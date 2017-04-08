@@ -8,6 +8,8 @@
 
 using namespace std;
 
+class Comment;
+
 class RubricItem
 {
 public:

@@ -8,6 +8,8 @@
 
 using namespace std;
 
+class LabAssignment;
+
 class Student
 {
 public:

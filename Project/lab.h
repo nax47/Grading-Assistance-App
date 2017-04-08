@@ -11,6 +11,10 @@
 
 using namespace std;
 
+class Template;
+class Section;
+
+
 class Lab
 {
 public:

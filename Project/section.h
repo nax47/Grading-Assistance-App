@@ -12,6 +12,9 @@
 
 using namespace std;
 
+class Student;
+class Lab;
+
 class Section
 {
 public:
