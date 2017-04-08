@@ -28,7 +28,7 @@ public:
 private:
     string subject;
     int points;
-    Vector <Comment *> comments;
+    vector <Comment *> comments;
 
 };
 
