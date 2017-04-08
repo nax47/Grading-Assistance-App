@@ -17,5 +17,6 @@ void Template::add_RI(RubricItem *newRI)
 
 RubricItem * Template::get_RI(int num)
 {
-    items.at(num);
+    return items.at(num);
+
 }
