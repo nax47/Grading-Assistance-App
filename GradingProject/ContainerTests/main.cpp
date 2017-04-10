@@ -75,6 +75,56 @@ TEST(general, LAB_TEST)
 
 }
 
+TEST(general, RUBRIC_ITEM_TEST)
+{
+    RubricItem r1("test", 10);
+    ASSERT_EQ(r1.get_Subject(), "test");
+    r1.set_Subject("new");
+    ASSERT_EQ(r1.get_Subject(), "new");
+    ASSERT_EQ(r1.get_Points(), 10);
+    r1.set_Points(1);
+    ASSERT_EQ(r1.get_Points(), 1);
+
+
+    Comment * cptr = new Comment("comment");
+    r1.add_Comment(cptr);
+    ASSERT_EQ(r1.get_Comment(0)->get_Comment(), "test comment");
+
+}
+
+TEST(general, LABASSIGNMENT_TEST)
+{
+    LabAssignment la1;
+    Student * stuptr = new Student("john");
+    la1.set_Student(stuptr);
+    ASSERT_EQ(la1.get_Student()->get_Name(), "john");
+    RubricItem * riptr = new RubricItem("test", 10);
+    la1.new_RI(riptr);
+    ASSERT_EQ(la1.get_RI("test")->get_Subject(), "test");
+    Comment * comptr = new Comment("test com");
+    la1.add_Comment(comptr, riptr);
+    la1.set_Grade(100);
+    ASSERT_EQ(la1.get_Grade(), 100);
+    Lab * labptr = new Lab();
+    labptr->set_ID(1);
+    la1.set_Lab(labptr);
+    ASSERT_EQ(la1.get_Lab()->get_ID(), 1);
+
+}
+
+TEST(general, STUDENT_TEST)
+{
+    Student stu("stu");
+    ASSERT_EQ(stu.get_Name(), "stu");
+    stu.set_Name("new stu");
+    ASSERT_EQ(stu.get_Name(), "new stu");
+    LabAssignment * labptr = new LabAssignment();
+    labptr->set_Grade(100);
+    stu.add_Lab(labptr);
+    ASSERT_EQ(stu.get_Lab(0)->get_Grade(), 100);
+
+}
+
 int main(int argc, char **argv) {
 
     ::testing::InitGoogleTest(&argc, argv);
