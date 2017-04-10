@@ -6,6 +6,10 @@
 #include "../DataContainers/rubricitem.h"
 #include <string>
 #include <QStackedWidget>
+#include <QMessageBox>
+#include <iostream>
+
+class RubricItem;
 
 namespace Ui {
 class Widget;
@@ -18,17 +22,30 @@ class Widget : public QWidget
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void display_code();
 
 private slots:
     void on_searchButton_clicked();
 
-    void on_newItem_clicked();
+    void on_itemButton_clicked();
 
-    void on_newComment_clicked();
+    void on_commentButton_clicked();
+
+    void on_openCodeButton_clicked();
+
+    void on_cancelButton_clicked();
+
+    void on_okButton_clicked();
 
 private:
     Ui::Widget *ui;
+
+    QString subjectQ;
+    QString pointsQ;
+    QString commentQ;
+
+    string subject;
+    int points;
+    string comment;
 };
 
 #endif // WIDGET_H

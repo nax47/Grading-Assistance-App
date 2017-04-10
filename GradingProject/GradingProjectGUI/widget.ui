@@ -13,83 +13,98 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QLineEdit" name="searchBar">
+  <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>50</y>
-     <width>101</width>
-     <height>27</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="searchButton">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>50</y>
-     <width>71</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Search</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="newItem">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>370</y>
-     <width>71</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>+ Item</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="newComment">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>370</y>
-     <width>91</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>+ Comment</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="codeDisp">
-   <property name="geometry">
-    <rect>
-     <x>33</x>
-     <y>27</y>
-     <width>351</width>
-     <height>361</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStackedWidget" name="rubricWindow">
-   <property name="geometry">
-    <rect>
-     <x>160</x>
-     <y>150</y>
-     <width>421</width>
-     <height>191</height>
+     <x>0</x>
+     <y>0</y>
+     <width>591</width>
+     <height>411</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
-   <widget class="QWidget" name="page">
-    <widget class="QLabel" name="label">
+   <widget class="QWidget" name="mainWindow">
+    <widget class="QLineEdit" name="searchBar">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>40</y>
+       <x>370</x>
+       <y>50</y>
+       <width>113</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="searchButton">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>50</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Search</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="itemButton">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>360</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>+ Item</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="commentButton">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>360</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>+ Comment</string>
+     </property>
+    </widget>
+    <widget class="QTextBrowser" name="codeDisp">
+     <property name="geometry">
+      <rect>
+       <x>25</x>
+       <y>51</y>
+       <width>321</width>
+       <height>341</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="openCodeButton">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open Code File</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="rubricItem">
+    <widget class="QLabel" name="subjectLabel">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>130</y>
        <width>67</width>
        <height>17</height>
       </rect>
@@ -98,11 +113,11 @@
       <string>Subject</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="commentLabel">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>100</y>
+       <x>120</x>
+       <y>250</y>
        <width>67</width>
        <height>17</height>
       </rect>
@@ -111,11 +126,11 @@
       <string>Comment</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="pointsLabel">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>70</y>
+       <x>130</x>
+       <y>190</y>
        <width>67</width>
        <height>17</height>
       </rect>
@@ -124,34 +139,73 @@
       <string>Points</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="subjectLine">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>50</y>
-       <width>191</width>
-       <height>27</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>90</y>
-       <width>191</width>
-       <height>27</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
+       <x>230</x>
        <y>130</y>
        <width>191</width>
        <height>27</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="pointsLine">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>190</y>
+       <width>191</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="commentLine">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>250</y>
+       <width>191</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="okButton">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>360</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cancelButton">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>360</y>
+       <width>99</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="newRubricItemLabel">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>60</y>
+       <width>171</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add New Rubric Item</string>
      </property>
     </widget>
    </widget>
