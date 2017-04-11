@@ -11,7 +11,10 @@ SOURCES += main.cpp \
     labassignment.cpp \
     section.cpp \
     lab.cpp \
-    engine.cpp
+    engine.cpp \
+    ../DBEngine/dbengine.cpp \
+    ../DBEngine/dbtable.cpp \
+    ../DBEngine/dbtool.cpp
 
 HEADERS += \
     student.h \
@@ -21,4 +24,9 @@ HEADERS += \
     labassignment.h \
     section.h \
     lab.h \
-    engine.h
+    engine.h \
+    ../DBEngine/dbengine.h \
+    ../DBEngine/dbtable.h \
+    ../DBEngine/dbtool.h
+
+LIBS += -lsqlite3

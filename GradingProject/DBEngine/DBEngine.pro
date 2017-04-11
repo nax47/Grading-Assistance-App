@@ -12,3 +12,5 @@ HEADERS += \
     dbtable.h \
     dbtool.h \
     dbengine.h
+
+LIBS += -lsqlite3
