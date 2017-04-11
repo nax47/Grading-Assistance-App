@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     DataContainers \
-    ContainerTests
+    ContainerTests \
+    GradingProjectGUI

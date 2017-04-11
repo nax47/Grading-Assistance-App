@@ -64,7 +64,11 @@ void Widget::on_okButton_clicked()
     } else if(subject.empty() || points == NULL || comment.empty()) {
         QMessageBox::information(this, "Warning", "Please populate all fields.");
     } else {
-        //RubricItem *newItem = new RubricItem();
+        RubricItem *newItem = new RubricItem(subject, points);
+        newItem->add_Comment(new Comment(comment));
         ui->stackedWidget->setCurrentIndex(0);
+        ui->groupBox->setTitle(subjectQ);
+        ui->comment1->setText(commentQ);
+        ui->pointsbox1->setValue(points);
     }
 }

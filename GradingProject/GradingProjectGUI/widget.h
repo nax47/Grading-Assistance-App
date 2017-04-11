@@ -8,8 +8,13 @@
 #include <QStackedWidget>
 #include <QMessageBox>
 #include <iostream>
+#include "../DataContainers/rubricitem.h"
+#include "../DataContainers/comment.h"
 
 class RubricItem;
+class Comment;
+
+using namespace std;
 
 namespace Ui {
 class Widget;

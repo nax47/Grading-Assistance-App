@@ -106,9 +106,9 @@ TEST(general, LABASSIGNMENT_TEST)
     la1.set_Grade(100);
     ASSERT_EQ(la1.get_Grade(), 100);
     Lab * labptr = new Lab();
-    labptr->set_ID(1);
+
     la1.set_Lab(labptr);
-    ASSERT_EQ(la1.get_Lab()->get_ID(), 1);
+    ASSERT_EQ(la1.get_Lab(), labptr);
 
 }
 

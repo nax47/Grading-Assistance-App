@@ -18,6 +18,12 @@ SOURCES += main.cpp \
 HEADERS  += \
     widget.h
 
+HEADERS += ../DataContainers/comment.h
+SOURCES += ../DataContainers/comment.cpp
+
+HEADERS += ../DataContainers/rubricitem.h
+SOURCES += ../DataContainers/rubricitem.cpp
+
 FORMS    += \
     widget.ui
 
