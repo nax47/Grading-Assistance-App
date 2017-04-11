@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     rubricitem.cpp \
     labassignment.cpp \
     section.cpp \
-    lab.cpp
+    lab.cpp \
+    engine.cpp
 
 HEADERS += \
     student.h \
@@ -19,4 +20,5 @@ HEADERS += \
     rubricitem.h \
     labassignment.h \
     section.h \
-    lab.h
+    lab.h \
+    engine.h
