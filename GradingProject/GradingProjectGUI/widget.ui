@@ -119,7 +119,7 @@
       <string>Open Code File</string>
      </property>
     </widget>
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="QScrollArea" name="rubricScroll">
      <property name="geometry">
       <rect>
        <x>580</x>
@@ -127,6 +127,9 @@
        <width>261</width>
        <height>451</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -149,8 +152,15 @@
          <height>121</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">border-color: rgb(255, 255, 255);
+</string>
+       </property>
        <property name="title">
         <string/>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
        <widget class="QLabel" name="Points1">
         <property name="geometry">
@@ -208,11 +218,14 @@
     <widget class="QLabel" name="subjectLabel">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>130</y>
+       <x>260</x>
+       <y>180</y>
        <width>67</width>
        <height>17</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Subject</string>
@@ -221,11 +234,14 @@
     <widget class="QLabel" name="commentLabel">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>250</y>
+       <x>250</x>
+       <y>300</y>
        <width>67</width>
        <height>17</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Comment</string>
@@ -234,11 +250,14 @@
     <widget class="QLabel" name="pointsLabel">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>190</y>
+       <x>260</x>
+       <y>240</y>
        <width>67</width>
        <height>17</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Points</string>
@@ -247,41 +266,53 @@
     <widget class="QLineEdit" name="subjectLine">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>130</y>
+       <x>360</x>
+       <y>180</y>
        <width>191</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="pointsLine">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>190</y>
+       <x>360</x>
+       <y>240</y>
        <width>191</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="commentLine">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>250</y>
+       <x>360</x>
+       <y>300</y>
        <width>191</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
     <widget class="QPushButton" name="okButton">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>360</y>
+       <x>290</x>
+       <y>410</y>
        <width>99</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>OK</string>
@@ -290,11 +321,14 @@
     <widget class="QPushButton" name="cancelButton">
      <property name="geometry">
       <rect>
-       <x>290</x>
-       <y>360</y>
+       <x>420</x>
+       <y>410</y>
        <width>99</width>
        <height>27</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Cancel</string>
@@ -303,11 +337,14 @@
     <widget class="QLabel" name="newRubricItemLabel">
      <property name="geometry">
       <rect>
-       <x>190</x>
-       <y>60</y>
+       <x>320</x>
+       <y>110</y>
        <width>171</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Add New Rubric Item</string>
