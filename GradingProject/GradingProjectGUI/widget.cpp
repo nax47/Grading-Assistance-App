@@ -34,7 +34,16 @@ void Widget::on_searchButton_clicked()
 
 void Widget::on_openCodeButton_clicked()
 {
-    QFile file("/home/thomas/Documents/test.txt");
+    QFileDialog dialog;
+    QStringList fileNames;
+
+    dialog.setFileMode(QFileDialog::AnyFile);
+    if(dialog.exec())
+    {
+        fileNames = dialog.selectedFiles();
+    }
+
+    QFile file(fileNames.at(0));
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0,"info",file.errorString());
     }

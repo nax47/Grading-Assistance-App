@@ -13,6 +13,7 @@
 #include <QVBoxLayout>
 #include <QSpinBox>
 #include <QGroupBox>
+#include <QFileDialog>
 
 class RubricItem;
 class Comment;
