@@ -66,9 +66,26 @@ void Widget::on_okButton_clicked()
     } else {
         RubricItem *newItem = new RubricItem(subject, points);
         newItem->add_Comment(new Comment(comment));
+
+        QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
+        rubricItemBox->setFixedSize(250,150);
+        rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 12pt\"DejaVu Sans\"; } ");
+        QVBoxLayout * boxLayout = new QVBoxLayout;
+        QLabel * pointsLabel = new QLabel(tr("Points"));
+        pointsLabel->setStyleSheet("QLabel { color: rgb(255, 255, 255); font: 12pt\"DejaVu Sans\"; } ");
+        pointsLabel->setFixedSize(50,20);
+        boxLayout->addWidget(pointsLabel);
+        QSpinBox * pointsVal = new QSpinBox();
+        pointsVal->setValue(points);
+        pointsVal->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 12pt\"DejaVu Sans\"; } ");
+        boxLayout->addWidget(pointsVal);
+        QLabel * commentsLabel = new QLabel(commentQ);
+        commentsLabel->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+        boxLayout->addWidget(commentsLabel);
+        rubricItemBox->setLayout(boxLayout);
+
+        ui->rubricScroll->setWidget(rubricItemBox);
+
         ui->stackedWidget->setCurrentIndex(0);
-        ui->groupBox->setTitle(subjectQ);
-        ui->comment1->setText(commentQ);
-        ui->pointsbox1->setValue(points);
     }
 }

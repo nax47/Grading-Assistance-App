@@ -10,6 +10,9 @@
 #include <iostream>
 #include "../DataContainers/rubricitem.h"
 #include "../DataContainers/comment.h"
+#include <QVBoxLayout>
+#include <QSpinBox>
+#include <QGroupBox>
 
 class RubricItem;
 class Comment;
