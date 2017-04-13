@@ -14,6 +14,9 @@
 #include <QSpinBox>
 #include <QGroupBox>
 #include <QFileDialog>
+#include <QHBoxLayout>
+#include <QCheckBox>
+#include <vector>
 
 class RubricItem;
 class Comment;
@@ -55,6 +58,8 @@ private:
     string subject;
     int points;
     string comment;
+
+    vector <QGroupBox *> rubricItemsDisplayed;
 };
 
 #endif // WIDGET_H
