@@ -19,6 +19,12 @@ using namespace std;
 
 class Section;
 class DBEngine;
+class Lab;
+class Student;
+class Template;
+class RubricItem;
+class LabAssignment;
+class Comment;
 
 class Engine
 {
@@ -26,12 +32,37 @@ public:
     Engine();
     ~Engine();
 
-    void add_Section(Section * sec);
+    void add_Section(int id);
     Section * get_Section(int id);
+
+    //set currents will be used when section lab and student are picked in gui
+    void set_currSection(int id);
+    void set_currLab();
+    void set_currStudent(string name);
+
+    // basic adds
+    void add_Student(string name);
+    void add_Lab();
+    void new_LabAssignment();
+
+    //GUI set up methods
+    vector <int> section_Drop_SetUp();
+    vector <int> labNum_Drop_SetUp();
+    vector <string> student_Drop_SetUp();
+
+    void add_Rubric_Item(string subj, int point, string comm);
 
 private:
 
+    Section * currSection;
+    Lab * currLab;
+    Student * currStudent;
+    LabAssignment * currLabAssignment;
+    Template * currTemplate;
+
+
     vector <Section *> sectionList;
+
     DBEngine * dbControl;
 };
 

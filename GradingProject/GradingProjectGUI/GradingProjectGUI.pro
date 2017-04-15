@@ -21,6 +21,9 @@ HEADERS  += \
 HEADERS += ../DataContainers/comment.h
 SOURCES += ../DataContainers/comment.cpp
 
+HEADERS += ../DataContainers/engine.h
+SOURCES += ../DataContainers/engine.cpp
+
 HEADERS += ../DataContainers/rubricitem.h
 SOURCES += ../DataContainers/rubricitem.cpp
 

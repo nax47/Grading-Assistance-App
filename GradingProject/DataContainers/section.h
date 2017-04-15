@@ -22,12 +22,15 @@ public:
     ~Section();
 
     void add_Student(Student * stu);
+    int get_Student_Size();
+    string get_Student_Name(int num);
     Student * get_Student(string name);
 
     void set_Id(int id);
     int get_Id();
 
     void add_Lab(Lab * newLab);
+    int get_Lab_Size();
     Lab * get_Lab(int num);
 
 

@@ -15,6 +15,18 @@ void Section::add_Student(Student *stu)
     studentList.push_back(stu);
 }
 
+int Section::get_Student_Size()
+{
+    return studentList.size();
+}
+
+string Section::get_Student_Name(int num)
+{
+    Student * tmp;
+    tmp = studentList.at(num);
+    return tmp->get_Name();
+}
+
 Student * Section::get_Student(string name)
 {
     Student * tmpPtr;
@@ -41,6 +53,11 @@ int Section::get_Id()
 void Section::add_Lab(Lab *newLab)
 {
     labList.push_back(newLab);
+}
+
+int Section::get_Lab_Size()
+{
+    return labList.size();
 }
 
 Lab * Section::get_Lab(int num)

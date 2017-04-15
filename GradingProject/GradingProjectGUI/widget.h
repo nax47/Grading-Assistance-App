@@ -8,7 +8,7 @@
 #include <QStackedWidget>
 #include <QMessageBox>
 #include <iostream>
-#include "../DataContainers/rubricitem.h"
+#include "../DataContainers/engine.h"
 #include "../DataContainers/comment.h"
 #include <QVBoxLayout>
 #include <QSpinBox>
@@ -48,6 +48,14 @@ private slots:
 
     void on_okButton_clicked();
 
+    void on_studentAdd_clicked();
+
+    void on_labAdd_clicked();
+
+    void on_sectionAdd_clicked();
+
+    void on_StartGrading_clicked();
+
 private:
     Ui::Widget *ui;
 
@@ -55,6 +63,7 @@ private:
     QString pointsQ;
     QString commentQ;
 
+    Engine GUIEngine;
     string subject;
     int points;
     string comment;

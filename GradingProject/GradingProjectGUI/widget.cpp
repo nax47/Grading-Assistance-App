@@ -6,7 +6,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(2);
+
 }
 
 Widget::~Widget()
@@ -115,4 +116,27 @@ void Widget::on_okButton_clicked()
 
         ui->stackedWidget->setCurrentIndex(0);
     }
+}
+
+void Widget::on_studentAdd_clicked()
+{
+    QString tmp = ui->newStudentName->text();
+    ui->studentDrop->addItem(tmp);
+}
+
+void Widget::on_labAdd_clicked()
+{
+    QString tmp = ui->newLabNum->text();
+    ui->labDrop->addItem(tmp);
+}
+
+void Widget::on_sectionAdd_clicked()
+{
+    QString tmp = ui->newIDVal->text();
+    ui->sectionDrop->addItem(tmp);
+}
+
+void Widget::on_StartGrading_clicked()
+{
+
 }
