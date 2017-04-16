@@ -121,22 +121,58 @@ void Widget::on_okButton_clicked()
 void Widget::on_studentAdd_clicked()
 {
     QString tmp = ui->newStudentName->text();
+    GUIEngine.add_Student(tmp.toStdString());
     ui->studentDrop->addItem(tmp);
 }
 
 void Widget::on_labAdd_clicked()
 {
     QString tmp = ui->newLabNum->text();
+    GUIEngine.add_Lab();
     ui->labDrop->addItem(tmp);
 }
 
 void Widget::on_sectionAdd_clicked()
 {
     QString tmp = ui->newIDVal->text();
+    GUIEngine.add_Section(tmp.toInt());
     ui->sectionDrop->addItem(tmp);
 }
 
 void Widget::on_StartGrading_clicked()
 {
+    ui->stackedWidget->setCurrentIndex(0);
+}
 
+void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
+{
+    GUIEngine.set_currSection(arg1.toInt());
+    ui->test->setText(arg1);
+    ui->labDrop->clear();
+    ui->studentDrop->clear();
+    vector <int> temp = GUIEngine.labNum_Drop_SetUp();
+    for(int i = 0; i < temp.size(); i++)
+    {
+        QString t = QString::number(temp.at(i));
+        ui->labDrop->addItem(t);
+    }
+    vector <string> t2 = GUIEngine.student_Drop_SetUp();
+    for(int i = 0; i < t2.size(); i++)
+    {
+        QString t = QString::fromStdString(t2.at(i));
+        ui->labDrop->addItem(t);
+    }
+}
+
+void Widget::on_labDrop_currentIndexChanged(const QString &arg1)
+{
+    if(!arg1.isEmpty() && !arg1.isNull())
+    {
+        GUIEngine.set_currLab(arg1.toInt() - 1);
+    }
+}
+
+void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
+{
+    GUIEngine.set_currStudent(arg1.toStdString());
 }

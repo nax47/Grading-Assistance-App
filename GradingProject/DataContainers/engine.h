@@ -37,7 +37,7 @@ public:
 
     //set currents will be used when section lab and student are picked in gui
     void set_currSection(int id);
-    void set_currLab();
+    void set_currLab(int id);
     void set_currStudent(string name);
 
     // basic adds

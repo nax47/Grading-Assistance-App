@@ -56,6 +56,12 @@ private slots:
 
     void on_StartGrading_clicked();
 
+    void on_sectionDrop_currentIndexChanged(const QString &arg1);
+
+    void on_labDrop_currentIndexChanged(const QString &arg1);
+
+    void on_studentDrop_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::Widget *ui;
 

@@ -53,7 +53,10 @@ void Engine::new_LabAssignment()
 }
 
 
-
+void Engine::set_currLab(int id)
+{
+    currLab = currSection->get_Lab(id);
+}
 
 void Engine::set_currSection(int id)
 {
