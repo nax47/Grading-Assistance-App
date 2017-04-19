@@ -20,6 +20,7 @@ class Lab
 public:
     Lab();
     ~Lab();
+    Lab(int num);
 
     void set_Section(Section * sec);
     Section * get_Section();
@@ -27,9 +28,13 @@ public:
     void set_Template(Template * tem);
     Template * get_Template();
 
+    void set_labNum(int num);
+    int get_labNum();
+
 private:
 
     Template * tmplate;
+    int labNum;
     Section * section;
 
 

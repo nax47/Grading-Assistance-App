@@ -10,6 +10,11 @@ Lab::~Lab()
 
 }
 
+Lab::Lab(int num)
+{
+    labNum = num;
+}
+
 void Lab::set_Section(Section *sec)
 {
     section = sec;
@@ -28,4 +33,14 @@ void Lab::set_Template(Template *tem)
 Template * Lab::get_Template()
 {
     return tmplate;
+}
+
+void Lab::set_labNum(int num)
+{
+    labNum = num;
+}
+
+int Lab::get_labNum()
+{
+    return labNum;
 }

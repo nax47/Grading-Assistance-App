@@ -128,7 +128,8 @@ void Widget::on_studentAdd_clicked()
 void Widget::on_labAdd_clicked()
 {
     QString tmp = ui->newLabNum->text();
-    GUIEngine.add_Lab();
+    int temp = tmp.toInt();
+    GUIEngine.add_Lab(temp);
     ui->labDrop->addItem(tmp);
 }
 
@@ -147,7 +148,7 @@ void Widget::on_StartGrading_clicked()
 void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
 {
     GUIEngine.set_currSection(arg1.toInt());
-    ui->test->setText(arg1);
+
     ui->labDrop->clear();
     ui->studentDrop->clear();
     vector <int> temp = GUIEngine.labNum_Drop_SetUp();
@@ -160,7 +161,7 @@ void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
     for(int i = 0; i < t2.size(); i++)
     {
         QString t = QString::fromStdString(t2.at(i));
-        ui->labDrop->addItem(t);
+        ui->studentDrop->addItem(t);
     }
 }
 
@@ -168,7 +169,7 @@ void Widget::on_labDrop_currentIndexChanged(const QString &arg1)
 {
     if(!arg1.isEmpty() && !arg1.isNull())
     {
-        GUIEngine.set_currLab(arg1.toInt() - 1);
+        GUIEngine.set_currLab(arg1.toInt());
     }
 }
 

@@ -29,15 +29,29 @@ Section * Engine::get_Section(int id)
     return nullptr;
 }
 
+Lab * Engine::get_Lab(int num)
+{
+    Lab * tmpPtr;
+    for(int i = 0; i < currSection->get_Lab_Size(); i++)
+    {
+        tmpPtr = currSection->get_Lab(i);
+        if(tmpPtr->get_labNum() == num)
+        {
+            return tmpPtr;
+        }
+    }
+    return nullptr;
+}
+
 void Engine::add_Student(string name)
 {
     Student * stu = new Student(name);
     currSection->add_Student(stu);
 }
 
-void Engine::add_Lab()
+void Engine::add_Lab(int num)
 {
-    Lab * lab = new Lab();
+    Lab * lab = new Lab(num);
     lab->set_Section(currSection);
     lab->set_Template(currTemplate);
     currSection->add_Lab(lab);
@@ -55,7 +69,7 @@ void Engine::new_LabAssignment()
 
 void Engine::set_currLab(int id)
 {
-    currLab = currSection->get_Lab(id);
+    currLab = get_Lab(id);
 }
 
 void Engine::set_currSection(int id)
@@ -91,7 +105,7 @@ vector <int> Engine::labNum_Drop_SetUp()
 
     for(int i = 0; i < labSize; i++)
     {
-        int t = i + 1;
+        int t = currSection->get_Lab(i)->get_labNum();
         out.push_back(t);
     }
 

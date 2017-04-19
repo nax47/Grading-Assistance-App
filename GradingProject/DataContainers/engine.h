@@ -34,6 +34,7 @@ public:
 
     void add_Section(int id);
     Section * get_Section(int id);
+    Lab * get_Lab(int num);
 
     //set currents will be used when section lab and student are picked in gui
     void set_currSection(int id);
@@ -42,7 +43,7 @@ public:
 
     // basic adds
     void add_Student(string name);
-    void add_Lab();
+    void add_Lab(int num);
     void new_LabAssignment();
 
     //GUI set up methods
