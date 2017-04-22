@@ -17,6 +17,8 @@
 #include <QHBoxLayout>
 #include <QCheckBox>
 #include <vector>
+#include <QtPrintSupport/QPrinter>
+#include <iostream>
 
 class RubricItem;
 class Comment;
@@ -62,6 +64,8 @@ private slots:
 
     void on_studentDrop_currentIndexChanged(const QString &arg1);
 
+    void on_doneButton_clicked();
+
     void on_commentCancel_clicked();
 
     void on_commentOK_clicked();
@@ -79,8 +83,21 @@ private:
     string subject;
     int points;
     string comment;
+    string fileName;
+    QString qFileName;
+    string studentName;
+
+    QString qhtml;
+    string html;
+    int section;
+    string sectionString;
+    string labString;
+    int lab;
+    int score;
+    string scoreString;
     string currPathName;
     string currFileName;
+    int lineNUM;
 
     vector <QGroupBox *> rubricItemsDisplayed;
 };

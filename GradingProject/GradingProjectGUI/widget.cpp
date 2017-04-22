@@ -27,11 +27,14 @@ void Widget::on_commentButton_clicked()
 {
     QString path = QString::fromStdString(currFileName);
     ui->testPath->setText(path);
-    QPoint t = ui->codeDisp->cursor().pos();
-    int y =  t.y();
-    QString test = QString::number(y);
+
+    QString p = QString::fromStdString(currPathName);
+    QString test = QString::number(lineNUM);
     ui->testLinenum->setText(test);
+    ui->testname->setText(p);
+
     ui->stackedWidget->setCurrentIndex(3);
+
 }
 
 void Widget::on_searchButton_clicked()
@@ -52,8 +55,8 @@ void Widget::on_openCodeButton_clicked()
     QString FName = fileNames.at(0);
     string FNamestr = FName.toStdString();
     int pos = FNamestr.find_last_of('/');
-    currFileName = FNamestr.substr(pos, FNamestr.length() - 1);
-    currPathName = FNamestr.substr(0,pos);
+    currFileName = FNamestr.substr(pos + 1, FNamestr.length() - 1);
+    currPathName = FNamestr.substr(0,pos + 1);
 
     QFile file(fileNames.at(0));
     if(!file.open(QIODevice::ReadOnly)) {
@@ -217,6 +220,41 @@ void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
     GUIEngine.set_currStudent(arg1.toStdString());
 }
 
+void Widget::on_doneButton_clicked()
+{
+    Student *currStudent = GUIEngine.get_currStu();
+    Section *currSection = GUIEngine.get_currSec();
+    Lab *currLab = GUIEngine.get_currL();
+
+    studentName = currStudent->get_Name();
+    fileName = "../" + studentName +".pdf";
+    qFileName = QString::fromStdString(fileName);
+
+    studentName = "<h1>" + studentName + "</h1>";
+    section = currSection->get_Id();
+    sectionString = to_string(section);
+    sectionString = "<h2> Section: " + sectionString + "</h2>";
+
+    lab = currLab->get_labNum();
+    labString = to_string(lab);
+    labString = "<h3> Lab Number: " + labString + "</h3>";
+
+    LabAssignment *currLabAssignment = currStudent->get_Lab(lab - 1);
+    score = currLabAssignment->get_Grade();
+    scoreString = to_string(score);
+    scoreString = "<h4> Final Grade: " + scoreString + "</h4>";
+
+    html = studentName + sectionString + labString + scoreString;
+    qhtml = QString::fromStdString(html);
+
+    QTextDocument doc;
+    doc.setHtml(qhtml);
+    QPrinter printer;
+    printer.setOutputFileName(qFileName);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    doc.print(&printer);
+    printer.newPage();
+}
 
 void Widget::on_commentCancel_clicked()
 {
@@ -230,5 +268,5 @@ void Widget::on_commentOK_clicked()
 
 void Widget::on_codeDisp_cursorPositionChanged()
 {
-
+    lineNUM = ui->codeDisp->cursor().pos().ry();
 }

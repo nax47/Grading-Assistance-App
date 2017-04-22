@@ -50,3 +50,13 @@ void RubricItem::delete_Comment(int num)
 {
     delete comments.at(num);
 }
+
+void RubricItem::set_Applied(bool in)
+{
+    applied = in;
+}
+
+bool RubricItem::get_Applied()
+{
+    return applied;
+}

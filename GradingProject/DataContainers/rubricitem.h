@@ -27,9 +27,13 @@ public:
     void add_Comment(Comment * newCom);
     void delete_Comment(int num);
 
+    void set_Applied(bool in);
+    bool get_Applied();
+
 private:
     string subject;
     int points;
+    bool applied;
     vector <Comment *> comments;
 
 };
