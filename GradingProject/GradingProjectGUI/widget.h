@@ -62,6 +62,12 @@ private slots:
 
     void on_studentDrop_currentIndexChanged(const QString &arg1);
 
+    void on_commentCancel_clicked();
+
+    void on_commentOK_clicked();
+
+    void on_codeDisp_cursorPositionChanged();
+
 private:
     Ui::Widget *ui;
 
@@ -73,6 +79,8 @@ private:
     string subject;
     int points;
     string comment;
+    string currPathName;
+    string currFileName;
 
     vector <QGroupBox *> rubricItemsDisplayed;
 };

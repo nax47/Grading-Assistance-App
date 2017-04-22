@@ -14,6 +14,7 @@ class Comment
 public:
     Comment();
     Comment(string in);
+    Comment(string in, int line, string file);
     ~Comment();
 
     string get_Comment();
@@ -25,10 +26,13 @@ public:
     void set_Rubric_Item(RubricItem * ptr);
     RubricItem * get_Rubric_Item();
 
+    void set_fileName(string in);
+    string get_fileName();
 
 private:
     string comment;
     int lineNum;
+    string fileName;
     RubricItem * link;
 
 

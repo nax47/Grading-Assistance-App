@@ -20,14 +20,20 @@
       <string notr="true">background-color: rgb(85, 87, 83);</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="mainWindow">
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="1" column="0">
         <widget class="QTextBrowser" name="codeDisp">
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -321,6 +327,9 @@
          <height>21</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLabel" name="label_2">
        <property name="geometry">
@@ -349,6 +358,9 @@
          <height>21</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLabel" name="label_3">
        <property name="geometry">
@@ -376,6 +388,9 @@
          <width>291</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
       <widget class="QPushButton" name="sectionAdd">
@@ -478,6 +493,9 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="newLabNum">
        <property name="geometry">
@@ -488,6 +506,9 @@
          <height>22</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="newStudentName">
        <property name="geometry">
@@ -497,6 +518,9 @@
          <width>113</width>
          <height>22</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="loadRub">
@@ -510,6 +534,99 @@
        </property>
        <property name="text">
         <string>Load Last Rubric</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page">
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>150</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>New Comment </string>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="newCommentText">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>220</y>
+         <width>541</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="testPath">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>440</y>
+         <width>381</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="testLinenum">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>510</y>
+         <width>351</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="commentOK">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>620</y>
+         <width>83</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Ok</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="commentCancel">
+       <property name="geometry">
+        <rect>
+         <x>480</x>
+         <y>630</y>
+         <width>83</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="testpath">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>570</y>
+         <width>64</width>
+         <height>15</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
        </property>
       </widget>
      </widget>

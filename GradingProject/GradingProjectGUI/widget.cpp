@@ -25,7 +25,13 @@ void Widget::on_itemButton_clicked()
 
 void Widget::on_commentButton_clicked()
 {
-
+    QString path = QString::fromStdString(currFileName);
+    ui->testPath->setText(path);
+    QPoint t = ui->codeDisp->cursor().pos();
+    int y =  t.y();
+    QString test = QString::number(y);
+    ui->testLinenum->setText(test);
+    ui->stackedWidget->setCurrentIndex(3);
 }
 
 void Widget::on_searchButton_clicked()
@@ -43,6 +49,11 @@ void Widget::on_openCodeButton_clicked()
     {
         fileNames = dialog.selectedFiles();
     }
+    QString FName = fileNames.at(0);
+    string FNamestr = FName.toStdString();
+    int pos = FNamestr.find_last_of('/');
+    currFileName = FNamestr.substr(pos, FNamestr.length() - 1);
+    currPathName = FNamestr.substr(0,pos);
 
     QFile file(fileNames.at(0));
     if(!file.open(QIODevice::ReadOnly)) {
@@ -99,10 +110,12 @@ void Widget::on_okButton_clicked()
         pointsBoxLayout->addWidget(pointsVal);
 
         QLabel * div = new QLabel(tr("Out of"));
+        div->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
         pointsBoxLayout->addWidget(div);
 
         QSpinBox * outof = new QSpinBox();
         outof->setValue(out.toInt());
+        div->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
         pointsBoxLayout->addWidget(outof);
         boxLayout->addLayout(pointsBoxLayout);
 
@@ -167,6 +180,7 @@ void Widget::on_StartGrading_clicked()
     grade = grade.append(tem);
     QString final = name.append(grade);
     ui->studentgrade->setText(final);
+    ui->studentgrade->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -201,4 +215,20 @@ void Widget::on_labDrop_currentIndexChanged(const QString &arg1)
 void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
 {
     GUIEngine.set_currStudent(arg1.toStdString());
+}
+
+
+void Widget::on_commentCancel_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+void Widget::on_commentOK_clicked()
+{
+
+}
+
+void Widget::on_codeDisp_cursorPositionChanged()
+{
+
 }
