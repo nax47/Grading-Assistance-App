@@ -69,6 +69,9 @@ void Widget::on_okButton_clicked()
     commentQ = ui->commentLine->text();
     comment = commentQ.toStdString();
 
+    QString out;
+    out = ui->outofText->text();
+
     if(points == NULL) {
         QMessageBox::information(this, "Warning", "Points value must be a number.");
     } else if(subject.empty() || points == NULL || comment.empty()) {
@@ -89,10 +92,18 @@ void Widget::on_okButton_clicked()
         pointsLabel->setFixedSize(50,20);
         pointsBoxLayout->addWidget(pointsLabel);
 
+
         QSpinBox * pointsVal = new QSpinBox();
         pointsVal->setValue(points);
         pointsVal->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
         pointsBoxLayout->addWidget(pointsVal);
+
+        QLabel * div = new QLabel(tr("Out of"));
+        pointsBoxLayout->addWidget(div);
+
+        QSpinBox * outof = new QSpinBox();
+        outof->setValue(out.toInt());
+        pointsBoxLayout->addWidget(outof);
         boxLayout->addLayout(pointsBoxLayout);
 
         QLabel * commentsLabel = new QLabel(commentQ);
@@ -142,6 +153,20 @@ void Widget::on_sectionAdd_clicked()
 
 void Widget::on_StartGrading_clicked()
 {
+    GUIEngine.start_Grading();
+    string studentName = GUIEngine.get_currStu()->get_Name();
+    QString name = QString::fromStdString(studentName);
+    int t = GUIEngine.get_currL()->get_labNum();
+    QString lab = " Lab #: ";
+    QString labnum = QString::number(t);
+    lab = lab.append(labnum);
+    name = name.append(lab);
+    int g = GUIEngine.get_currLA()->get_Grade();
+    QString grade = " Grade: ";
+    QString tem = QString::number(g);
+    grade = grade.append(tem);
+    QString final = name.append(grade);
+    ui->studentgrade->setText(final);
     ui->stackedWidget->setCurrentIndex(0);
 }
 

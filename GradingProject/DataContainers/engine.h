@@ -36,16 +36,24 @@ public:
     Section * get_Section(int id);
     Lab * get_Lab(int num);
 
+
     //set currents will be used when section lab and student are picked in gui
     void set_currSection(int id);
     void set_currLab(int id);
     void set_currStudent(string name);
+
+    //get currents
+    Student * get_currStu();
+    Lab * get_currL();
+    Section * get_currSec();
+    LabAssignment * get_currLA();
 
     // basic adds
     void add_Student(string name);
     void add_Lab(int num);
     void new_LabAssignment();
 
+    void start_Grading();
     //GUI set up methods
     vector <int> section_Drop_SetUp();
     vector <int> labNum_Drop_SetUp();

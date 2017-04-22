@@ -83,7 +83,34 @@ void Engine::set_currStudent(string name)
     currStudent = currSection->get_Student(name);
 }
 
+Student * Engine::get_currStu()
+{
+    return currStudent;
+}
 
+Section * Engine::get_currSec()
+{
+    return currSection;
+}
+
+Lab * Engine::get_currL()
+{
+    return currLab;
+}
+
+LabAssignment * Engine::get_currLA()
+{
+    return currLabAssignment;
+}
+
+void Engine::start_Grading()
+{
+    LabAssignment * lab = new LabAssignment();
+    lab->set_Student(currStudent);
+    lab->set_Grade(100);
+    currStudent->add_Lab(lab);
+    currLabAssignment = lab;
+}
 
 vector <int> Engine::section_Drop_SetUp()
 {
