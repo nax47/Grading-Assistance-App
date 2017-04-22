@@ -11,6 +11,13 @@ Comment::Comment(string in)
     comment = in;
 }
 
+Comment::Comment(string in, int line, string file)
+{
+    comment = in;
+    lineNum = line;
+    fileName = file;
+}
+
 Comment::~Comment()
 {
 
@@ -44,4 +51,14 @@ void Comment::set_Rubric_Item(RubricItem *ptr)
 RubricItem * Comment::get_Rubric_Item()
 {
     return link;
+}
+
+void Comment::set_fileName(string in)
+{
+    fileName = in;
+}
+
+string Comment::get_fileName()
+{
+    return fileName;
 }

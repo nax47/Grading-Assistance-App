@@ -66,6 +66,12 @@ private slots:
 
     void on_doneButton_clicked();
 
+    void on_commentCancel_clicked();
+
+    void on_commentOK_clicked();
+
+    void on_codeDisp_cursorPositionChanged();
+
 private:
     Ui::Widget *ui;
 
@@ -89,6 +95,8 @@ private:
     int lab;
     int score;
     string scoreString;
+    string currPathName;
+    string currFileName;
 
     vector <QGroupBox *> rubricItemsDisplayed;
 };
