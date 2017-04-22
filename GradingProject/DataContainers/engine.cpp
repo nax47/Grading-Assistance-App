@@ -66,6 +66,16 @@ void Engine::new_LabAssignment()
     currStudent->add_Lab(LA);
 }
 
+void Engine::add_Rubric_Item(string subj, int point, string comm)
+{
+    RubricItem * rub = new RubricItem(subj, point);
+    Comment * com = new Comment(comm);
+    rub->add_Comment(com);
+    currLabAssignment->new_RI(rub);
+    currLab->get_Template()->add_RI(rub);
+
+}
+
 
 void Engine::set_currLab(int id)
 {
@@ -106,6 +116,9 @@ LabAssignment * Engine::get_currLA()
 void Engine::start_Grading()
 {
     LabAssignment * lab = new LabAssignment();
+    Template * labTemplate = new Template();
+    currLab->set_Template(labTemplate);
+    lab->set_Lab(currLab);
     lab->set_Student(currStudent);
     lab->set_Grade(100);
     currStudent->add_Lab(lab);
