@@ -27,11 +27,14 @@ void Widget::on_commentButton_clicked()
 {
     QString path = QString::fromStdString(currFileName);
     ui->testPath->setText(path);
-    QPoint t = ui->codeDisp->cursor().pos();
-    int y =  t.y();
-    QString test = QString::number(y);
+
+    QString p = QString::fromStdString(currPathName);
+    QString test = QString::number(lineNUM);
     ui->testLinenum->setText(test);
+    ui->testname->setText(p);
+
     ui->stackedWidget->setCurrentIndex(3);
+
 }
 
 void Widget::on_searchButton_clicked()
@@ -52,8 +55,8 @@ void Widget::on_openCodeButton_clicked()
     QString FName = fileNames.at(0);
     string FNamestr = FName.toStdString();
     int pos = FNamestr.find_last_of('/');
-    currFileName = FNamestr.substr(pos, FNamestr.length() - 1);
-    currPathName = FNamestr.substr(0,pos);
+    currFileName = FNamestr.substr(pos + 1, FNamestr.length() - 1);
+    currPathName = FNamestr.substr(0,pos + 1);
 
     QFile file(fileNames.at(0));
     if(!file.open(QIODevice::ReadOnly)) {
@@ -230,5 +233,5 @@ void Widget::on_commentOK_clicked()
 
 void Widget::on_codeDisp_cursorPositionChanged()
 {
-
+    lineNUM = ui->codeDisp->cursor().pos().ry();
 }

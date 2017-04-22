@@ -303,7 +303,7 @@
       <widget class="QLabel" name="label">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>40</x>
          <y>170</y>
          <width>71</width>
          <height>21</height>
@@ -321,7 +321,7 @@
       <widget class="QComboBox" name="sectionDrop">
        <property name="geometry">
         <rect>
-         <x>230</x>
+         <x>140</x>
          <y>170</y>
          <width>291</width>
          <height>21</height>
@@ -334,7 +334,7 @@
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>40</x>
          <y>270</y>
          <width>59</width>
          <height>20</height>
@@ -352,7 +352,7 @@
       <widget class="QComboBox" name="labDrop">
        <property name="geometry">
         <rect>
-         <x>230</x>
+         <x>140</x>
          <y>270</y>
          <width>291</width>
          <height>21</height>
@@ -365,7 +365,7 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>120</x>
+         <x>40</x>
          <y>380</y>
          <width>59</width>
          <height>20</height>
@@ -383,7 +383,7 @@
       <widget class="QComboBox" name="studentDrop">
        <property name="geometry">
         <rect>
-         <x>230</x>
+         <x>140</x>
          <y>380</y>
          <width>291</width>
          <height>21</height>
@@ -435,7 +435,7 @@
       <widget class="QPushButton" name="StartGrading">
        <property name="geometry">
         <rect>
-         <x>310</x>
+         <x>150</x>
          <y>530</y>
          <width>181</width>
          <height>21</height>
@@ -448,7 +448,7 @@
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
-         <x>670</x>
+         <x>630</x>
          <y>170</y>
          <width>21</width>
          <height>21</height>
@@ -461,7 +461,7 @@
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
-         <x>640</x>
+         <x>620</x>
          <y>270</y>
          <width>51</width>
          <height>21</height>
@@ -474,7 +474,7 @@
       <widget class="QLabel" name="label_6">
        <property name="geometry">
         <rect>
-         <x>630</x>
+         <x>620</x>
          <y>380</y>
          <width>51</width>
          <height>21</height>
@@ -487,10 +487,10 @@
       <widget class="QLineEdit" name="newIDVal">
        <property name="geometry">
         <rect>
-         <x>710</x>
+         <x>682</x>
          <y>170</y>
-         <width>113</width>
-         <height>22</height>
+         <width>141</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -500,10 +500,10 @@
       <widget class="QLineEdit" name="newLabNum">
        <property name="geometry">
         <rect>
-         <x>720</x>
+         <x>682</x>
          <y>270</y>
-         <width>113</width>
-         <height>22</height>
+         <width>141</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -513,10 +513,10 @@
       <widget class="QLineEdit" name="newStudentName">
        <property name="geometry">
         <rect>
-         <x>710</x>
+         <x>682</x>
          <y>380</y>
-         <width>113</width>
-         <height>22</height>
+         <width>141</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -526,14 +526,41 @@
       <widget class="QRadioButton" name="loadRub">
        <property name="geometry">
         <rect>
-         <x>330</x>
-         <y>470</y>
+         <x>170</x>
+         <y>460</y>
          <width>141</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
         <string>Load Last Rubric</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>90</y>
+         <width>221</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Add new class sections, labs 
+ and students below.</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>411</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Choose what section, lab and student you would like to grade.</string>
        </property>
       </widget>
      </widget>
@@ -564,24 +591,11 @@
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
-      <widget class="QLabel" name="testPath">
-       <property name="geometry">
-        <rect>
-         <x>220</x>
-         <y>440</y>
-         <width>381</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="testLinenum">
        <property name="geometry">
         <rect>
          <x>240</x>
-         <y>510</y>
+         <y>420</y>
          <width>351</width>
          <height>16</height>
         </rect>
@@ -614,19 +628,6 @@
        </property>
        <property name="text">
         <string>Cancel</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="testpath">
-       <property name="geometry">
-        <rect>
-         <x>250</x>
-         <y>570</y>
-         <width>64</width>
-         <height>15</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
        </property>
       </widget>
      </widget>

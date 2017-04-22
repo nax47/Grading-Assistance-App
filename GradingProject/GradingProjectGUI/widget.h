@@ -81,6 +81,7 @@ private:
     string comment;
     string currPathName;
     string currFileName;
+    int lineNUM;
 
     vector <QGroupBox *> rubricItemsDisplayed;
 };
