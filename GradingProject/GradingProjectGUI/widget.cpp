@@ -220,6 +220,41 @@ void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
     GUIEngine.set_currStudent(arg1.toStdString());
 }
 
+void Widget::on_doneButton_clicked()
+{
+    Student *currStudent = GUIEngine.get_currStu();
+    Section *currSection = GUIEngine.get_currSec();
+    Lab *currLab = GUIEngine.get_currL();
+
+    studentName = currStudent->get_Name();
+    fileName = "../" + studentName +".pdf";
+    qFileName = QString::fromStdString(fileName);
+
+    studentName = "<h1>" + studentName + "</h1>";
+    section = currSection->get_Id();
+    sectionString = to_string(section);
+    sectionString = "<h2> Section: " + sectionString + "</h2>";
+
+    lab = currLab->get_labNum();
+    labString = to_string(lab);
+    labString = "<h3> Lab Number: " + labString + "</h3>";
+
+    LabAssignment *currLabAssignment = currStudent->get_Lab(lab - 1);
+    score = currLabAssignment->get_Grade();
+    scoreString = to_string(score);
+    scoreString = "<h4> Final Grade: " + scoreString + "</h4>";
+
+    html = studentName + sectionString + labString + scoreString;
+    qhtml = QString::fromStdString(html);
+
+    QTextDocument doc;
+    doc.setHtml(qhtml);
+    QPrinter printer;
+    printer.setOutputFileName(qFileName);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    doc.print(&printer);
+    printer.newPage();
+}
 
 void Widget::on_commentCancel_clicked()
 {
