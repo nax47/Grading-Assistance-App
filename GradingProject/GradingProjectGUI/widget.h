@@ -71,6 +71,9 @@ private slots:
 
     void on_commentOK_clicked();
 
+
+    void on_applyButton_clicked();
+
 private:
     Ui::Widget *ui;
 
@@ -104,6 +107,8 @@ private:
 
     QScrollBar * codeBar;
     QScrollBar * numBar;
+    QScrollBar * RIBar;
+    QWidget * scrollWidget;
     int currSliderVal;
 
     string subj;
@@ -112,8 +117,14 @@ private:
     string rubricComment;
     string rubric;
 
-    vector<RubricItem*> rubricItems;
+    string comm;
+    int commLine;
+    string commLineString;
+    string commFile;
+    string commTotal;
 
+    vector<RubricItem*> rubricItems;
+    vector<Comment*> comments;
     vector <QGroupBox *> rubricItemsDisplayed;
 };
 
