@@ -16,6 +16,7 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QCheckBox>
+#include <QScrollBar>
 #include <vector>
 #include <QtPrintSupport/QPrinter>
 #include <iostream>
@@ -70,8 +71,6 @@ private slots:
 
     void on_commentOK_clicked();
 
-    void on_codeDisp_cursorPositionChanged();
-
 private:
     Ui::Widget *ui;
 
@@ -98,10 +97,14 @@ private:
     string currPathName;
     string currFileName;
     int lineNUM;
-
+    int totalLines;
     vector<string> fileVec;
     string currFile;
     string countStr;
+
+    QScrollBar * codeBar;
+    QScrollBar * numBar;
+    int currSliderVal;
 
     vector <QGroupBox *> rubricItemsDisplayed;
 };

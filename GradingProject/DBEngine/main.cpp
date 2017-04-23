@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    DBEngine * engine = new DBEngine(new DBTool("GradingToolDB"));
+    DBEngine * engine = new DBEngine(new DBTool("ToolDB"));
     std::vector<int> testIds = {7, 4, 5,9};
     engine->store_section(1,testIds, testIds);
     engine->store_student(1, "Nakul Talwar", testIds);

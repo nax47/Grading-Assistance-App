@@ -8,6 +8,16 @@ Widget::Widget(QWidget *parent) :
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(2);
 
+    currSliderVal = 0;
+    codeBar = ui->codeDisp->verticalScrollBar();
+    numBar = ui->linNumBox->verticalScrollBar();
+
+    connect(codeBar, &QAbstractSlider::valueChanged, [=](int aSliderPosition){if(aSliderPosition != currSliderVal)
+    {
+            numBar->setValue(aSliderPosition);
+            currSliderVal = aSliderPosition;
+        }
+    });
 }
 
 Widget::~Widget()
@@ -25,15 +35,11 @@ void Widget::on_itemButton_clicked()
 
 void Widget::on_commentButton_clicked()
 {
-//    QString path = QString::fromStdString(currFileName);
-//    ui->testPath->setText(path);
 
-//    QString p = QString::fromStdString(currPathName);
-//    QString test = QString::number(lineNUM);
-//    ui->testLinenum->setText(test);
-//    ui->testname->setText(p);
-
-//    ui->stackedWidget->setCurrentIndex(3);
+    ui->newCommentText->clear();
+    ui->lineNumVal->clear();
+    ui->subjectNewCom->clear();
+    ui->stackedWidget->setCurrentIndex(3);
 
 }
 
@@ -44,6 +50,7 @@ void Widget::on_searchButton_clicked()
 
 void Widget::on_openCodeButton_clicked()
 {
+    totalLines = 0;
     QFileDialog dialog;
     QStringList fileNames;
 
@@ -65,7 +72,20 @@ void Widget::on_openCodeButton_clicked()
     }
 
     QTextStream in(&file);
-    ui->codeDisp->setText(in.readAll());
+    QString fileData = in.readAll();
+    ui->codeDisp->setText(fileData);
+
+    totalLines = fileData.count('\n');
+    file.close();
+    QString ln = "\n";
+    QString nums;
+    for(int i = 0; i < totalLines*2; i++)
+    {
+        QString tmp = QString::number(i);
+        nums = nums.append(tmp);
+        nums = nums.append(ln);
+    }
+    ui->linNumBox->setText(nums);
 }
 
 void Widget::on_cancelButton_clicked()
@@ -152,6 +172,7 @@ void Widget::on_studentAdd_clicked()
     QString tmp = ui->newStudentName->text();
     GUIEngine.add_Student(tmp.toStdString());
     ui->studentDrop->addItem(tmp);
+    ui->newStudentName->clear();
 }
 
 void Widget::on_labAdd_clicked()
@@ -160,6 +181,7 @@ void Widget::on_labAdd_clicked()
     int temp = tmp.toInt();
     GUIEngine.add_Lab(temp);
     ui->labDrop->addItem(tmp);
+    ui->newLabNum->clear();
 }
 
 void Widget::on_sectionAdd_clicked()
@@ -167,17 +189,18 @@ void Widget::on_sectionAdd_clicked()
     QString tmp = ui->newIDVal->text();
     GUIEngine.add_Section(tmp.toInt());
     ui->sectionDrop->addItem(tmp);
+    ui->newIDVal->clear();
 }
 
 void Widget::on_StartGrading_clicked()
 {
-//    if(GUIEngine.get_currStu() == NULL) {
-//        QMessageBox::information(this, "Warning", "Please Select Student.");
-//    } else if(GUIEngine.get_currL() == NULL) {
-//        QMessageBox::information(this, "Warning", "Please Select Lab");
-//    } else if(GUIEngine.get_currSec() == NULL) {
-//        QMessageBox::information(this, "Warning", "Please Select Section.");
-//    } else {
+    if(GUIEngine.get_currStu() == nullptr) {
+        QMessageBox::information(this, "Warning", "Please Select Student.");
+    } else if(GUIEngine.get_currL() == nullptr) {
+        QMessageBox::information(this, "Warning", "Please Select Lab");
+    } else if(GUIEngine.get_currSec() == nullptr) {
+        QMessageBox::information(this, "Warning", "Please Select Section.");
+    } else {
         GUIEngine.start_Grading();
         string studentName = GUIEngine.get_currStu()->get_Name();
         QString name = QString::fromStdString(studentName);
@@ -194,7 +217,7 @@ void Widget::on_StartGrading_clicked()
         ui->studentgrade->setText(final);
         ui->stackedWidget->setCurrentIndex(0);
 
-    //}
+    }
 }
 
 void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
@@ -282,12 +305,9 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
+    string in = ui->newCommentText
+    Comment * com = new Comment()
 
-}
-
-void Widget::on_codeDisp_cursorPositionChanged()
-{
-    lineNUM = ui->codeDisp->cursor().pos().ry();
 }
 
 

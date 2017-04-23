@@ -65,11 +65,11 @@ public:
 
 private:
 
-    Section * currSection;
-    Lab * currLab;
-    Student * currStudent;
-    LabAssignment * currLabAssignment;
-    Template * currTemplate;
+    Section * currSection = nullptr;
+    Lab * currLab = nullptr;
+    Student * currStudent = nullptr;
+    LabAssignment * currLabAssignment = nullptr;
+    Template * currTemplate = nullptr;
 
 
     vector <Section *> sectionList;
