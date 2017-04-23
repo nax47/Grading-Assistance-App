@@ -15,6 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+Modified by Nakul Talwar in April 2017
+
 *********************************************************************/
 
 #include "dbtable.h"
@@ -32,7 +34,8 @@ DBTable::DBTable() {
  // Constructor taking a pointer to the DB tool and name
  // of the table that will be represented by this class.
 DBTable::DBTable(DBTool      *db,
-                 std::string  name    ) {
+                 std::string  name,
+                 std::string createString) {
 
     // Store table name and reference to db.
     curr_db     = db;
@@ -41,11 +44,22 @@ DBTable::DBTable(DBTool      *db,
     // Register the different sql calls for the
     // parent class.
     store_exist_sql();
-    store_create_sql();
     store_drop_sql();
     store_size_sql();
 
+    sql_create = createString;
     sql_add_row = "";
+    sql_select_all = "";
+
+    //Reconstitute data from existing table
+    //reconstitute();
+
+    //Delete existing database table
+    drop();
+
+    // must build table sepparately so new
+    // sql can be properly registered
+    build_table();
 }
 
  // This should be called by the child constructor but
@@ -91,26 +105,6 @@ void DBTable::store_exist_sql() {
     sql_exist += "    type = \"table\" ";
     sql_exist += "and name = \"" + table_name + "\"";
     sql_exist += ";";
-
-}
-
- // SQL used to create the table in the database.  The
- // code provided here is just an example and should
- // be specified in child database.
-void DBTable::store_create_sql() {
-
-    // std::cerr << "store_create_sql DBTable\n"
-    // 	    << &sql_create << "\n";
-
-    sql_create =  "CREATE TABLE ";
-    sql_create += table_name;
-    sql_create += " ( ";
-    sql_create += "  id INT PRIMARY KEY NOT NULL, ";
-    sql_create += "  dummy1 TEXT NOT NULL,";
-    sql_create += "  dummy2 INT  NOT NULL, ";
-    sql_create += "  dummy3 CHAR(50),";
-    sql_create += "  dummy4 REAL";
-    sql_create += " );";
 
 }
 
@@ -430,6 +424,140 @@ int cb_size(void  *data,
     return 0;
 }
 
+// Get table name
 std::string DBTable::get_name() {
     return table_name;
+}
+
+// Add specific row to table
+// The SQL statement specific to this table and row will be
+// passed in as a string
+bool DBTable::add_row(std::string add_row){
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_add_row = add_row;
+
+    //std::cout << sql_add_row << std::endl;
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_add_row.c_str(),
+                           cb_add_row,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+// The callback after a row is added to the table.   SQLite
+// will pass the results of the call and this function
+// will manipulate and make changes to the DBTable object.
+int cb_add_row(void  *data,
+                int    argc,
+                char **argv,
+                char **azColName)
+{
+
+    std::cerr << "cb_add_row being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    DBTable *obj = (DBTable *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? argv[i] : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
+}
+
+// Select all rows from the table.
+// Data from the tables can be obtained one row
+// at a time from the callback cb_select_all
+bool DBTable::select_all() {
+
+    int   retCode = 0;
+    char *zErrMsg = 0;
+
+    sql_select_all  = "SELECT * FROM ";
+    sql_select_all += table_name;
+    sql_select_all += ";";
+
+    retCode = sqlite3_exec(curr_db->db_ref(),
+                           sql_select_all.c_str(),
+                           cb_select_all,
+                           this,
+                           &zErrMsg          );
+
+    if( retCode != SQLITE_OK ){
+
+        std::cerr << table_name
+                  << " template ::"
+                  << std::endl
+                  << "SQL error: "
+                  << zErrMsg;
+
+        sqlite3_free(zErrMsg);
+    }
+
+    return retCode;
+}
+
+// The callback after all the rows in the table are selected.
+// SQLite will pass the results of the call and this function
+// will manipulate and make changes to the DBTable object.
+int cb_select_all(void  *data,
+                   int    argc,
+                   char **argv,
+                   char **azColName)
+{
+
+    std::cerr << "cb_select_all being called\n";
+
+    if(argc < 1) {
+        std::cerr << "No data presented to callback "
+                  << "argc = " << argc
+                  << std::endl;
+    }
+
+    int i;
+
+    DBTable *obj = (DBTable *) data;
+
+    std::cout << "------------------------------\n";
+    std::cout << obj->get_name()
+              << std::endl;
+
+    for(i = 0; i < argc; i++){
+        std::cout << azColName[i]
+                     << " = "
+                     <<  (argv[i] ? std::string(argv[i]) : "NULL")
+                      << std::endl;
+    }
+
+    return 0;
 }

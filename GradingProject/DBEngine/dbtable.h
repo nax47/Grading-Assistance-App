@@ -15,6 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+Modified by Nakul Talwar in April 2017
+
 *********************************************************************/
 
 #ifndef DBTABLE_H
@@ -72,7 +74,12 @@ protected:
 
     // default sql for determining number of rows in the table
     std::string sql_size;
+
+    // sql to store a row with specific columns
     std::string sql_add_row;
+
+    // default sql for selecting all rows from a table
+    std::string sql_select_all;
 
     // internal flag for storing the result of the last exists request
     bool table_exists;
@@ -84,7 +91,7 @@ public:
 
     // constructors
     DBTable();
-    DBTable(DBTool *db, std::string name);
+    DBTable(DBTool *db, std::string name, std::string createString);
 
     // destructor
     virtual ~DBTable();
@@ -99,7 +106,6 @@ public:
     virtual void store_template_sql();
 
     virtual void store_exist_sql();
-    virtual void store_create_sql();
     virtual void store_drop_sql();
     virtual void store_size_sql();
 
@@ -110,6 +116,8 @@ public:
     bool create(); // used
     bool drop();
     int  size();
+    bool add_row(std::string add_row);
+    bool select_all();
 
     std::string get_name();
 
@@ -122,12 +130,14 @@ public:
 // Functions for providing callback functionality to the
 // sqlite database repository.  See exists method and callback
 // for details about parameters.
-int cb_template(void *data, int argc, char **argv, char **azColName);
-int cb_exist   (void *data, int argc, char **argv, char **azColName);
-int cb_create  (void *data, int argc, char **argv, char **azColName);
-int cb_drop    (void *data, int argc, char **argv, char **azColName);
-int cb_load    (void *data, int argc, char **argv, char **azColName);
-int cb_store   (void *data, int argc, char **argv, char **azColName);
-int cb_size    (void *data, int argc, char **argv, char **azColName);
+int cb_template   (void *data, int argc, char **argv, char **azColName);
+int cb_exist      (void *data, int argc, char **argv, char **azColName);
+int cb_create     (void *data, int argc, char **argv, char **azColName);
+int cb_drop       (void *data, int argc, char **argv, char **azColName);
+int cb_load       (void *data, int argc, char **argv, char **azColName);
+int cb_store      (void *data, int argc, char **argv, char **azColName);
+int cb_size       (void *data, int argc, char **argv, char **azColName);
+int cb_add_row    (void *data, int argc, char **argv, char **azColName);
+int cb_select_all (void *data, int argc, char **argv, char **azColName);
 
 #endif // DBTABLE_H
