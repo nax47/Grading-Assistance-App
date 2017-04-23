@@ -141,7 +141,8 @@ void Widget::on_okButton_clicked()
 
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
-        rubricItemBox->setFixedSize(220,150);
+        rubricItemBox->setFixedWidth(220);
+        rubricItemBox->setMinimumHeight(150);
         rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
 
         QVBoxLayout * boxLayout = new QVBoxLayout;
@@ -169,15 +170,18 @@ void Widget::on_okButton_clicked()
         pointsBoxLayout->addWidget(outof);
         boxLayout->addLayout(pointsBoxLayout);
 
-        QLabel * commentsLabel = new QLabel(commentQ);
-        commentsLabel->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
-        boxLayout->addWidget(commentsLabel);
-
         QCheckBox * applyBox = new QCheckBox();
 
         applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
         applyBox->setText("Select");
         boxLayout->addWidget(applyBox);
+
+        QLabel * commentsLabel = new QLabel(commentQ);
+        commentsLabel->setMinimumHeight(20);
+        commentsLabel->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+        boxLayout->addWidget(commentsLabel);
+
+
 
         rubricItemBox->setLayout(boxLayout);
         rubricItemsDisplayed.push_back(rubricItemBox);
@@ -339,7 +343,38 @@ void Widget::on_commentOK_clicked()
     int in2 = ui->lNumNewCom->text().toInt();
     Comment * com = new Comment(in, in2, currFile);
     GUIEngine.get_currLA()->get_RI(ui->RISnewCom->text().toStdString())->add_Comment(com);
+    QString sub = ui->RISnewCom->text();
+    int gbNum = -1;
+    for(int i=0; i<rubricItemsDisplayed.size(); i++)
+    {
+        QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
+        if(sub == tmpPtr->title())
+        {
+            gbNum = i;
+        }
+    }
+    if(gbNum == -1)
+    {
+        QMessageBox::information(this, "Warning", "Please enter a valid rubric item subject");
+    }
+    else
+    {
+        QLabel * newComment = new QLabel(ui->newComText->text());
+        newComment->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+        newComment->setMinimumHeight(20);
+        QGroupBox * tmpPtr = rubricItemsDisplayed.at(gbNum);
+        tmpPtr->layout()->addWidget(newComment);
+        tmpPtr->resize(220, tmpPtr->height() + 20);
 
+        QVBoxLayout * scrollLayout = new QVBoxLayout;
+        for(int i=0; i<rubricItemsDisplayed.size(); i++){
+            scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+        }
+        delete scrollWidget->layout();
+        scrollWidget->setLayout(scrollLayout);
+        ui->rubricScroll->setWidget(scrollWidget);
+    }
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void Widget::on_applyButton_clicked()
