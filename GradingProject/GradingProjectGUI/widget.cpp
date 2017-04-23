@@ -114,12 +114,12 @@ void Widget::on_okButton_clicked()
         pointsBoxLayout->addWidget(pointsVal);
 
         QLabel * div = new QLabel(tr("Out of"));
-        div->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
+        div->setStyleSheet("QLabel { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
         pointsBoxLayout->addWidget(div);
 
         QSpinBox * outof = new QSpinBox();
         outof->setValue(out.toInt());
-        div->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
+        outof->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
         pointsBoxLayout->addWidget(outof);
         boxLayout->addLayout(pointsBoxLayout);
 
@@ -192,7 +192,6 @@ void Widget::on_StartGrading_clicked()
         grade = grade.append(tem);
         QString final = name.append(grade);
         ui->studentgrade->setText(final);
-        ui->studentgrade->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
         ui->stackedWidget->setCurrentIndex(0);
 
     //}
