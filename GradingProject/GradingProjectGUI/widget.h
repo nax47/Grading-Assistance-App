@@ -99,6 +99,10 @@ private:
     string currFileName;
     int lineNUM;
 
+    vector<string> fileVec;
+    string currFile;
+    string countStr;
+
     vector <QGroupBox *> rubricItemsDisplayed;
 };
 

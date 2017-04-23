@@ -25,15 +25,15 @@ void Widget::on_itemButton_clicked()
 
 void Widget::on_commentButton_clicked()
 {
-    QString path = QString::fromStdString(currFileName);
-    ui->testPath->setText(path);
+//    QString path = QString::fromStdString(currFileName);
+//    ui->testPath->setText(path);
 
-    QString p = QString::fromStdString(currPathName);
-    QString test = QString::number(lineNUM);
-    ui->testLinenum->setText(test);
-    ui->testname->setText(p);
+//    QString p = QString::fromStdString(currPathName);
+//    QString test = QString::number(lineNUM);
+//    ui->testLinenum->setText(test);
+//    ui->testname->setText(p);
 
-    ui->stackedWidget->setCurrentIndex(3);
+//    ui->stackedWidget->setCurrentIndex(3);
 
 }
 
@@ -57,6 +57,7 @@ void Widget::on_openCodeButton_clicked()
     int pos = FNamestr.find_last_of('/');
     currFileName = FNamestr.substr(pos + 1, FNamestr.length() - 1);
     currPathName = FNamestr.substr(0,pos + 1);
+    fileVec.push_back(currFileName);
 
     QFile file(fileNames.at(0));
     if(!file.open(QIODevice::ReadOnly)) {
@@ -145,6 +146,7 @@ void Widget::on_okButton_clicked()
     }
 }
 
+
 void Widget::on_studentAdd_clicked()
 {
     QString tmp = ui->newStudentName->text();
@@ -169,22 +171,31 @@ void Widget::on_sectionAdd_clicked()
 
 void Widget::on_StartGrading_clicked()
 {
-    GUIEngine.start_Grading();
-    string studentName = GUIEngine.get_currStu()->get_Name();
-    QString name = QString::fromStdString(studentName);
-    int t = GUIEngine.get_currL()->get_labNum();
-    QString lab = " Lab #: ";
-    QString labnum = QString::number(t);
-    lab = lab.append(labnum);
-    name = name.append(lab);
-    int g = GUIEngine.get_currLA()->get_Grade();
-    QString grade = " Grade: ";
-    QString tem = QString::number(g);
-    grade = grade.append(tem);
-    QString final = name.append(grade);
-    ui->studentgrade->setText(final);
-    ui->studentgrade->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
-    ui->stackedWidget->setCurrentIndex(0);
+//    if(GUIEngine.get_currStu() == NULL) {
+//        QMessageBox::information(this, "Warning", "Please Select Student.");
+//    } else if(GUIEngine.get_currL() == NULL) {
+//        QMessageBox::information(this, "Warning", "Please Select Lab");
+//    } else if(GUIEngine.get_currSec() == NULL) {
+//        QMessageBox::information(this, "Warning", "Please Select Section.");
+//    } else {
+        GUIEngine.start_Grading();
+        string studentName = GUIEngine.get_currStu()->get_Name();
+        QString name = QString::fromStdString(studentName);
+        int t = GUIEngine.get_currL()->get_labNum();
+        QString lab = " Lab #: ";
+        QString labnum = QString::number(t);
+        lab = lab.append(labnum);
+        name = name.append(lab);
+        int g = GUIEngine.get_currLA()->get_Grade();
+        QString grade = " Grade: ";
+        QString tem = QString::number(g);
+        grade = grade.append(tem);
+        QString final = name.append(grade);
+        ui->studentgrade->setText(final);
+        ui->studentgrade->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
+        ui->stackedWidget->setCurrentIndex(0);
+
+    //}
 }
 
 void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
@@ -199,6 +210,7 @@ void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
         QString t = QString::number(temp.at(i));
         ui->labDrop->addItem(t);
     }
+    string five = "5";
     vector <string> t2 = GUIEngine.student_Drop_SetUp();
     for(int i = 0; i < t2.size(); i++)
     {
@@ -227,7 +239,7 @@ void Widget::on_doneButton_clicked()
     Lab *currLab = GUIEngine.get_currL();
 
     studentName = currStudent->get_Name();
-    fileName = "../" + studentName +".pdf";
+    fileName = currPathName + studentName +".pdf";
     qFileName = QString::fromStdString(fileName);
 
     studentName = "<h1>" + studentName + "</h1>";
@@ -237,14 +249,22 @@ void Widget::on_doneButton_clicked()
 
     lab = currLab->get_labNum();
     labString = to_string(lab);
-    labString = "<h3> Lab Number: " + labString + "</h3>";
+    labString = "<h2> Lab Number: " + labString + "</h2>";
 
     LabAssignment *currLabAssignment = currStudent->get_Lab(lab - 1);
     score = currLabAssignment->get_Grade();
     scoreString = to_string(score);
-    scoreString = "<h4> Final Grade: " + scoreString + "</h4>";
+    scoreString = "<h3> Final Grade: " + scoreString + "</h3>";
 
     html = studentName + sectionString + labString + scoreString;
+
+    for(int i = 0; i < fileVec.size(); i++) {
+        countStr = to_string(i);
+        currFile = fileVec.at(i);
+        currFile = "<h4> File Name : " + currFile + "</h4>";
+        html = html + currFile;
+    }
+
     qhtml = QString::fromStdString(html);
 
     QTextDocument doc;
@@ -270,3 +290,5 @@ void Widget::on_codeDisp_cursorPositionChanged()
 {
     lineNUM = ui->codeDisp->cursor().pos().ry();
 }
+
+
