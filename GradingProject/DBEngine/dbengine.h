@@ -7,6 +7,7 @@
 #include <map>
 
 class DBTool;
+class DBTable;
 
 class DBEngine{
 public:
@@ -39,6 +40,11 @@ public:
 
     // Method to store a new row in the comment table
     void store_comment(int id, std::string comment, int lineNum, std::string filename, int rubricItemId);
+
+
+
+
+    void get_data();
 
 private:
     // Reference to database tool that will store the tables

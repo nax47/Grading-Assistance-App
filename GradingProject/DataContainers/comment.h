@@ -29,12 +29,15 @@ public:
     void set_fileName(string in);
     string get_fileName();
 
+    void set_Id(int id);
+    int get_Id();
+
 private:
     string comment;
     int lineNum;
     string fileName;
     RubricItem * link;
-
+    int ID;
 
 };
 

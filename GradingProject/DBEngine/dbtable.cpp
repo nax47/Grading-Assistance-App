@@ -51,12 +51,6 @@ DBTable::DBTable(DBTool      *db,
     sql_add_row = "";
     sql_select_all = "";
 
-    //Reconstitute data from existing table
-    //reconstitute();
-
-    //Delete existing database table
-    drop();
-
     // must build table sepparately so new
     // sql can be properly registered
     build_table();

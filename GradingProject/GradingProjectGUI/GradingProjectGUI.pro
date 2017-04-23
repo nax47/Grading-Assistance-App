@@ -31,6 +31,9 @@ SOURCES += ../DataContainers/engine.cpp
 HEADERS += ../DBEngine/dbtool.h
 SOURCES += ../DBEngine/dbtool.cpp
 
+HEADERS += ../DBEngine/dbtable.h
+SOURCES += ../DBEngine/dbtable.cpp
+
 HEADERS += ../DBEngine/dbengine.h
 SOURCES += ../DBEngine/dbengine.cpp
 

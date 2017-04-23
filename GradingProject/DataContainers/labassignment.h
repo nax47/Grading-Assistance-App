@@ -35,12 +35,16 @@ public:
     Lab * get_Lab();
     void set_Lab(Lab * lab);
 
+    void set_Id(int id);
+    int get_Id();
+
 private:
 
     Student * student;
     vector <RubricItem *> appliedItems;
     int grade;
     Lab * linkedLab;
+    int ID;
 };
 
 #endif // LABASSIGNMENT_H

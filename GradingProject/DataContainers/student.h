@@ -25,10 +25,14 @@ public:
     void add_Lab(LabAssignment * newLab);
     LabAssignment * get_Lab(int labNum);
 
+    void set_Id(int id);
+    int get_Id();
+
 private:
 
     string studentName;
     vector <LabAssignment *> gradedLabs;
+    int ID;
 
 };
 

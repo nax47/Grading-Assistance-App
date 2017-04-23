@@ -30,11 +30,15 @@ public:
     void set_Applied(bool in);
     bool get_Applied();
 
+    void set_Id(int id);
+    int get_Id();
+
 private:
     string subject;
     int points;
     bool applied;
     vector <Comment *> comments;
+    int ID;
 
 };
 

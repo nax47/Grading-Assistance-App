@@ -44,3 +44,13 @@ int Lab::get_labNum()
 {
     return labNum;
 }
+
+void Lab::set_Id(int id)
+{
+    ID = id;
+}
+
+int Lab::get_Id()
+{
+    return ID;
+}

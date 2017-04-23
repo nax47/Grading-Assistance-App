@@ -20,3 +20,13 @@ RubricItem * Template::get_RI(int num)
     return items.at(num);
 
 }
+
+void Template::set_Id(int id)
+{
+    ID = id;
+}
+
+int Template::get_Id()
+{
+    return ID;
+}

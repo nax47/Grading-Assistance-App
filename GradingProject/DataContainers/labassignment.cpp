@@ -87,6 +87,15 @@ void LabAssignment::set_Lab(Lab *lab)
     linkedLab = lab;
 }
 
+void LabAssignment::set_Id(int id)
+{
+    ID = id;
+}
+
+int LabAssignment::get_Id()
+{
+    return ID;
+}
 
 
 

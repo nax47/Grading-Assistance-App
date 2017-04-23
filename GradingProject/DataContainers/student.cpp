@@ -34,3 +34,13 @@ LabAssignment * Student::get_Lab(int labNum)
 {
     return gradedLabs.at(labNum);
 }
+
+void Student::set_Id(int id)
+{
+    ID = id;
+}
+
+int Student::get_Id()
+{
+    return ID;
+}

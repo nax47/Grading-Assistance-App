@@ -60,3 +60,13 @@ bool RubricItem::get_Applied()
 {
     return applied;
 }
+
+void RubricItem::set_Id(int id)
+{
+    ID = id;
+}
+
+int RubricItem::get_Id()
+{
+    return ID;
+}

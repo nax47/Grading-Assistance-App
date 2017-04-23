@@ -31,12 +31,15 @@ public:
     void set_labNum(int num);
     int get_labNum();
 
+    void set_Id(int id);
+    int get_Id();
+
 private:
 
     Template * tmplate;
     int labNum;
     Section * section;
-
+    int ID;
 
 };
 

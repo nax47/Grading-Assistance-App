@@ -366,3 +366,18 @@ void DBEngine::create_additional_table(std::vector<int> ids, std::string tableNa
 
     additionalTables[tableName] = table;
 }
+
+void DBEngine::get_data(){
+    sectionTable->select_all();
+    studentTable->select_all();
+    labTable->select_all();
+    templateTable->select_all();
+    labAssignmentTable->select_all();
+    rubricItemTable->select_all();
+    commentTable->select_all();
+    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
+    while (it!=additionalTables.end()){
+        it->second->select_all();
+        it++;
+    }
+}

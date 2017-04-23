@@ -62,3 +62,13 @@ string Comment::get_fileName()
 {
     return fileName;
 }
+
+void Comment::set_Id(int id)
+{
+    ID = id;
+}
+
+int Comment::get_Id()
+{
+    return ID;
+}
