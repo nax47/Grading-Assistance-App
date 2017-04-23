@@ -22,6 +22,7 @@ public:
 
     void set_Id(int id);
     int get_Id();
+    vector<RubricItem*> getItems();
 
 private:
     vector <RubricItem *> items;

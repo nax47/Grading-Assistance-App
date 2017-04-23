@@ -30,3 +30,7 @@ int Template::get_Id()
 {
     return ID;
 }
+
+vector<RubricItem *> Template::getItems() {
+    return items;
+}

@@ -106,6 +106,14 @@ private:
     QScrollBar * numBar;
     int currSliderVal;
 
+    string subj;
+    string rubricPoints;
+    int rubricPoint;
+    string rubricComment;
+    string rubric;
+
+    vector<RubricItem*> rubricItems;
+
     vector <QGroupBox *> rubricItemsDisplayed;
 };
 

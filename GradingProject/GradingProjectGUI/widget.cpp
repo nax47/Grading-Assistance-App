@@ -114,6 +114,7 @@ void Widget::on_okButton_clicked()
     } else {
         RubricItem *newItem = new RubricItem(subject, points);
         newItem->add_Comment(new Comment(comment));
+        rubricItems.push_back(newItem);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedSize(220,150);
@@ -287,6 +288,24 @@ void Widget::on_doneButton_clicked()
         html = html + currFile;
     }
 
+    for(int i = 0; i < rubricItems.size() - 1; i++) {
+        RubricItem *currItem = rubricItems.at(i);
+        subj = currItem->get_Subject();
+        subj = "<h2>" + subj + "</h2>";
+
+        rubricPoint = currItem->get_Points();
+        rubricPoints = to_string(rubricPoint);
+        rubricPoints = "<h3> Points: " + rubricPoints + "</h3>";
+
+        comment = currItem->get_Comment(i)->get_Comment();
+        comment = "<h3>" + comment + "</h3>";
+
+        rubric = rubric + subj + rubricPoints + comment;
+        cout << rubric;
+        cout << "test";
+    }
+
+    html = html + rubric;
     qhtml = QString::fromStdString(html);
 
     QTextDocument doc;
@@ -305,8 +324,9 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
-    string in = ui->newCommentText
-    Comment * com = new Comment()
+    QString QComment = ui->newCommentText;
+    Comment * com = new Comment();
+    ui->stackedWidget->setCurrentIndex(0);
 
 }
 
