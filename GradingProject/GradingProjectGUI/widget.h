@@ -71,6 +71,9 @@ private slots:
 
     void on_commentOK_clicked();
 
+
+    void on_applyButton_clicked();
+
 private:
     Ui::Widget *ui;
 
@@ -104,6 +107,8 @@ private:
 
     QScrollBar * codeBar;
     QScrollBar * numBar;
+    QScrollBar * RIBar;
+    QWidget * scrollWidget;
     int currSliderVal;
 
     vector <QGroupBox *> rubricItemsDisplayed;

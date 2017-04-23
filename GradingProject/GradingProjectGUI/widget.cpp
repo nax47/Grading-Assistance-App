@@ -7,7 +7,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(2);
-
+    scrollWidget = new QWidget();
     currSliderVal = 0;
     codeBar = ui->codeDisp->verticalScrollBar();
     numBar = ui->linNumBox->verticalScrollBar();
@@ -36,15 +36,40 @@ void Widget::on_itemButton_clicked()
 void Widget::on_commentButton_clicked()
 {
 
-    ui->newCommentText->clear();
-    ui->lineNumVal->clear();
-    ui->subjectNewCom->clear();
+    ui->newComText->clear();
+    ui->lNumNewCom->clear();
+    ui->RISnewCom->clear();
     ui->stackedWidget->setCurrentIndex(3);
 
 }
 
 void Widget::on_searchButton_clicked()
 {
+    QString search = ui->searchBar->text();
+    int gbNum = -1;
+    for(int i=0; i<rubricItemsDisplayed.size(); i++)
+    {
+        QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
+        if(search == tmpPtr->title())
+        {
+            gbNum = i;
+        }
+    }
+    if(gbNum != -1)
+    {
+        QVBoxLayout * scrollLayout = new QVBoxLayout;
+        scrollLayout->addWidget(rubricItemsDisplayed.at(gbNum));
+        for(int i=0; i<rubricItemsDisplayed.size(); i++)
+        {
+            if(i != gbNum)
+            {
+                scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+            }
+        }
+        delete scrollWidget->layout();
+        scrollWidget->setLayout(scrollLayout);
+        ui->rubricScroll->setWidget(scrollWidget);
+    }
 
 }
 
@@ -112,8 +137,8 @@ void Widget::on_okButton_clicked()
     } else if(subject.empty() || points == NULL || comment.empty()) {
         QMessageBox::information(this, "Warning", "Please populate all fields.");
     } else {
-        RubricItem *newItem = new RubricItem(subject, points);
-        newItem->add_Comment(new Comment(comment));
+        GUIEngine.add_Rubric_Item(subject, points, comment);
+
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedSize(220,150);
@@ -131,6 +156,7 @@ void Widget::on_okButton_clicked()
         QSpinBox * pointsVal = new QSpinBox();
         pointsVal->setValue(points);
         pointsVal->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
+        pointsVal->setMaximum(out.toInt());
         pointsBoxLayout->addWidget(pointsVal);
 
         QLabel * div = new QLabel(tr("Out of"));
@@ -148,20 +174,24 @@ void Widget::on_okButton_clicked()
         boxLayout->addWidget(commentsLabel);
 
         QCheckBox * applyBox = new QCheckBox();
+
         applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
-        applyBox->setText("Apply");
+        applyBox->setText("Select");
         boxLayout->addWidget(applyBox);
 
         rubricItemBox->setLayout(boxLayout);
         rubricItemsDisplayed.push_back(rubricItemBox);
 
+
+
+
         QVBoxLayout * scrollLayout = new QVBoxLayout;
         for(int i=0; i<rubricItemsDisplayed.size(); i++){
             scrollLayout->addWidget(rubricItemsDisplayed.at(i));
         }
-        delete ui->rubricScroll->layout();
-        ui->rubricScroll->setLayout(scrollLayout);
-
+        delete scrollWidget->layout();
+        scrollWidget->setLayout(scrollLayout);
+        ui->rubricScroll->setWidget(scrollWidget);
         ui->stackedWidget->setCurrentIndex(0);
     }
 }
@@ -305,9 +335,14 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
-    string in = ui->newCommentText
-    Comment * com = new Comment()
+    string in = ui->newComText->text().toStdString();
+    int in2 = ui->lNumNewCom->text().toInt();
+    Comment * com = new Comment(in, in2, currFile);
+    GUIEngine.get_currLA()->get_RI(ui->RISnewCom->text().toStdString())->add_Comment(com);
 
 }
 
+void Widget::on_applyButton_clicked()
+{
 
+}
