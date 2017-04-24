@@ -33,12 +33,23 @@ public:
     int get_Lab_Size();
     Lab * get_Lab(int num);
 
+    vector <int> get_Student_Ids();
+
+    vector <int> get_Lab_Ids();
+
+    vector <Student *> get_students();
+
+    vector <Lab *> get_labs();
+
 
 private:
 
     vector <Student *> studentList;
     vector <Lab *> labList;
     int ID;
+    //static int idCount;
 };
+
+//int Section::idCount = 0;
 
 #endif // SECTION_H

@@ -38,7 +38,9 @@ private:
     string fileName;
     RubricItem * link;
     int ID;
-
+    //static int idCount;
 };
+
+//int Comment::idCount = 0;
 
 #endif // COMMENT_H

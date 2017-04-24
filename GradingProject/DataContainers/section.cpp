@@ -65,3 +65,32 @@ Lab * Section::get_Lab(int num)
     return labList.at(num);
 }
 
+vector <int> Section::get_Student_Ids(){
+
+    vector<int> ids;
+
+    for(int i=0; i<studentList.size(); i++){
+        ids.push_back(studentList.at(i)->get_Id());
+    }
+
+    return ids;
+}
+
+vector <int> Section::get_Lab_Ids(){
+
+    vector<int> ids;
+
+    for(int i=0; i<labList.size(); i++){
+        ids.push_back(labList.at(i)->get_Id());
+    }
+
+    return ids;
+}
+
+vector <Student *> Section::get_students(){
+    return studentList;
+}
+
+vector <Lab *> Section::get_labs(){
+    return labList;
+}

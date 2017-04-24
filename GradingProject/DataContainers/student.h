@@ -28,12 +28,18 @@ public:
     void set_Id(int id);
     int get_Id();
 
+    vector <int> get_LabAssignment_Ids();
+
+    vector <LabAssignment *> get_labAssignments();
+
 private:
 
     string studentName;
     vector <LabAssignment *> gradedLabs;
     int ID;
-
+    //static int idCountStudent;
 };
+
+//int Student::idCount = 0;
 
 #endif // STUDENT_H

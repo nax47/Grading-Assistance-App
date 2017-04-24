@@ -38,6 +38,10 @@ public:
     void set_Id(int id);
     int get_Id();
 
+    vector <int> get_RubricItem_Ids();
+
+    vector <RubricItem *> get_rubricItems();
+
 private:
 
     Student * student;
@@ -45,6 +49,9 @@ private:
     int grade;
     Lab * linkedLab;
     int ID;
+    //static int idCount;
 };
+
+//int LabAssignment::idCount = 0;
 
 #endif // LABASSIGNMENT_H

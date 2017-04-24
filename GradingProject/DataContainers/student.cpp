@@ -44,3 +44,18 @@ int Student::get_Id()
 {
     return ID;
 }
+
+vector <int> Student::get_LabAssignment_Ids(){
+
+    vector<int> ids;
+
+    for(int i=0; i<gradedLabs.size(); i++){
+        ids.push_back(gradedLabs.at(i)->get_Id());
+    }
+
+    return ids;
+}
+
+vector <LabAssignment *> Student::get_labAssignments(){
+    return gradedLabs;
+}

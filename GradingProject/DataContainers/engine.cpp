@@ -6,7 +6,7 @@ Engine::Engine(){
 }
 
 Engine::~Engine(){
-
+    //write_to_database();
 }
 
 void Engine::add_Section(int id)
@@ -48,6 +48,7 @@ void Engine::add_Student(string name)
 {
     Student * stu = new Student(name);
     currSection->add_Student(stu);
+    students.push_back(stu);
 }
 
 void Engine::add_Lab(int num)
@@ -56,27 +57,24 @@ void Engine::add_Lab(int num)
     lab->set_Section(currSection);
     lab->set_Template(currTemplate);
     currSection->add_Lab(lab);
+    labs.push_back(lab);
 }
 
-void Engine::new_LabAssignment()
-{
-    LabAssignment * LA = new LabAssignment();
-    LA->set_Student(currStudent);
-    LA->set_Lab(currLab);
-    LA->set_Grade(100);
-    currStudent->add_Lab(LA);
-}
-
-void Engine::add_Rubric_Item(string subj, int point, string comm)
+void Engine::add_Rubric_Item(string subj, int point)
 {
     RubricItem * rub = new RubricItem(subj, point);
-    Comment * com = new Comment(comm);
-    rub->add_Comment(com);
+    RubricItem * rub2 = new RubricItem(subj, point);
     currLabAssignment->new_RI(rub);
-    currLab->get_Template()->add_RI(rub);
-
+    currLab->get_Template()->add_RI(rub2);
+    rubricItems.push_back(rub);
+    rubricItems.push_back(rub2);
 }
 
+Comment * Engine::add_Comment(string comment, int lineNum, string fileName){
+    Comment * com = new Comment(comment, lineNum, fileName);
+    comments.push_back(com);
+    return com;
+}
 
 void Engine::set_currLab(int id)
 {
@@ -124,6 +122,8 @@ void Engine::start_Grading()
     lab->set_Grade(100);
     currStudent->add_Lab(lab);
     currLabAssignment = lab;
+    labAssignments.push_back(lab);
+    templates.push_back(labTemplate);
 }
 
 vector <int> Engine::section_Drop_SetUp()
@@ -162,3 +162,43 @@ vector <string> Engine::student_Drop_SetUp()
     }
     return out;
 }
+
+void Engine::write_to_database(){
+
+    for(int i=0; i<sectionList.size(); i++){
+        Section * section = sectionList.at(i);
+        dbControl->store_section(section->get_Id(), section->get_Student_Ids(), section->get_Lab_Ids());
+    }
+
+    for(int i=0; i<students.size(); i++){
+        Student * student = students.at(i);
+        dbControl->store_student(student->get_Id(), student->get_Name(), student->get_LabAssignment_Ids());
+    }
+
+    for(int i=0; i<labs.size(); i++){
+        Lab * lab = labs.at(i);
+        dbControl->store_lab(lab->get_Id(), lab->get_Section()->get_Id(), lab->get_labNum(), lab->get_Template()->get_Id());
+    }
+
+    for(int i=0; i<templates.size(); i++){
+        Template * templ = templates.at(i);
+        dbControl->store_template(templ->get_Id(), templ->get_RubricItem_Ids());
+    }
+
+    for(int i=0; i<labAssignments.size(); i++){
+        LabAssignment * labAssignment = labAssignments.at(i);
+        dbControl->store_labAssignment(labAssignment->get_Id(), labAssignment->get_Grade(), labAssignment->get_Student()->get_Id(), labAssignment->get_Lab()->get_Id(), labAssignment->get_RubricItem_Ids());
+    }
+
+    for(int i=0; i<rubricItems.size(); i++){
+        RubricItem * rubricItem = rubricItems.at(i);
+        dbControl->store_rubricItem(rubricItem->get_Id(), rubricItem->get_Subject(), rubricItem->get_Points(), rubricItem->get_Comment_Ids());
+    }
+
+    for(int i=0; i<comments.size(); i++){
+        Comment * comment = comments.at(i);
+        dbControl->store_comment(comment->get_Id(), comment->get_Comment(), comment->get_line(), comment->get_fileName(), comment->get_Rubric_Item()->get_Id());
+    }
+}
+
+

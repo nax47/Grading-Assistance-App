@@ -97,5 +97,18 @@ int LabAssignment::get_Id()
     return ID;
 }
 
+vector <int> LabAssignment::get_RubricItem_Ids(){
 
+    vector<int> ids;
+
+    for(int i=0; i<appliedItems.size(); i++){
+        ids.push_back(appliedItems.at(i)->get_Id());
+    }
+
+    return ids;
+}
+
+vector <RubricItem *> LabAssignment::get_rubricItems(){
+    return appliedItems;
+}
 
