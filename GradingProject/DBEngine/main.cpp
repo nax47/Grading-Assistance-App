@@ -14,6 +14,6 @@ int main(int argc, char *argv[])
     engine->store_labAssignment(1, 85, 1, 3, testIds);
     engine->store_rubricItem(1, "Style", 9, testIds);
     engine->store_comment(1, "Too much indenting", 57, "testfile.txt", 4);
-    engine->get_data();
+    //engine->get_data();
     return 0;
 }

@@ -80,7 +80,10 @@ public:
     // Method to restore data from an additional  table
     void restore_additional_table_data(std::string tableName, char **data);
 
-    void get_data();
+    void restore_data();
+
+    // Method called by main Engine to restore and recreate the data stored in tables
+    std::vector<Section *> get_stored_data();
 
 private:
     // Reference to database tool that will store the tables
@@ -110,6 +113,9 @@ private:
     // Map of additional tables created on the fly
     // Used to store one to many links from an object
     std::map <std::string, DBTable *> additionalTables;
+
+    // Vector to temporarily store names of additional tables
+    std::vector <std::string> additionalTableNames;
 
     // Map to temporarily store sections while recreating data structures
     std::map <int, Section *> sections;

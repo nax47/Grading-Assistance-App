@@ -7,6 +7,20 @@ DBEngine::DBEngine(){
 DBEngine::DBEngine(DBTool * dbtool){
     this->dbtool = dbtool;
     initialize_main_tables();
+    restore_data();
+    sectionTable->drop();
+    studentTable->drop();
+    labTable->drop();
+    templateTable->drop();
+    labAssignmentTable->drop();
+    rubricItemTable->drop();
+    commentTable->drop();
+    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
+    while (it!=additionalTables.end()){
+        it->second->drop();
+        delete it->second;
+        it++;
+    }
 }
 
 DBEngine::~DBEngine(){
@@ -367,25 +381,12 @@ void DBEngine::create_additional_table(std::vector<int> ids, std::string tableNa
     additionalTables[tableName] = table;
 }
 
-void DBEngine::get_data(){
-
-    sectionTable->select_all();
-    studentTable->select_all();
-    labTable->select_all();
-    templateTable->select_all();
-    labAssignmentTable->select_all();
-    rubricItemTable->select_all();
-    commentTable->select_all();
-    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
-    while (it!=additionalTables.end()){
-        it->second->select_all();
-        it++;
-    }
-}
-
 void DBEngine::restore_section_data(char **data){
 
     int id = std::stoi(std::string(data[0]));
+    additionalTableNames.push_back(std::string(data[1]));
+    additionalTableNames.push_back(std::string(data[2]));
+
     Section * section;
 
     if(sections.find(id) == sections.end())
@@ -402,6 +403,8 @@ void DBEngine::restore_student_data(char **data){
 
     int id = std::stoi(std::string(data[0]));
     std::string name = std::string(data[1]);
+    additionalTableNames.push_back(std::string(data[2]));
+
     Student * student;
 
     if(students.find(id) == students.end())
@@ -455,6 +458,8 @@ void DBEngine::restore_lab_data(char **data){
 void DBEngine::restore_template_data(char **data){
 
     int id = std::stoi(std::string(data[0]));
+    additionalTableNames.push_back(std::string(data[1]));
+
     Template * templ;
 
     if(templates.find(id) == templates.end())
@@ -473,6 +478,8 @@ void DBEngine::restore_labAssignment_data(char **data){
     int grade = std::stoi(std::string(data[1]));
     int studentId = std::stoi(std::string(data[2]));
     int labId = std::stoi(std::string(data[3]));
+    additionalTableNames.push_back(std::string(data[4]));
+
     LabAssignment * labAssignment;
     Student * student;
     Lab * lab;
@@ -509,6 +516,8 @@ void DBEngine::restore_rubricItem_data(char **data){
     int id = std::stoi(std::string(data[0]));
     std::string subject = std::string(data[1]);
     int points = std::stoi(std::string(data[2]));
+    additionalTableNames.push_back(std::string(data[3]));
+
     RubricItem * rubricItem;
 
     if(rubricItems.find(id) == rubricItems.end())
@@ -593,4 +602,55 @@ void DBEngine::restore_additional_table_data(string tableName, char **data){
         rubricItems[id]->add_Comment(comments[commentId]);
     }
 
+}
+
+void DBEngine::restore_data(){
+
+    sectionTable->select_all();
+    studentTable->select_all();
+    labTable->select_all();
+    templateTable->select_all();
+    labAssignmentTable->select_all();
+    rubricItemTable->select_all();
+    commentTable->select_all();
+
+    std::string sql_create;
+    std::string tableName;
+
+    sql_create =  "CREATE TABLE ";
+    sql_create += tableName;
+    sql_create += " ( ";
+    sql_create += "  id INT PRIMARY KEY NOT NULL ";
+    sql_create += " );";
+
+    for(int i=0; i<additionalTableNames.size(); i++){
+        tableName = additionalTableNames.at(i);
+
+        sql_create =  "CREATE TABLE ";
+        sql_create += tableName;
+        sql_create += " ( ";
+        sql_create += "  id INT PRIMARY KEY NOT NULL ";
+        sql_create += " );";
+
+        additionalTables[tableName] = new DBTable(dbtool, this, tableName, sql_create);
+    }
+
+    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
+    while (it!=additionalTables.end()){
+        it->second->select_all();
+        it++;
+    }
+}
+
+std::vector<Section *> DBEngine::get_stored_data(){
+
+    std::vector<Section *> restoredSections;
+
+    std::map<int, Section *>::iterator it = sections.begin();
+    while (it!=sections.end()){
+        restoredSections.push_back(it->second);
+        it++;
+    }
+
+    return restoredSections;
 }
