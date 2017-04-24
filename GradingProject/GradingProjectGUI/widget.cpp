@@ -9,8 +9,11 @@ Widget::Widget(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(2);
     GUIEngine = new Engine();
     vector <int> sec = GUIEngine->section_Drop_SetUp();
-    vector <int> labN = GUIEngine->labNum_Drop_SetUp();
-    vector <string> stuu = GUIEngine->student_Drop_SetUp();
+    for(int i = 0; i < sec.size(); i++)
+    {
+        QString t = QString::number(sec.at(i));
+        ui->sectionDrop->addItem(t);
+    }
 
 
     scrollWidget = new QWidget();
