@@ -61,7 +61,7 @@ public:
 
 
 
-    void add_Rubric_Item(string subj, int point, string comm);
+    void add_Rubric_Item(string subj, int point);
 
 
 private:

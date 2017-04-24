@@ -67,13 +67,12 @@ void Engine::new_LabAssignment()
     currStudent->add_Lab(LA);
 }
 
-void Engine::add_Rubric_Item(string subj, int point, string comm)
+void Engine::add_Rubric_Item(string subj, int point)
 {
     RubricItem * rub = new RubricItem(subj, point);
-    Comment * com = new Comment(comm);
-    rub->add_Comment(com);
+    RubricItem * rub2 = new RubricItem(subj, point);
     currLabAssignment->new_RI(rub);
-    currLab->get_Template()->add_RI(rub);
+    currLab->get_Template()->add_RI(rub2);
 
 }
 
