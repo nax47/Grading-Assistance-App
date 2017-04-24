@@ -81,7 +81,8 @@ private:
     QString pointsQ;
     QString commentQ;
 
-    Engine GUIEngine;
+    Engine * GUIEngine;
+
     string subject;
     int points;
     string comment;

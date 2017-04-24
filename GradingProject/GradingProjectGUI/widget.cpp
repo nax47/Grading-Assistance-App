@@ -7,6 +7,12 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(2);
+    GUIEngine = new Engine();
+    vector <int> sec = GUIEngine->section_Drop_SetUp();
+    vector <int> labN = GUIEngine->labNum_Drop_SetUp();
+    vector <string> stuu = GUIEngine->student_Drop_SetUp();
+
+
     scrollWidget = new QWidget();
     currSliderVal = 0;
     codeBar = ui->codeDisp->verticalScrollBar();
@@ -140,7 +146,7 @@ void Widget::on_okButton_clicked()
         RubricItem *newItem = new RubricItem(subject, points);
         newItem->add_Comment(new Comment(comment));
         rubricItems.push_back(newItem);
-        GUIEngine.add_Rubric_Item(subject, points, comment);
+        GUIEngine->add_Rubric_Item(subject, points, comment);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedWidth(220);
@@ -208,7 +214,7 @@ void Widget::on_okButton_clicked()
 void Widget::on_studentAdd_clicked()
 {
     QString tmp = ui->newStudentName->text();
-    GUIEngine.add_Student(tmp.toStdString());
+    GUIEngine->add_Student(tmp.toStdString());
     ui->studentDrop->addItem(tmp);
     ui->newStudentName->clear();
 }
@@ -217,7 +223,7 @@ void Widget::on_labAdd_clicked()
 {
     QString tmp = ui->newLabNum->text();
     int temp = tmp.toInt();
-    GUIEngine.add_Lab(temp);
+    GUIEngine->add_Lab(temp);
     ui->labDrop->addItem(tmp);
     ui->newLabNum->clear();
 }
@@ -225,29 +231,29 @@ void Widget::on_labAdd_clicked()
 void Widget::on_sectionAdd_clicked()
 {
     QString tmp = ui->newIDVal->text();
-    GUIEngine.add_Section(tmp.toInt());
+    GUIEngine->add_Section(tmp.toInt());
     ui->sectionDrop->addItem(tmp);
     ui->newIDVal->clear();
 }
 
 void Widget::on_StartGrading_clicked()
 {
-    if(GUIEngine.get_currStu() == nullptr) {
+    if(GUIEngine->get_currStu() == nullptr) {
         QMessageBox::information(this, "Warning", "Please Select Student.");
-    } else if(GUIEngine.get_currL() == nullptr) {
+    } else if(GUIEngine->get_currL() == nullptr) {
         QMessageBox::information(this, "Warning", "Please Select Lab");
-    } else if(GUIEngine.get_currSec() == nullptr) {
+    } else if(GUIEngine->get_currSec() == nullptr) {
         QMessageBox::information(this, "Warning", "Please Select Section.");
     } else {
-        GUIEngine.start_Grading();
-        string studentName = GUIEngine.get_currStu()->get_Name();
+        GUIEngine->start_Grading();
+        string studentName = GUIEngine->get_currStu()->get_Name();
         QString name = QString::fromStdString(studentName);
-        int t = GUIEngine.get_currL()->get_labNum();
+        int t = GUIEngine->get_currL()->get_labNum();
         QString lab = " Lab #: ";
         QString labnum = QString::number(t);
         lab = lab.append(labnum);
         name = name.append(lab);
-        int g = GUIEngine.get_currLA()->get_Grade();
+        int g = GUIEngine->get_currLA()->get_Grade();
         QString grade = " Grade: ";
         QString tem = QString::number(g);
         grade = grade.append(tem);
@@ -260,18 +266,18 @@ void Widget::on_StartGrading_clicked()
 
 void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
 {
-    GUIEngine.set_currSection(arg1.toInt());
+    GUIEngine->set_currSection(arg1.toInt());
 
     ui->labDrop->clear();
     ui->studentDrop->clear();
-    vector <int> temp = GUIEngine.labNum_Drop_SetUp();
+    vector <int> temp = GUIEngine->labNum_Drop_SetUp();
     for(int i = 0; i < temp.size(); i++)
     {
         QString t = QString::number(temp.at(i));
         ui->labDrop->addItem(t);
     }
     string five = "5";
-    vector <string> t2 = GUIEngine.student_Drop_SetUp();
+    vector <string> t2 = GUIEngine->student_Drop_SetUp();
     for(int i = 0; i < t2.size(); i++)
     {
         QString t = QString::fromStdString(t2.at(i));
@@ -283,20 +289,20 @@ void Widget::on_labDrop_currentIndexChanged(const QString &arg1)
 {
     if(!arg1.isEmpty() && !arg1.isNull())
     {
-        GUIEngine.set_currLab(arg1.toInt());
+        GUIEngine->set_currLab(arg1.toInt());
     }
 }
 
 void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
 {
-    GUIEngine.set_currStudent(arg1.toStdString());
+    GUIEngine->set_currStudent(arg1.toStdString());
 }
 
 void Widget::on_doneButton_clicked()
 {
-    Student *currStudent = GUIEngine.get_currStu();
-    Section *currSection = GUIEngine.get_currSec();
-    Lab *currLab = GUIEngine.get_currL();
+    Student *currStudent = GUIEngine->get_currStu();
+    Section *currSection = GUIEngine->get_currSec();
+    Lab *currLab = GUIEngine->get_currL();
 
     studentName = currStudent->get_Name();
     fileName = currPathName + studentName +".pdf";
@@ -321,7 +327,7 @@ void Widget::on_doneButton_clicked()
 //    for(int i = 0; i < fileVec.size(); i++) {
 //        countStr = to_string(i);
 //        currFile = fileVec.at(i);
-//        currFile = "<h4> File Name : " + currFile + "</h4>";
+//        currFile = "<h4> File Name : " + currFile255 + "</h4>";
 //        html = html + currFile;
 //    }
 
@@ -377,7 +383,7 @@ void Widget::on_commentOK_clicked()
     string in = ui->newComText->text().toStdString();
     int in2 = ui->lNumNewCom->text().toInt();
     Comment * com = new Comment(in, in2, currFile);
-    GUIEngine.get_currLA()->get_RI(ui->RISnewCom->text().toStdString())->add_Comment(com);
+    GUIEngine->get_currLA()->get_RI(ui->RISnewCom->text().toStdString())->add_Comment(com);
     comments.push_back(com);
     QString sub = ui->RISnewCom->text();
     int gbNum = -1;
@@ -424,21 +430,21 @@ void Widget::on_applyButton_clicked()
         tmpPtr = rubricItemsDisplayed.at(i);
         selected = selectedBoxes.at(i);
         pointPTR = pointBoxes.at(i);
-        if(selected->isChecked() && !(GUIEngine.get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
+        if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
         {
-            GUIEngine.get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
-            GUIEngine.get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
+            GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
+            GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
             pointsOff = pointsOff + pointPTR->value();
-            GUIEngine.get_currLA()->set_Grade(GUIEngine.get_currLA()->get_Grade() - pointPTR->value());
+            GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
 
-            string studentName = GUIEngine.get_currStu()->get_Name();
+            string studentName = GUIEngine->get_currStu()->get_Name();
             QString name = QString::fromStdString(studentName);
-            int t = GUIEngine.get_currL()->get_labNum();
+            int t = GUIEngine->get_currL()->get_labNum();
             QString lab = " Lab #: ";
             QString labnum = QString::number(t);
             lab = lab.append(labnum);
             name = name.append(lab);
-            int g = GUIEngine.get_currLA()->get_Grade();
+            int g = GUIEngine->get_currLA()->get_Grade();
             QString grade = " Grade: ";
             QString tem = QString::number(g);
             grade = grade.append(tem);
