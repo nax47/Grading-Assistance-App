@@ -123,11 +123,14 @@ private:
     string commLineString;
     string commFile;
     string commTotal;
+    string empty = "<br>";
 
     vector <QCheckBox *> selectedBoxes;
     vector <QSpinBox *> pointBoxes;
     vector <RubricItem *> rubricItems;
+    vector <RubricItem*>::iterator rubricIter;
     vector <Comment *> comments;
+    vector <Comment*>::iterator commIter;
     vector <QGroupBox *> rubricItemsDisplayed;
 };
 

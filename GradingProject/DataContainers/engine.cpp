@@ -55,7 +55,8 @@ void Engine::add_Lab(int num)
 {
     Lab * lab = new Lab(num);
     lab->set_Section(currSection);
-    lab->set_Template(currTemplate);
+    Template * labTemplate = new Template();
+    lab->set_Template(labTemplate);
     currSection->add_Lab(lab);
     labs.push_back(lab);
 }
@@ -119,6 +120,14 @@ Lab * Engine::get_currL()
     return currLab;
 }
 
+//void Engine::add_Lab(int num)
+//{
+//    Lab * lab = new Lab(num);
+//    lab->set_Section(currSection);
+//    lab->set_Template(currTemplate);
+//    currSection->add_Lab(lab);
+//    labs.push_back(lab);
+//}
 LabAssignment * Engine::get_currLA()
 {
     return currLabAssignment;
@@ -127,15 +136,13 @@ LabAssignment * Engine::get_currLA()
 void Engine::start_Grading()
 {
     LabAssignment * lab = new LabAssignment();
-    Template * labTemplate = new Template();
-    currLab->set_Template(labTemplate);
+
+    currLab->set_Template(currLab->get_Template());
     lab->set_Lab(currLab);
     lab->set_Student(currStudent);
     lab->set_Grade(100);
     currStudent->add_Lab(lab);
     currLabAssignment = lab;
-    labAssignments.push_back(lab);
-    templates.push_back(labTemplate);
 }
 
 vector <int> Engine::section_Drop_SetUp()

@@ -41,6 +41,7 @@ public:
     void set_currSection(int id);
     void set_currLab(int id);
     void set_currStudent(string name);
+    void new_LabAssignment();
 
     //get currents
     Student * get_currStu();

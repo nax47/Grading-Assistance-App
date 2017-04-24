@@ -145,11 +145,10 @@ void Widget::on_okButton_clicked()
 
     if(points == NULL) {
         QMessageBox::information(this, "Warning", "Points value must be a number.");
-    } else if(subject.empty() || points == NULL || comment.empty()) {
+    } else if(subject.empty() || points == NULL) {
         QMessageBox::information(this, "Warning", "Please populate all fields.");
     } else {
-        RubricItem *newItem = new RubricItem(subject, points);
-        rubricItems.push_back(newItem);
+
         GUIEngine->add_Rubric_Item(subject, points);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
@@ -298,6 +297,9 @@ void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
 
 void Widget::on_doneButton_clicked()
 {
+    rubricItems = GUIEngine->get_currLA()->get_rubricItems();
+    cout << comments.size() << endl;
+    cout << rubricItems.size() << endl;
     Student *currStudent = GUIEngine->get_currStu();
     Section *currSection = GUIEngine->get_currSec();
     Lab *currLab = GUIEngine->get_currL();
@@ -329,37 +331,58 @@ void Widget::on_doneButton_clicked()
 //        html = html + currFile;
 //    }
 
-    for(int i = 0; i < comments.size() - 1; i++) {
-        Comment *currComm = comments.at(i);
-        comm = currComm->get_Comment();
-        comm = "<h3>" + comm + "</h3>";
+//    for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
+//        Comment *currComm = *commIter;
+//            comm = currComm->get_Comment();
+//            comm = "<h3>" + comm + "</h3>";
 
-        commLine = currComm->get_line();
-        commLineString = to_string(commLine);
-        commLineString = "<h3>" + commLineString + "</h3>";
+//            commLine = currComm->get_line();
+//            commLineString = to_string(commLine);
+//            commLineString = "<h3> Line Number: " + commLineString + "</h3>";
 
-        commFile = currComm->get_fileName();
-        commFile = "<h3>" + commFile + "</h3>";
+//            commFile = currComm->get_fileName();
+//            commFile = "<h3> File: " + commFile + "</h3>";
 
-        commTotal = commTotal + commFile + commLineString + comm;
+//            commTotal = commTotal + empty + commFile + commLineString + comm;
+//    }
+
+    for(rubricIter = rubricItems.begin(); rubricIter != rubricItems.end(); rubricIter++) {
+        RubricItem *currItem = *rubricIter;
+        cout << currItem->get_Applied() << " rubric iter" << endl;
+        if(currItem->get_Applied()) {
+            subj = currItem->get_Subject();
+            subj = "<h2>" + subj + "</h2>";
+
+            rubricPoint = currItem->get_Points();
+            rubricPoints = to_string(rubricPoint);
+            rubricPoints = "<h3> Points: " + rubricPoints + "</h3>";
+
+            comments = currItem->get_comments();
+            rubric = rubric + empty + subj + rubricPoints;
+
+            for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
+                Comment *currComm = *commIter;
+                    comm = currComm->get_Comment();
+                    comm = "<h3>" + comm + "</h3>";
+
+                    commLine = currComm->get_line();
+                    commLineString = to_string(commLine);
+                    commLineString = "<h3> Line Number: " + commLineString + "</h3>";
+
+                    commFile = currComm->get_fileName();
+                    commFile = "<h3> File: " + commFile + "</h3>";
+
+                    comment = rubric + empty + commFile + commLineString + comm;
+            }
+
+//            comment = currItem->get_Comment();
+//            comment = "<h3>" + comment + "</h3>";
+
+
+        }
     }
 
-    for(int i = 0; i < rubricItems.size() - 1; i++) {
-        RubricItem *currItem = rubricItems.at(i);
-        subj = currItem->get_Subject();
-        subj = "<h2>" + subj + "</h2>";
-
-        rubricPoint = currItem->get_Points();
-        rubricPoints = to_string(rubricPoint);
-        rubricPoints = "<h3> Points: " + rubricPoints + "</h3>";
-
-        comment = currItem->get_Comment(i)->get_Comment();
-        comment = "<h3>" + comment + "</h3>";
-
-        rubric = rubric + subj + rubricPoints + comment;
-    }
-
-    html = html + commTotal + rubric;
+    html = html + rubric + commTotal;
     qhtml = QString::fromStdString(html);
 
     QTextDocument doc;
@@ -369,6 +392,8 @@ void Widget::on_doneButton_clicked()
     printer.setOutputFormat(QPrinter::PdfFormat);
     doc.print(&printer);
     printer.newPage();
+
+    ui->stackedWidget->setCurrentIndex(2);
 }
 
 void Widget::on_commentCancel_clicked()
@@ -378,11 +403,15 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
+    if(currFileName.empty()) {
+        QMessageBox::information(this, "Warning", "Please Select Code File Before Adding Comment.");
+        ui->stackedWidget->setCurrentIndex(0);
+    } else {
     string in = ui->newComText->text().toStdString();
     int in2 = ui->lNumNewCom->text().toInt();
-    Comment * com = GUIEngine->add_Comment(in, in2, currFile);
+    Comment * com = GUIEngine->add_Comment(in, in2, currFileName);
     GUIEngine->get_currLA()->get_RI(ui->RIScombo->currentText().toStdString())->add_Comment(com);
-    comments.push_back(com);
+    //comments.push_back(com);
     QString sub = ui->RIScombo->currentText();
     int gbNum = -1;
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
@@ -415,6 +444,7 @@ void Widget::on_commentOK_clicked()
         ui->rubricScroll->setWidget(scrollWidget);
     }
     ui->stackedWidget->setCurrentIndex(0);
+    }
 }
 
 void Widget::on_applyButton_clicked()
@@ -431,6 +461,7 @@ void Widget::on_applyButton_clicked()
         if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
         {
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
+            cout << "applied set : " << GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied() << endl;
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
             pointsOff = pointsOff + pointPTR->value();
             GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
