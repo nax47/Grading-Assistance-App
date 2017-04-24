@@ -7,7 +7,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(2);
-
+    scrollWidget = new QWidget();
     currSliderVal = 0;
     codeBar = ui->codeDisp->verticalScrollBar();
     numBar = ui->linNumBox->verticalScrollBar();
@@ -36,15 +36,40 @@ void Widget::on_itemButton_clicked()
 void Widget::on_commentButton_clicked()
 {
 
-    ui->newCommentText->clear();
-    ui->lineNumVal->clear();
-    ui->subjectNewCom->clear();
+    ui->newComText->clear();
+    ui->lNumNewCom->clear();
+    ui->RISnewCom->clear();
     ui->stackedWidget->setCurrentIndex(3);
 
 }
 
 void Widget::on_searchButton_clicked()
 {
+    QString search = ui->searchBar->text();
+    int gbNum = -1;
+    for(int i=0; i<rubricItemsDisplayed.size(); i++)
+    {
+        QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
+        if(search == tmpPtr->title())
+        {
+            gbNum = i;
+        }
+    }
+    if(gbNum != -1)
+    {
+        QVBoxLayout * scrollLayout = new QVBoxLayout;
+        scrollLayout->addWidget(rubricItemsDisplayed.at(gbNum));
+        for(int i=0; i<rubricItemsDisplayed.size(); i++)
+        {
+            if(i != gbNum)
+            {
+                scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+            }
+        }
+        delete scrollWidget->layout();
+        scrollWidget->setLayout(scrollLayout);
+        ui->rubricScroll->setWidget(scrollWidget);
+    }
 
 }
 
@@ -114,9 +139,12 @@ void Widget::on_okButton_clicked()
     } else {
         RubricItem *newItem = new RubricItem(subject, points);
         newItem->add_Comment(new Comment(comment));
+        rubricItems.push_back(newItem);
+        GUIEngine.add_Rubric_Item(subject, points, comment);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
-        rubricItemBox->setFixedSize(220,150);
+        rubricItemBox->setFixedWidth(220);
+        rubricItemBox->setMinimumHeight(150);
         rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
 
         QVBoxLayout * boxLayout = new QVBoxLayout;
@@ -131,6 +159,7 @@ void Widget::on_okButton_clicked()
         QSpinBox * pointsVal = new QSpinBox();
         pointsVal->setValue(points);
         pointsVal->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
+        pointsVal->setMaximum(out.toInt());
         pointsBoxLayout->addWidget(pointsVal);
 
         QLabel * div = new QLabel(tr("Out of"));
@@ -143,25 +172,32 @@ void Widget::on_okButton_clicked()
         pointsBoxLayout->addWidget(outof);
         boxLayout->addLayout(pointsBoxLayout);
 
+        QCheckBox * applyBox = new QCheckBox();
+
+        applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+        applyBox->setText("Select");
+        boxLayout->addWidget(applyBox);
+
         QLabel * commentsLabel = new QLabel(commentQ);
+        commentsLabel->setMinimumHeight(20);
         commentsLabel->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
         boxLayout->addWidget(commentsLabel);
 
-        QCheckBox * applyBox = new QCheckBox();
-        applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
-        applyBox->setText("Apply");
-        boxLayout->addWidget(applyBox);
+
 
         rubricItemBox->setLayout(boxLayout);
         rubricItemsDisplayed.push_back(rubricItemBox);
+
+
+
 
         QVBoxLayout * scrollLayout = new QVBoxLayout;
         for(int i=0; i<rubricItemsDisplayed.size(); i++){
             scrollLayout->addWidget(rubricItemsDisplayed.at(i));
         }
-        delete ui->rubricScroll->layout();
-        ui->rubricScroll->setLayout(scrollLayout);
-
+        delete scrollWidget->layout();
+        scrollWidget->setLayout(scrollLayout);
+        ui->rubricScroll->setWidget(scrollWidget);
         ui->stackedWidget->setCurrentIndex(0);
     }
 }
@@ -280,13 +316,44 @@ void Widget::on_doneButton_clicked()
 
     html = studentName + sectionString + labString + scoreString;
 
-    for(int i = 0; i < fileVec.size(); i++) {
-        countStr = to_string(i);
-        currFile = fileVec.at(i);
-        currFile = "<h4> File Name : " + currFile + "</h4>";
-        html = html + currFile;
+//    for(int i = 0; i < fileVec.size(); i++) {
+//        countStr = to_string(i);
+//        currFile = fileVec.at(i);
+//        currFile = "<h4> File Name : " + currFile + "</h4>";
+//        html = html + currFile;
+//    }
+
+    for(int i = 0; i < comments.size() - 1; i++) {
+        Comment *currComm = comments.at(i);
+        comm = currComm->get_Comment();
+        comm = "<h3>" + comm + "</h3>";
+
+        commLine = currComm->get_line();
+        commLineString = to_string(commLine);
+        commLineString = "<h3>" + commLineString + "</h3>";
+
+        commFile = currComm->get_fileName();
+        commFile = "<h3>" + commFile + "</h3>";
+
+        commTotal = commTotal + commFile + commLineString + comm;
     }
 
+    for(int i = 0; i < rubricItems.size() - 1; i++) {
+        RubricItem *currItem = rubricItems.at(i);
+        subj = currItem->get_Subject();
+        subj = "<h2>" + subj + "</h2>";
+
+        rubricPoint = currItem->get_Points();
+        rubricPoints = to_string(rubricPoint);
+        rubricPoints = "<h3> Points: " + rubricPoints + "</h3>";
+
+        comment = currItem->get_Comment(i)->get_Comment();
+        comment = "<h3>" + comment + "</h3>";
+
+        rubric = rubric + subj + rubricPoints + comment;
+    }
+
+    html = html + commTotal + rubric;
     qhtml = QString::fromStdString(html);
 
     QTextDocument doc;
@@ -305,9 +372,46 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
-    string in = ui->newCommentText
-    Comment * com = new Comment()
+    string in = ui->newComText->text().toStdString();
+    int in2 = ui->lNumNewCom->text().toInt();
+    Comment * com = new Comment(in, in2, currFile);
+    GUIEngine.get_currLA()->get_RI(ui->RISnewCom->text().toStdString())->add_Comment(com);
+    comments.push_back(com);
+    QString sub = ui->RISnewCom->text();
+    int gbNum = -1;
+    for(int i=0; i<rubricItemsDisplayed.size(); i++)
+    {
+        QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
+        if(sub == tmpPtr->title())
+        {
+            gbNum = i;
+        }
+    }
+    if(gbNum == -1)
+    {
+        QMessageBox::information(this, "Warning", "Please enter a valid rubric item subject");
+    }
+    else
+    {
+        QLabel * newComment = new QLabel(ui->newComText->text());
+        newComment->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+        newComment->setMinimumHeight(20);
+        QGroupBox * tmpPtr = rubricItemsDisplayed.at(gbNum);
+        tmpPtr->layout()->addWidget(newComment);
+        tmpPtr->resize(220, tmpPtr->height() + 20);
 
+        QVBoxLayout * scrollLayout = new QVBoxLayout;
+        for(int i=0; i<rubricItemsDisplayed.size(); i++){
+            scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+        }
+        delete scrollWidget->layout();
+        scrollWidget->setLayout(scrollLayout);
+        ui->rubricScroll->setWidget(scrollWidget);
+    }
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
+void Widget::on_applyButton_clicked()
+{
 
+}
