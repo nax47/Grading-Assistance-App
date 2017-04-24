@@ -33,13 +33,19 @@ public:
     void set_Id(int id);
     int get_Id();
 
+    vector <int> get_Comment_Ids();
+
+    vector <Comment *> get_comments();
+
 private:
     string subject;
     int points;
     bool applied;
     vector <Comment *> comments;
     int ID;
-
+    //static int idCount;
 };
+
+//int RubricItem::idCount = 0;
 
 #endif // RUBRICITEM_H

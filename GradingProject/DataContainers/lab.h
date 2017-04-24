@@ -40,7 +40,9 @@ private:
     int labNum;
     Section * section;
     int ID;
-
+    //static int idCount;
 };
+
+//int Lab::idCount = 0;
 
 #endif // LAB_H

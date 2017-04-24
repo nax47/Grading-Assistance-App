@@ -34,3 +34,18 @@ int Template::get_Id()
 vector<RubricItem *> Template::getItems() {
     return items;
 }
+
+vector <int> Template::get_RubricItem_Ids(){
+
+    vector<int> ids;
+
+    for(int i=0; i<items.size(); i++){
+        ids.push_back(items.at(i)->get_Id());
+    }
+
+    return ids;
+}
+
+vector <RubricItem *> Template::get_rubricItems(){
+    return items;
+}

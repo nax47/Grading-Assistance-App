@@ -70,3 +70,18 @@ int RubricItem::get_Id()
 {
     return ID;
 }
+
+vector <int> RubricItem::get_Comment_Ids(){
+
+    vector<int> ids;
+
+    for(int i=0; i<comments.size(); i++){
+        ids.push_back(comments.at(i)->get_Id());
+    }
+
+    return ids;
+}
+
+vector <Comment *> RubricItem::get_comments(){
+    return comments;
+}

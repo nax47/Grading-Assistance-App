@@ -51,7 +51,7 @@ public:
     // basic adds
     void add_Student(string name);
     void add_Lab(int num);
-    void new_LabAssignment();
+    Comment * add_Comment(std::string comment, int lineNum, std::string fileName);
 
     void start_Grading();
     //GUI set up methods
@@ -66,6 +66,8 @@ public:
 
 private:
 
+    void write_to_database();
+
     Section * currSection = nullptr;
     Lab * currLab = nullptr;
     Student * currStudent = nullptr;
@@ -74,6 +76,18 @@ private:
 
 
     vector <Section *> sectionList;
+
+    vector <Student *> students;
+
+    vector <Lab *> labs;
+
+    vector <Template *> templates;
+
+    vector <LabAssignment *> labAssignments;
+
+    vector <RubricItem *> rubricItems;
+
+    vector <Comment *> comments;
 
     DBEngine * dbControl;
 };
