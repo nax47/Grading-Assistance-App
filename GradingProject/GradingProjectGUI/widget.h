@@ -123,8 +123,10 @@ private:
     string commFile;
     string commTotal;
 
-    vector<RubricItem*> rubricItems;
-    vector<Comment*> comments;
+    vector <QCheckBox *> selectedBoxes;
+    vector <QSpinBox *> pointBoxes;
+    vector <RubricItem *> rubricItems;
+    vector <Comment *> comments;
     vector <QGroupBox *> rubricItemsDisplayed;
 };
 
