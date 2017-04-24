@@ -16,6 +16,13 @@
 
 class DBTool;
 class DBTable;
+class Section;
+class Student;
+class Lab;
+class Template;
+class LabAssignment;
+class RubricItem;
+class Comment;
 
 class DBEngine{
 public:

@@ -368,6 +368,7 @@ void DBEngine::create_additional_table(std::vector<int> ids, std::string tableNa
 }
 
 void DBEngine::get_data(){
+
     sectionTable->select_all();
     studentTable->select_all();
     labTable->select_all();
@@ -383,48 +384,213 @@ void DBEngine::get_data(){
 }
 
 void DBEngine::restore_section_data(char **data){
+
     int id = std::stoi(std::string(data[0]));
     Section * section;
 
-    if(sections[id] == NULL)
-        section  = new Section();
+    if(sections.find(id) == sections.end())
+        section = new Section();
     else
         section = sections[id];
 
     section->set_Id(id);
-    additionalTables[std::string(data[1])]->select_all();
+
+    sections[id] = section;
 }
 
 void DBEngine::restore_student_data(char **data){
 
+    int id = std::stoi(std::string(data[0]));
+    std::string name = std::string(data[1]);
+    Student * student;
+
+    if(students.find(id) == students.end())
+        student = new Student();
+    else
+        student = students[id];
+
+    student->set_Id(id);
+    student->set_Name(name);
+
+    students[id] = student;
 }
 
 void DBEngine::restore_lab_data(char **data){
 
+    int id = std::stoi(std::string(data[0]));
+    int sectionId = std::stoi(std::string(data[1]));
+    int labNum = std::stoi(std::string(data[2]));
+    int templateId = std::stoi(std::string(data[3]));
+    Lab * lab;
+    Section * section;
+    Template * templ;
+
+    if(labs.find(id) == labs.end())
+        lab = new Lab();
+    else
+        lab = labs[id];
+
+    if(sections.find(sectionId) == sections.end()){
+        section = new Section();
+        sections[sectionId] = section;
+    }
+    else
+        section = sections[sectionId];
+
+    if(templates.find(templateId) == templates.end()){
+        templ = new Template();
+        templates[templateId] = templ;
+    }
+    else
+        templ = templates[templateId];
+
+    lab->set_Id(id);
+    lab->set_labNum(labNum);
+    lab->set_Section(section);
+    lab->set_Template(templ);
+
+    labs[id] = lab;
 }
 
 void DBEngine::restore_template_data(char **data){
 
+    int id = std::stoi(std::string(data[0]));
+    Template * templ;
+
+    if(templates.find(id) == templates.end())
+        templ = new Template();
+    else
+        templ = templates[id];
+
+    templ->set_Id(id);
+
+    templates[id] = templ;
 }
 
 void DBEngine::restore_labAssignment_data(char **data){
 
+    int id = std::stoi(std::string(data[0]));
+    int grade = std::stoi(std::string(data[1]));
+    int studentId = std::stoi(std::string(data[2]));
+    int labId = std::stoi(std::string(data[3]));
+    LabAssignment * labAssignment;
+    Student * student;
+    Lab * lab;
+
+    if(labAssignments.find(id) == labAssignments.end())
+        labAssignment = new LabAssignment();
+    else
+        labAssignment = labAssignments[id];
+
+    if(students.find(studentId) == students.end()){
+        student = new Student();
+        students[studentId] = student;
+    }
+    else
+        student = students[studentId];
+
+    if(labs.find(labId) == labs.end()){
+        lab = new Lab();
+        labs[labId] = lab;
+    }
+    else
+        lab = labs[labId];
+
+    labAssignment->set_Id(id);
+    labAssignment->set_Grade(grade);
+    labAssignment->set_Student(student);
+    labAssignment->set_Lab(lab);
+
+    labAssignments[id] = labAssignment;
 }
 
 void DBEngine::restore_rubricItem_data(char **data){
 
+    int id = std::stoi(std::string(data[0]));
+    std::string subject = std::string(data[1]);
+    int points = std::stoi(std::string(data[2]));
+    RubricItem * rubricItem;
+
+    if(rubricItems.find(id) == rubricItems.end())
+        rubricItem = new RubricItem();
+    else
+        rubricItem = rubricItems[id];
+
+    rubricItem->set_Id(id);
+    rubricItem->set_Subject(subject);
+    rubricItem->set_Points(points);
+
+    rubricItems[id] = rubricItem;
+
 }
 
 void DBEngine::restore_comment_data(char **data){
+    int id = std::stoi(std::string(data[0]));
+    std::string commentString = std::string(data[1]);
+    int lineNum = std::stoi(std::string(data[2]));
+    std::string fileName = std::string(data[3]);
+    int rubricItemId = std::stoi(std::string(data[4]));
+    Comment * comment;
+    RubricItem * rubricItem;
 
+    if(comments.find(id) == comments.end())
+        comment = new Comment();
+    else
+        comment = comments[id];
+
+    if(rubricItems.find(rubricItemId) == rubricItems.end()){
+        rubricItem = new RubricItem();
+        rubricItems[rubricItemId] = rubricItem;
+    }
+    else
+        rubricItem = rubricItems[rubricItemId];
+
+    comment->set_Id(id);
+    comment->change_Comment(commentString);
+    comment->set_line(lineNum);
+    comment->set_fileName(fileName);
+    comment->set_Rubric_Item(rubricItem);
+
+    comments[id] = comment;
 }
 
 void DBEngine::restore_additional_table_data(string tableName, char **data){
 
     if(tableName.substr(0,6) == "section"){
-        int id = stoi(tablename.substr(7,7));
+        int id = stoi(tableName.substr(7,7));
 
-        if(tableName.substr())
-
+        if(tableName.substr(8,14) == "student"){
+            int studentId = std::stoi(std::string(data[0]));
+            sections[id]->add_Student(students[studentId]);
+        }
+        else if(tableName.substr(8,10) == "lab"){
+            int labId = std::stoi(std::string(data[0]));
+            sections[id]->add_Lab(labs[labId]);
+        }
     }
+
+    else if(tableName.substr(0,6) == "student"){
+        int id = stoi(tableName.substr(7,7));
+        int labAssignmentId = std::stoi(std::string(data[0]));
+        students[id]->add_Lab(labAssignments[labAssignmentId]);
+    }
+
+    else if(tableName.substr(0,7) == "template"){
+        int id = stoi(tableName.substr(8,8));
+        int rubricItemId = std::stoi(std::string(data[0]));
+        templates[id]->add_RI(rubricItems[rubricItemId]);
+    }
+
+    else if(tableName.substr(0,12) == "labAssignment"){
+        int id = stoi(tableName.substr(13,13));
+        int rubricItemId = std::stoi(std::string(data[0]));
+        labAssignments[id]->new_RI(rubricItems[rubricItemId]);
+    }
+
+    else if(tableName.substr(0,9) == "rubricItem"){
+        int id = stoi(tableName.substr(13,13));
+        int commentId = std::stoi(std::string(data[0]));
+        rubricItems[id]->add_Comment(comments[commentId]);
+    }
+
 }

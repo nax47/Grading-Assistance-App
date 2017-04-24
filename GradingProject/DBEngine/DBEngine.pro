@@ -7,26 +7,26 @@ SOURCES += main.cpp \
     dbtable.cpp \
     dbtool.cpp \
     dbengine.cpp \
-    student.cpp \
-    comment.cpp \
-    template.cpp \
-    rubricitem.cpp \
-    labassignment.cpp \
-    section.cpp \
-    lab.cpp \
-    engine.cpp
+    ../DataContainers/student.cpp \
+    ../DataContainers/comment.cpp \
+    ../DataContainers/template.cpp \
+    ../DataContainers/rubricitem.cpp \
+    ../DataContainers/labassignment.cpp \
+    ../DataContainers/section.cpp \
+    ../DataContainers/lab.cpp \
+    ../DataContainers/engine.cpp
 
 HEADERS += \
     dbtable.h \
     dbtool.h \
     dbengine.h \
-    student.h \
-    comment.h \
-    template.h \
-    rubricitem.h \
-    labassignment.h \
-    section.h \
-    lab.h \
-    engine.h
+    ../DataContainers/student.h \
+    ../DataContainers/comment.h \
+    ../DataContainers/template.h \
+    ../DataContainers/rubricitem.h \
+    ../DataContainers/labassignment.h \
+    ../DataContainers/section.h \
+    ../DataContainers/lab.h \
+    ../DataContainers/engine.h
 
 LIBS += -lsqlite3
