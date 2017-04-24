@@ -161,6 +161,7 @@ void Widget::on_okButton_clicked()
         pointsVal->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
         pointsVal->setMaximum(out.toInt());
         pointsBoxLayout->addWidget(pointsVal);
+        pointBoxes.push_back(pointsVal);
 
         QLabel * div = new QLabel(tr("Out of"));
         div->setStyleSheet("QLabel { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
@@ -177,6 +178,7 @@ void Widget::on_okButton_clicked()
         applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
         applyBox->setText("Select");
         boxLayout->addWidget(applyBox);
+        selectedBoxes.push_back(applyBox);
 
         QLabel * commentsLabel = new QLabel(commentQ);
         commentsLabel->setMinimumHeight(20);
@@ -413,5 +415,36 @@ void Widget::on_commentOK_clicked()
 
 void Widget::on_applyButton_clicked()
 {
+    QGroupBox * tmpPtr;
+    QCheckBox * selected;
+    QSpinBox * pointPTR;
+    int pointsOff = 0;
+    for(int i=0; i<rubricItemsDisplayed.size(); i++)
+    {
+        tmpPtr = rubricItemsDisplayed.at(i);
+        selected = selectedBoxes.at(i);
+        pointPTR = pointBoxes.at(i);
+        if(selected->isChecked() && !(GUIEngine.get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
+        {
+            GUIEngine.get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
+            GUIEngine.get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
+            pointsOff = pointsOff + pointPTR->value();
+            GUIEngine.get_currLA()->set_Grade(GUIEngine.get_currLA()->get_Grade() - pointPTR->value());
+
+            string studentName = GUIEngine.get_currStu()->get_Name();
+            QString name = QString::fromStdString(studentName);
+            int t = GUIEngine.get_currL()->get_labNum();
+            QString lab = " Lab #: ";
+            QString labnum = QString::number(t);
+            lab = lab.append(labnum);
+            name = name.append(lab);
+            int g = GUIEngine.get_currLA()->get_Grade();
+            QString grade = " Grade: ";
+            QString tem = QString::number(g);
+            grade = grade.append(tem);
+            QString final = name.append(grade);
+            ui->studentgrade->setText(final);
+        }
+    }
 
 }
