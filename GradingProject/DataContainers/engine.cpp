@@ -2,6 +2,7 @@
 
 Engine::Engine(){
     dbControl = new DBEngine(new DBTool("GradingToolDB"));
+    sectionList = dbControl->get_stored_data();
 }
 
 Engine::~Engine(){
