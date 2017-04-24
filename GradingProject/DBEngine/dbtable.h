@@ -30,6 +30,7 @@ Modified by Nakul Talwar in April 2017
 #include <sys/types.h>
 
 #include "dbtool.h"
+#include "dbengine.h"
 
 /**
  * @brief The DBTable class
@@ -49,6 +50,8 @@ Modified by Nakul Talwar in April 2017
  * A called to sqlite_exec is detailed in the exist method, which
  * is how these classes interfaces to the SQLite tool.
  */
+
+class DBEngine;
 
 class DBTable {
 
@@ -87,11 +90,15 @@ protected:
     // internal value for storing the result of the last size request
     int  row_cnt;
 
+    // Reference to the DBEngine that the table is a part of
+    DBEngine * engine;
+
+
 public:
 
     // constructors
     DBTable();
-    DBTable(DBTool *db, std::string name, std::string createString);
+    DBTable(DBTool *db, DBEngine *engine, std::string name, std::string createString);
 
     // destructor
     virtual ~DBTable();
@@ -124,6 +131,8 @@ public:
     void set_exists()      {table_exists = true; }
     void unset_exists()    {table_exists = false;}
     void set_size(int cnt) {row_cnt      = cnt;  }
+
+    DBEngine * get_engine();
 
 };
 

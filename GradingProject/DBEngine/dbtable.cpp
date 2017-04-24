@@ -34,12 +34,14 @@ DBTable::DBTable() {
  // Constructor taking a pointer to the DB tool and name
  // of the table that will be represented by this class.
 DBTable::DBTable(DBTool      *db,
+                 DBEngine *engine,
                  std::string  name,
                  std::string createString) {
 
     // Store table name and reference to db.
     curr_db     = db;
     table_name  = name;
+    this->engine = engine;
 
     // Register the different sql calls for the
     // parent class.
@@ -541,10 +543,36 @@ int cb_select_all(void  *data,
     int i;
 
     DBTable *obj = (DBTable *) data;
+    std::string tableName = obj->get_name();
 
     std::cout << "------------------------------\n";
-    std::cout << obj->get_name()
+    std::cout << tableName
               << std::endl;
+
+    if(tableName == "sectionTable"){
+        obj->get_engine()->restore_section_data(argv);
+    }
+    else if(tableName == "studentTable"){
+        obj->get_engine()->restore_student_data(argv);
+    }
+    else if(tableName == "labTable"){
+        obj->get_engine()->restore_lab_data(argv);
+    }
+    else if(tableName == "templateTable"){
+        obj->get_engine()->restore_template_data(argv);
+    }
+    else if(tableName == "labAssignmentTable"){
+        obj->get_engine()->restore_labAssignment_data(argv);
+    }
+    else if(tableName == "rubricItemTable"){
+        obj->get_engine()->restore_rubricItem_data(argv);
+    }
+    else if(tableName == "commentTable"){
+        obj->get_engine()->restore_comment_data(argv);
+    }
+    else{
+        obj->get_engine()->restore_additional_table_data(tableName, argv);
+    }
 
     for(i = 0; i < argc; i++){
         std::cout << azColName[i]
@@ -554,4 +582,8 @@ int cb_select_all(void  *data,
     }
 
     return 0;
+}
+
+DBEngine * DBTable::get_engine(){
+    return engine;
 }

@@ -36,7 +36,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  labIdsTableName TEXT NOT NULL";
     sql_create += " );";
 
-    sectionTable = new DBTable(dbtool, "sectionTable", sql_create);
+    sectionTable = new DBTable(dbtool, this, "sectionTable", sql_create);
 
     sql_create =  "CREATE TABLE ";
     sql_create += "studentTable";
@@ -46,7 +46,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  labAssignmentIdsTableName TEXT NOT NULL";
     sql_create += " );";
 
-    studentTable = new DBTable(dbtool, "studentTable", sql_create);
+    studentTable = new DBTable(dbtool, this, "studentTable", sql_create);
 
     sql_create =  "CREATE TABLE ";
     sql_create += "labTable";
@@ -57,7 +57,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  templateId INT  NOT NULL ";
     sql_create += " );";
 
-    labTable = new DBTable(dbtool, "labTable", sql_create);
+    labTable = new DBTable(dbtool, this, "labTable", sql_create);
 
     sql_create =  "CREATE TABLE ";
     sql_create += "templateTable";
@@ -66,7 +66,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  rubricItemIdsTableName TEXT NOT NULL";
     sql_create += " );";
 
-    templateTable = new DBTable(dbtool, "templateTable", sql_create);
+    templateTable = new DBTable(dbtool, this, "templateTable", sql_create);
 
     sql_create =  "CREATE TABLE ";
     sql_create += "labAssignmentTable";
@@ -78,7 +78,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  rubricItemIdsTableName TEXT NOT NULL";
     sql_create += " );";
 
-    labAssignmentTable = new DBTable(dbtool, "labAssignmentTable", sql_create);
+    labAssignmentTable = new DBTable(dbtool, this, "labAssignmentTable", sql_create);
 
     sql_create =  "CREATE TABLE ";
     sql_create += "rubricItemTable";
@@ -89,7 +89,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  commentIdsTableName TEXT NOT NULL";
     sql_create += " );";
 
-    rubricItemTable = new DBTable(dbtool, "rubricItemTable", sql_create);
+    rubricItemTable = new DBTable(dbtool, this, "rubricItemTable", sql_create);
 
     sql_create =  "CREATE TABLE ";
     sql_create += "commentTable";
@@ -101,7 +101,7 @@ void DBEngine::initialize_main_tables(){
     sql_create += "  rubricItemId INT  NOT NULL ";
     sql_create += " );";
 
-    commentTable = new DBTable(dbtool, "commentTable", sql_create);
+    commentTable = new DBTable(dbtool, this, "commentTable", sql_create);
 }
 
 void DBEngine::store_section(int id, std::vector<int> studentIds, std::vector<int> labIds){
@@ -344,7 +344,7 @@ void DBEngine::create_additional_table(std::vector<int> ids, std::string tableNa
     sql_create += "  id INT PRIMARY KEY NOT NULL ";
     sql_create += " );";
 
-    DBTable * table = new DBTable(dbtool, tableName, sql_create);
+    DBTable * table = new DBTable(dbtool, this, tableName, sql_create);
 
     std::string sql_add_row;
     char  tempval[128];
@@ -379,5 +379,52 @@ void DBEngine::get_data(){
     while (it!=additionalTables.end()){
         it->second->select_all();
         it++;
+    }
+}
+
+void DBEngine::restore_section_data(char **data){
+    int id = std::stoi(std::string(data[0]));
+    Section * section;
+
+    if(sections[id] == NULL)
+        section  = new Section();
+    else
+        section = sections[id];
+
+    section->set_Id(id);
+    additionalTables[std::string(data[1])]->select_all();
+}
+
+void DBEngine::restore_student_data(char **data){
+
+}
+
+void DBEngine::restore_lab_data(char **data){
+
+}
+
+void DBEngine::restore_template_data(char **data){
+
+}
+
+void DBEngine::restore_labAssignment_data(char **data){
+
+}
+
+void DBEngine::restore_rubricItem_data(char **data){
+
+}
+
+void DBEngine::restore_comment_data(char **data){
+
+}
+
+void DBEngine::restore_additional_table_data(string tableName, char **data){
+
+    if(tableName.substr(0,6) == "section"){
+        int id = stoi(tablename.substr(7,7));
+
+        if(tableName.substr())
+
     }
 }
