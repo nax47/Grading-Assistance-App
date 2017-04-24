@@ -60,14 +60,26 @@ void Engine::add_Lab(int num)
     labs.push_back(lab);
 }
 
+void Engine::new_LabAssignment()
+{
+    LabAssignment * LA = new LabAssignment();
+    LA->set_Student(currStudent);
+    LA->set_Lab(currLab);
+    LA->set_Grade(100);
+    currStudent->add_Lab(LA);
+}
+
+
 void Engine::add_Rubric_Item(string subj, int point)
 {
     RubricItem * rub = new RubricItem(subj, point);
     RubricItem * rub2 = new RubricItem(subj, point);
     currLabAssignment->new_RI(rub);
     currLab->get_Template()->add_RI(rub2);
+
     rubricItems.push_back(rub);
     rubricItems.push_back(rub2);
+
 }
 
 Comment * Engine::add_Comment(string comment, int lineNum, string fileName){

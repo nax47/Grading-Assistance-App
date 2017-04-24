@@ -7,6 +7,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(2);
+    //builds engine and sets up drop boxes with data base info
     GUIEngine = new Engine();
     vector <int> sec = GUIEngine->section_Drop_SetUp();
     for(int i = 0; i < sec.size(); i++)
@@ -16,11 +17,11 @@ Widget::Widget(QWidget *parent) :
     }
 
 
+    //attaches main code display window scroll bar to the line number one
     scrollWidget = new QWidget();
     currSliderVal = 0;
     codeBar = ui->codeDisp->verticalScrollBar();
     numBar = ui->linNumBox->verticalScrollBar();
-
     connect(codeBar, &QAbstractSlider::valueChanged, [=](int aSliderPosition){if(aSliderPosition != currSliderVal)
     {
             numBar->setValue(aSliderPosition);
@@ -38,7 +39,6 @@ void Widget::on_itemButton_clicked()
 {
     ui->subjectLine->clear();
     ui->pointsLine->clear();
-    ui->commentLine->clear();
     ui->stackedWidget->setCurrentIndex(1);
 }
 
@@ -47,7 +47,12 @@ void Widget::on_commentButton_clicked()
 
     ui->newComText->clear();
     ui->lNumNewCom->clear();
-    ui->RISnewCom->clear();
+    ui->RIScombo->clear();
+    for(int i = 0; i < rubricItemsDisplayed.size(); i++)
+    {
+        QGroupBox * temp = rubricItemsDisplayed.at(i);
+        ui->RIScombo->addItem(temp->title());
+    }
     ui->stackedWidget->setCurrentIndex(3);
 
 }
@@ -135,9 +140,6 @@ void Widget::on_okButton_clicked()
     pointsQ = ui->pointsLine->text();
     points = pointsQ.toInt();
 
-    commentQ = ui->commentLine->text();
-    comment = commentQ.toStdString();
-
     QString out;
     out = ui->outofText->text();
 
@@ -147,9 +149,8 @@ void Widget::on_okButton_clicked()
         QMessageBox::information(this, "Warning", "Please populate all fields.");
     } else {
         RubricItem *newItem = new RubricItem(subject, points);
-        newItem->add_Comment(new Comment(comment));
         rubricItems.push_back(newItem);
-        GUIEngine->add_Rubric_Item(subject, points, comment);
+        GUIEngine->add_Rubric_Item(subject, points);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedWidth(220);
@@ -188,12 +189,6 @@ void Widget::on_okButton_clicked()
         applyBox->setText("Select");
         boxLayout->addWidget(applyBox);
         selectedBoxes.push_back(applyBox);
-
-        QLabel * commentsLabel = new QLabel(commentQ);
-        commentsLabel->setMinimumHeight(20);
-        commentsLabel->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
-        boxLayout->addWidget(commentsLabel);
-
 
 
         rubricItemBox->setLayout(boxLayout);
@@ -385,10 +380,10 @@ void Widget::on_commentOK_clicked()
 {
     string in = ui->newComText->text().toStdString();
     int in2 = ui->lNumNewCom->text().toInt();
-    Comment * com = new Comment(in, in2, currFile);
-    GUIEngine->get_currLA()->get_RI(ui->RISnewCom->text().toStdString())->add_Comment(com);
+    Comment * com = GUIEngine->add_Comment(in, in2, currFile);
+    GUIEngine->get_currLA()->get_RI(ui->RIScombo->currentText().toStdString())->add_Comment(com);
     comments.push_back(com);
-    QString sub = ui->RISnewCom->text();
+    QString sub = ui->RIScombo->currentText();
     int gbNum = -1;
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
     {

@@ -20,8 +20,7 @@
       <string notr="true">background-color: rgb(85, 87, 83);</string>
      </property>
      <property name="currentIndex">
-      <number>3</number>
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="mainWindow">
       <widget class="QWidget" name="layoutWidget">
@@ -246,8 +245,8 @@
       <widget class="QPushButton" name="cancelButton">
        <property name="geometry">
         <rect>
-         <x>429</x>
-         <y>460</y>
+         <x>420</x>
+         <y>370</y>
          <width>121</width>
          <height>21</height>
         </rect>
@@ -262,8 +261,8 @@
       <widget class="QPushButton" name="okButton">
        <property name="geometry">
         <rect>
-         <x>270</x>
-         <y>460</y>
+         <x>250</x>
+         <y>370</y>
          <width>131</width>
          <height>21</height>
         </rect>
@@ -273,35 +272,6 @@
        </property>
        <property name="text">
         <string>OK</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="commentLabel">
-       <property name="geometry">
-        <rect>
-         <x>241</x>
-         <y>379</y>
-         <width>64</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="text">
-        <string>Comment</string>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="commentLine">
-       <property name="geometry">
-        <rect>
-         <x>311</x>
-         <y>379</y>
-         <width>231</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
       <widget class="QLabel" name="pointsLabel">
@@ -620,9 +590,9 @@
       <widget class="QRadioButton" name="loadRub">
        <property name="geometry">
         <rect>
-         <x>170</x>
+         <x>150</x>
          <y>460</y>
-         <width>141</width>
+         <width>201</width>
          <height>21</height>
         </rect>
        </property>
@@ -630,7 +600,7 @@
         <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>Load Last Rubric</string>
+        <string>Load Last Rubric Template</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_8">
@@ -733,19 +703,6 @@
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="RISnewCom">
-       <property name="geometry">
-        <rect>
-         <x>380</x>
-         <y>450</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_10">
        <property name="geometry">
         <rect>
@@ -772,12 +729,58 @@
         <string>Rubric Item Subject</string>
        </property>
       </widget>
+      <widget class="QComboBox" name="RIScombo">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>450</y>
+         <width>211</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>sectionDrop</tabstop>
+  <tabstop>sectionAdd</tabstop>
+  <tabstop>newIDVal</tabstop>
+  <tabstop>labDrop</tabstop>
+  <tabstop>labAdd</tabstop>
+  <tabstop>newLabNum</tabstop>
+  <tabstop>studentDrop</tabstop>
+  <tabstop>studentAdd</tabstop>
+  <tabstop>newStudentName</tabstop>
+  <tabstop>loadRub</tabstop>
+  <tabstop>StartGrading</tabstop>
+  <tabstop>openCodeButton</tabstop>
+  <tabstop>codeDisp</tabstop>
+  <tabstop>searchBar</tabstop>
+  <tabstop>searchButton</tabstop>
+  <tabstop>rubricScroll</tabstop>
+  <tabstop>itemButton</tabstop>
+  <tabstop>commentButton</tabstop>
+  <tabstop>applyButton</tabstop>
+  <tabstop>doneButton</tabstop>
+  <tabstop>subjectLine</tabstop>
+  <tabstop>pointsLine</tabstop>
+  <tabstop>outofText</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>newComText</tabstop>
+  <tabstop>lNumNewCom</tabstop>
+  <tabstop>RIScombo</tabstop>
+  <tabstop>commentOK</tabstop>
+  <tabstop>commentCancel</tabstop>
+  <tabstop>linNumBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
