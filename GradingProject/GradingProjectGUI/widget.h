@@ -117,6 +117,8 @@ private:
     int rubricPoint;
     string rubricComment;
     string rubric;
+    int maxPnt;
+    string maxPntStr;
 
     string comm;
     int commLine;
@@ -127,6 +129,7 @@ private:
 
     vector <QCheckBox *> selectedBoxes;
     vector <QSpinBox *> pointBoxes;
+    vector <QSpinBox *> maxPoints;
     vector <RubricItem *> rubricItems;
     vector <RubricItem*>::iterator rubricIter;
     vector <Comment *> comments;

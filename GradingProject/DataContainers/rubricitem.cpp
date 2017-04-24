@@ -61,6 +61,16 @@ bool RubricItem::get_Applied()
     return applied;
 }
 
+void RubricItem::set_maxP(int p)
+{
+    maxPoints = p;
+}
+
+int RubricItem::get_maxP()
+{
+    return maxPoints;
+}
+
 void RubricItem::set_Id(int id)
 {
     ID = id;

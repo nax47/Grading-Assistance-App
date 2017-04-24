@@ -33,6 +33,9 @@ public:
     void set_Id(int id);
     int get_Id();
 
+    void set_maxP(int p);
+    int get_maxP();
+
     vector <int> get_Comment_Ids();
 
     vector <Comment *> get_comments();
@@ -40,6 +43,7 @@ public:
 private:
     string subject;
     int points;
+    int maxPoints;
     bool applied;
     vector <Comment *> comments;
     int ID;

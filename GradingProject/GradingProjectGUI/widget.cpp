@@ -181,6 +181,7 @@ void Widget::on_okButton_clicked()
         outof->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
         pointsBoxLayout->addWidget(outof);
         boxLayout->addLayout(pointsBoxLayout);
+        maxPoints.push_back(outof);
 
         QCheckBox * applyBox = new QCheckBox();
 
@@ -354,8 +355,10 @@ void Widget::on_doneButton_clicked()
             subj = "<h2>" + subj + "</h2>";
 
             rubricPoint = currItem->get_Points();
+            maxPnt = currItem->get_maxP();
             rubricPoints = to_string(rubricPoint);
-            rubricPoints = "<h3> Points: " + rubricPoints + "</h3>";
+            maxPntStr = to_string(maxPnt);
+            rubricPoints = "<h3> Points: " + rubricPoints + " out of " + maxPntStr + "</h3>";
 
             comments = currItem->get_comments();
             rubric = rubric + empty + subj + rubricPoints;
@@ -372,17 +375,12 @@ void Widget::on_doneButton_clicked()
                     commFile = currComm->get_fileName();
                     commFile = "<h3> File: " + commFile + "</h3>";
 
-                    comment = rubric + empty + commFile + commLineString + comm;
+                    rubric = rubric + commFile + commLineString + comm + empty;
             }
-
-//            comment = currItem->get_Comment();
-//            comment = "<h3>" + comment + "</h3>";
-
-
         }
     }
 
-    html = html + rubric + commTotal;
+    html = html + rubric;
     qhtml = QString::fromStdString(html);
 
     QTextDocument doc;
@@ -452,17 +450,20 @@ void Widget::on_applyButton_clicked()
     QGroupBox * tmpPtr;
     QCheckBox * selected;
     QSpinBox * pointPTR;
+    QSpinBox * mpointPTR;
     int pointsOff = 0;
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
     {
         tmpPtr = rubricItemsDisplayed.at(i);
         selected = selectedBoxes.at(i);
         pointPTR = pointBoxes.at(i);
+        mpointPTR = maxPoints.at(i);
         if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
         {
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
-            cout << "applied set : " << GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied() << endl;
+            //cout << "applied set : " << GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied() << endl;
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
+            GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_maxP(mpointPTR->value());
             pointsOff = pointsOff + pointPTR->value();
             GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
 
