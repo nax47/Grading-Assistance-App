@@ -16,7 +16,7 @@ public:
     Template();
     ~Template();
 
-
+    //Setters and getters.
     void add_RI(RubricItem * newRI);
     RubricItem * get_RI(int num);
 
@@ -31,8 +31,8 @@ public:
     static int idCount;
 
 private:
-    vector <RubricItem *> items;
-    int ID;
+    vector <RubricItem *> items; //vector of rubric items
+    int ID; //id for database
 };
 
 

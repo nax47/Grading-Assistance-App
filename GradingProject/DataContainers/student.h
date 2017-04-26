@@ -18,7 +18,7 @@ public:
     Student(string name);
     ~Student();
 
-
+    //Setters and getters.
     void set_Name(string name);
     string get_Name();
 
@@ -36,9 +36,9 @@ public:
 
 private:
 
-    string studentName;
-    vector <LabAssignment *> gradedLabs;
-    int ID;
+    string studentName; //student name
+    vector <LabAssignment *> gradedLabs; //vector of graded labs
+    int ID; //id for database
 };
 
 

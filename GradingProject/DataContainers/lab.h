@@ -18,10 +18,12 @@ class Section;
 class Lab
 {
 public:
+    //Constructors and destructor
     Lab();
     ~Lab();
     Lab(int num);
 
+    //Getters and setters
     void set_Section(Section * sec);
     Section * get_Section();
 
@@ -38,10 +40,10 @@ public:
 
 private:
 
-    Template * tmplate;
-    int labNum;
-    Section * section;
-    int ID;
+    Template * tmplate; //template
+    int labNum; //lab number
+    Section * section; //section
+    int ID; //id for database
 };
 
 

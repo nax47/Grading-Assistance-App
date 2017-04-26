@@ -17,6 +17,7 @@ public:
     Comment(string in, int line, string file);
     ~Comment();
 
+    //Getters and Setters.
     string get_Comment();
     void change_Comment(string in);
 
@@ -35,11 +36,11 @@ public:
     static int idCount;
 
 private:
-    string comment;
-    int lineNum;
-    string fileName;
-    RubricItem * link;
-    int ID;
+    string comment; //Comment
+    int lineNum; //line number
+    string fileName; //file name
+    RubricItem * link; //rubric item comment is in
+    int ID; //id for database
 };
 
 
