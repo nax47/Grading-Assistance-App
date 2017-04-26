@@ -412,6 +412,12 @@ void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
 }
 
 //Chosen when grader is done grading all of current student's code.
+//HTML is used to output to pdf.
+//<h1> denotes header  1, <h2> denoted header 2, etc.
+//</h1> denotes end of header one, etc.
+//Added to beginning and end of string to print to pdf.
+//All ints converted to string and all strings converted to QString.
+//Deletes pointers for current student so next student can be graded.
 void Widget::on_doneButton_clicked()
 {
     //Initializes vector for holding rubric items.
@@ -428,57 +434,81 @@ void Widget::on_doneButton_clicked()
     fileName = currPathName + studentName +".pdf";
     qFileName = QString::fromStdString(fileName);
 
+    //Sets student name.
     studentName = "<h1>" + studentName + "</h1>";
+
+    //Sets current section.
     section = currSection->get_Id();
     sectionString = to_string(section);
     sectionString = "<h2> Section: " + sectionString + "</h2>";
 
+    //Sets current lab.
     lab = currLab->get_labNum();
     labString = to_string(lab);
     labString = "<h2> Lab Number: " + labString + "</h2>";
 
+    //Gets current lab assingment to set final score.
     LabAssignment *currLabAssignment = currStudent->get_Lab(lab - 1);
     score = currLabAssignment->get_Grade();
     scoreString = to_string(score);
     scoreString = "<h3> Final Grade: " + scoreString + "</h3>";
 
+    //Combines student name, section, lab, and grade to one string.
     html = studentName + sectionString + labString + scoreString;
 
+    //Iterates through vector of rubic items.
+    //Nested loops to get all comments associated with each rubric item.
+    //Gets applied rubric items and comments to print to pdf.
     for(rubricIter = rubricItems.begin(); rubricIter != rubricItems.end(); rubricIter++) {
         RubricItem *currItem = *rubricIter;
+        //Checks if current rubric item was applied.
         if(currItem->get_Applied()) {
+
+            //Sets subject of rubric item.
             subj = currItem->get_Subject();
             subj = "<h2>" + subj + "</h2>";
 
+            //Sets current points.
             rubricPoint = currItem->get_Points();
             maxPnt = currItem->get_maxP();
             rubricPoints = to_string(rubricPoint);
             maxPntStr = to_string(maxPnt);
             rubricPoints = "<h3> Points: " + rubricPoints + " out of " + maxPntStr + "</h3>";
 
+            //Gets comments associated with current rubric item.
             comments = currItem->get_comments();
+
+            //Combines rubric item with subject and points.
             rubric = rubric + empty + subj + rubricPoints;
 
+            //Iterates through vector of comments.
             for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
                 Comment *currComm = *commIter;
+
+                    //Sets comment.
                     comm = currComm->get_Comment();
                     comm = "<h3>" + comm + "</h3>";
 
+                    //Sets line of code comment is to be applied to.
                     commLine = currComm->get_line();
                     commLineString = to_string(commLine);
                     commLineString = "<h3> Line Number: " + commLineString + "</h3>";
 
+                    //Sets file that comment is associated with.
                     commFile = currComm->get_fileName();
                     commFile = "<h3> File: " + commFile + "</h3>";
 
+                    //Combines rubric, file, comment line, and comment.
                     rubric = rubric + commFile + commLineString + comm + empty;
             }
         }
     }
 
+    //Sets final output string and converts to QString.
     html = html + rubric;
     qhtml = QString::fromStdString(html);
 
+    //Code for printing to pdf document.
     QTextDocument doc;
     doc.setHtml(qhtml);
     QPrinter printer;
@@ -487,41 +517,50 @@ void Widget::on_doneButton_clicked()
     doc.print(&printer);
     printer.newPage();
 
+    //Clears the code display
     ui->codeDisp->clear();
     ui->linNumBox->clear();
-//    delete scrollWidget->layout();
-//    delete scrollWidget;
-//    QWidget * scrollWidget = new QWidget();
-//    QVBoxLayout * emp = new QVBoxLayout;
-//    scrollWidget->setLayout(emp);
-//    ui->rubricScroll->setWidget(scrollWidget);
+
+    //Iterates through vector of displayed rubric items and deletes.
     for(rubrDispIter = rubricItemsDisplayed.begin(); rubrDispIter != rubricItemsDisplayed.end(); rubrDispIter++) {
         QGroupBox *currQBox = *rubrDispIter;
         delete currQBox;
     }
 
+    //Iterates through vector of rubric items and deletes each.
     for(rubricIter = rubricItems.begin(); rubricIter != rubricItems.end(); rubricIter++) {
         RubricItem *currItem = *rubricIter;
         delete currItem;
     }
 
+    //Clears vector of displayed rubric items.
     rubricItemsDisplayed.clear();
+
+    //Clears vector of selected boxes.
     selectedBoxes.clear();
+
+    //Clears vectors of point boxes, maxpoints, rubric items.
     pointBoxes.clear();
     maxPoints.clear();
     rubricItems.clear();
+
+    //Clears strings of comments, curr file name, html output, qhtml, and rubric.
     comments.clear();
     currFileName.clear();
     html.clear();
     qhtml.clear();
     rubric.clear();
+
+    //Sets gui back to main screen to add new student.
     ui->stackedWidget->setCurrentIndex(2);
 }
 
+//Cancels adding new comment.
 void Widget::on_commentCancel_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }
+
 
 void Widget::on_commentOK_clicked()
 {
@@ -563,6 +602,7 @@ void Widget::on_commentOK_clicked()
     ui->stackedWidget->setCurrentIndex(0);
 
 }
+
 
 void Widget::on_applyButton_clicked()
 {

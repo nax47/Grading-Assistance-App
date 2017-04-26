@@ -13,10 +13,12 @@ class Comment;
 class RubricItem
 {
 public:
+    //Constructors and destructor
     RubricItem();
     RubricItem(string sub, int pnts);
     ~RubricItem();
 
+    //Getters, setters, and methods to add.
     void set_Subject(string sub);
     string get_Subject();
 
@@ -43,12 +45,12 @@ public:
     static int idCount;
 
 private:
-    string subject;
-    int points;
-    int maxPoints;
-    bool applied;
-    vector <Comment *> comments;
-    int ID;
+    string subject; //subject of rubric item
+    int points; //points off for rubric item
+    int maxPoints; //max points rubric tiem is worth
+    bool applied; //Whether or no the rubric item was applied
+    vector <Comment *> comments; //vector of comments associated with the rubric items
+    int ID; //id for database
 };
 
 

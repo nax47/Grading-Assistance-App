@@ -20,6 +20,7 @@ public:
     LabAssignment();
     ~LabAssignment();
 
+    //Setters, getters, and metehods for adding data.
     void set_Student(Student * kid);
     Student * get_Student();
 
@@ -46,11 +47,11 @@ public:
 
 private:
 
-    Student * student;
-    vector <RubricItem *> appliedItems;
-    int grade;
-    Lab * linkedLab;
-    int ID;
+    Student * student; //Student
+    vector <RubricItem *> appliedItems; //applied rubric items
+    int grade; //grade of assignment
+    Lab * linkedLab; //Lab that assignement is linked to
+    int ID; //id for database
 };
 
 
