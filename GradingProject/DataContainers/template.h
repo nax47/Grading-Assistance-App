@@ -28,12 +28,12 @@ public:
 
     vector <RubricItem *> get_rubricItems();
 
+    static int idCount;
+
 private:
     vector <RubricItem *> items;
     int ID;
-    //static int idCount;
 };
 
-//int Template::idCount = 0;
 
 #endif // TEMPLATE_H

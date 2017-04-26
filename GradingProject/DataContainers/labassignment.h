@@ -42,6 +42,8 @@ public:
 
     vector <RubricItem *> get_rubricItems();
 
+    static int idCount;
+
 private:
 
     Student * student;
@@ -49,9 +51,7 @@ private:
     int grade;
     Lab * linkedLab;
     int ID;
-    //static int idCount;
 };
 
-//int LabAssignment::idCount = 0;
 
 #endif // LABASSIGNMENT_H

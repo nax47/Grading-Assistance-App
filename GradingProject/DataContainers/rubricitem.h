@@ -40,6 +40,8 @@ public:
 
     vector <Comment *> get_comments();
 
+    static int idCount;
+
 private:
     string subject;
     int points;
@@ -47,9 +49,7 @@ private:
     bool applied;
     vector <Comment *> comments;
     int ID;
-    //static int idCount;
 };
 
-//int RubricItem::idCount = 0;
 
 #endif // RUBRICITEM_H

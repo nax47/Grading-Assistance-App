@@ -1,14 +1,19 @@
 #include "comment.h"
 
+int Comment::idCount = 0;
+
 Comment::Comment()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 
 Comment::Comment(string in)
 {
     comment = in;
+    ID = idCount;
+    idCount += 1;
 }
 
 Comment::Comment(string in, int line, string file)
@@ -16,6 +21,8 @@ Comment::Comment(string in, int line, string file)
     comment = in;
     lineNum = line;
     fileName = file;
+    ID = idCount;
+    idCount += 1;
 }
 
 Comment::~Comment()

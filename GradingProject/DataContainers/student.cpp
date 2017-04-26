@@ -1,13 +1,18 @@
 #include "student.h"
 
+int Student::idCount = 0;
+
 Student::Student()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 Student::Student(string name)
 {
     studentName = name;
+    ID = idCount;
+    idCount += 1;
 }
 
 Student::~Student()

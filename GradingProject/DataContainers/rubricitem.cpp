@@ -1,14 +1,19 @@
 #include "rubricitem.h"
 
+int RubricItem::idCount = 0;
+
 RubricItem::RubricItem()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 RubricItem::RubricItem(string sub, int pnts)
 {
     subject = sub;
     points = pnts;
+    ID = idCount;
+    idCount += 1;
 }
 
 RubricItem::~RubricItem()

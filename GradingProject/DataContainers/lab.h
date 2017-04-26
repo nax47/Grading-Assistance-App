@@ -34,15 +34,15 @@ public:
     void set_Id(int id);
     int get_Id();
 
+    static int idCount;
+
 private:
 
     Template * tmplate;
     int labNum;
     Section * section;
     int ID;
-    //static int idCount;
 };
 
-//int Lab::idCount = 0;
 
 #endif // LAB_H

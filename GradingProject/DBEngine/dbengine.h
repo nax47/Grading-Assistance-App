@@ -80,10 +80,47 @@ public:
     // Method to restore data from an additional  table
     void restore_additional_table_data(std::string tableName, char **data);
 
-    void restore_data();
+    // Method to get the highest id of sections stored in database
+    int get_max_section_id();
 
-    // Method called by main Engine to restore and recreate the data stored in tables
-    std::vector<Section *> get_stored_data();
+    // Method to get the highest id of students stored in database
+    int get_max_student_id();
+
+    // Method to get the highest id of labs stored in database
+    int get_max_lab_id();
+
+    // Method to get the highest id of templates stored in database
+    int get_max_template_id();
+
+    // Method to get the highest id of lab assignments stored in database
+    int get_max_labAssignment_id();
+
+    // Method to get the highest id of rubric items stored in database
+    int get_max_rubricItem_id();
+
+    // Method to get the highest id of comments stored in database
+    int get_max_comment_id();
+
+    // Method called by main Engine to restore the list of stored sections
+    std::vector<Section *> get_sections();
+
+    // Method called by main Engine to restore the list of stored students
+    std::vector<Student *> get_students();
+
+    // Method called by main Engine to restore the list of stored labs
+    std::vector<Lab *> get_labs();
+
+    // Method called by main Engine to restore the list of stored templates
+    std::vector<Template *> get_templates();
+
+    // Method called by main Engine to restore the list of stored lab assignments
+    std::vector<LabAssignment *> get_labAssignments();
+
+    // Method called by main Engine to restore the list of stored rubric items
+    std::vector<RubricItem *> get_rubricItems();
+
+    // Method called by main Engine to restore the list of stored comments
+    std::vector<Comment *> get_comments();
 
 private:
     // Reference to database tool that will store the tables
@@ -138,11 +175,35 @@ private:
     // Map to temporarily store comments while recreating data structures
     std::map <int, Comment *> comments;
 
+    // Max section ID stored in database
+    int maxSectionId;
+
+    // Max student ID stored in database
+    int maxStudentId;
+
+    // Max lab ID stored in database
+    int maxLabId;
+
+    // Max template ID stored in database
+    int maxTemplateId;
+
+    // Max lab assignment ID stored in database
+    int maxLabAssignmentId;
+
+    // Max rubric item ID stored in database
+    int maxRubricItemId;
+
+    // Max comment ID stored in database
+    int maxCommentId;
+
     // Create a table that stores one to many links
     void create_additional_table(std::vector<int> ids, std::string tableName);
 
     // Creates main DBTable objects
     void initialize_main_tables();
+
+    // Internal method restore data from tables into objects
+    void restore_data();
 };
 
 #endif // DBENGINE_H

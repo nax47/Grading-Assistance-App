@@ -32,15 +32,15 @@ public:
     void set_Id(int id);
     int get_Id();
 
+    static int idCount;
+
 private:
     string comment;
     int lineNum;
     string fileName;
     RubricItem * link;
     int ID;
-    //static int idCount;
 };
 
-//int Comment::idCount = 0;
 
 #endif // COMMENT_H

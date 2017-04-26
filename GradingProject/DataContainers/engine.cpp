@@ -1,12 +1,39 @@
 #include "engine.h"
 
 Engine::Engine(){
+
     dbControl = new DBEngine(new DBTool("GradingToolDB"));
-    sectionList = dbControl->get_stored_data();
+
+    //Initialize the sectionList with data stored in the database
+    sectionList = dbControl->get_sections();
+
+    //Initialize the other object vectors with data from the database
+    students = dbControl->get_students();
+    labs = dbControl->get_labs();
+    templates = dbControl->get_templates();
+    labAssignments = dbControl->get_labAssignments();
+    rubricItems = dbControl->get_rubricItems();
+    comments = dbControl->get_comments();
+
+    std::cout << "restored items" << std::endl;
+
+    //debugging
+    for(int i=0; i<sectionList.size(); i++){
+        std::cout << "Section: " << std::to_string(sectionList.at(i)->get_Id()) << std::endl;
+    }
+
+    //Update ID count for each class so subsequent objects are created with correct IDs
+    Section::idCount = dbControl->get_max_section_id()+1;
+    Student::idCount = dbControl->get_max_student_id()+1;
+    Lab::idCount = dbControl->get_max_lab_id()+1;
+    Template::idCount = dbControl->get_max_template_id()+1;
+    LabAssignment::idCount = dbControl->get_max_labAssignment_id()+1;
+    RubricItem::idCount = dbControl->get_max_rubricItem_id()+1;
+    Comment::idCount = dbControl->get_max_comment_id()+1;
 }
 
 Engine::~Engine(){
-    //write_to_database();
+    write_to_database();
 }
 
 void Engine::add_Section(int id)
@@ -59,6 +86,7 @@ void Engine::add_Lab(int num)
     lab->set_Template(labTemplate);
     currSection->add_Lab(lab);
     labs.push_back(lab);
+    templates.push_back(labTemplate);
 }
 
 void Engine::new_LabAssignment()
@@ -68,6 +96,7 @@ void Engine::new_LabAssignment()
     LA->set_Lab(currLab);
     LA->set_Grade(100);
     currStudent->add_Lab(LA);
+    labAssignments.push_back(LA);
 }
 
 
@@ -143,6 +172,7 @@ void Engine::start_Grading()
     lab->set_Grade(100);
     currStudent->add_Lab(lab);
     currLabAssignment = lab;
+    labAssignments.push_back(lab);
 }
 
 vector <int> Engine::section_Drop_SetUp()

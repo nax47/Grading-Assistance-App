@@ -1,8 +1,11 @@
 #include "lab.h"
 
+int Lab::idCount = 0;
+
 Lab::Lab()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 Lab::~Lab()
@@ -13,6 +16,8 @@ Lab::~Lab()
 Lab::Lab(int num)
 {
     labNum = num;
+    ID = idCount;
+    idCount += 1;
 }
 
 void Lab::set_Section(Section *sec)
