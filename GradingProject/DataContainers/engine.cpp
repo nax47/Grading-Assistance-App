@@ -100,10 +100,12 @@ void Engine::new_LabAssignment()
 }
 
 
-void Engine::add_Rubric_Item(string subj, int point)
+void Engine::add_Rubric_Item(string subj, int point, int max)
 {
     RubricItem * rub = new RubricItem(subj, point);
     RubricItem * rub2 = new RubricItem(subj, point);
+    rub->set_maxP(max);
+    rub2->set_maxP(max);
     currLabAssignment->new_RI(rub);
     currLab->get_Template()->add_RI(rub2);
 
@@ -149,27 +151,32 @@ Lab * Engine::get_currL()
     return currLab;
 }
 
-//void Engine::add_Lab(int num)
-//{
-//    Lab * lab = new Lab(num);
-//    lab->set_Section(currSection);
-//    lab->set_Template(currTemplate);
-//    currSection->add_Lab(lab);
-//    labs.push_back(lab);
-//}
+
 LabAssignment * Engine::get_currLA()
 {
     return currLabAssignment;
 }
 
-void Engine::start_Grading()
+void Engine::start_Grading(bool loadLast)
 {
     LabAssignment * lab = new LabAssignment();
 
-    currLab->set_Template(currLab->get_Template());
+    //currLab->set_Template(currLab->get_Template());
     lab->set_Lab(currLab);
     lab->set_Student(currStudent);
     lab->set_Grade(100);
+    if(loadLast)
+    {
+        vector <RubricItem *> last = currLab->get_Template()->getItems();
+        for(int i = 0; i < last.size(); i++)
+        {
+            RubricItem * tp = last.at(i);
+            RubricItem * temp = new RubricItem(tp->get_Subject(), tp->get_Points());
+            temp->set_maxP(tp->get_maxP());
+
+            lab->new_RI(temp);
+        }
+    }
     currStudent->add_Lab(lab);
     currLabAssignment = lab;
     labAssignments.push_back(lab);

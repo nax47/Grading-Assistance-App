@@ -54,7 +54,7 @@ public:
     void add_Lab(int num);
     Comment * add_Comment(std::string comment, int lineNum, std::string fileName);
 
-    void start_Grading();
+    void start_Grading(bool loadLast);
     //GUI set up methods
     vector <int> section_Drop_SetUp();
     vector <int> labNum_Drop_SetUp();
@@ -62,7 +62,7 @@ public:
 
 
 
-    void add_Rubric_Item(string subj, int point);
+    void add_Rubric_Item(string subj, int point, int max);
 
 
 private:

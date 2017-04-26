@@ -143,6 +143,7 @@ void Widget::on_okButton_clicked()
     pointsQ = ui->pointsLine->text();
     points = pointsQ.toInt();
 
+    int max = ui->outofText->text().toInt();
     QString out;
     out = ui->outofText->text();
 
@@ -152,7 +153,7 @@ void Widget::on_okButton_clicked()
         QMessageBox::information(this, "Warning", "Please populate all fields.");
     } else {
 
-        GUIEngine->add_Rubric_Item(subject, points);
+        GUIEngine->add_Rubric_Item(subject, points, max);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedWidth(220);
@@ -309,7 +310,7 @@ void Widget::on_StartGrading_clicked()
             }
 
         }
-        GUIEngine->start_Grading();
+        GUIEngine->start_Grading(ui->loadRub->isChecked());
         string studentName = GUIEngine->get_currStu()->get_Name();
         QString name = QString::fromStdString(studentName);
         int t = GUIEngine->get_currL()->get_labNum();
@@ -523,36 +524,14 @@ void Widget::on_applyButton_clicked()
     QSpinBox * mpointPTR;
     int pointsOff = 0;
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
-    {//    for(int i = 0; i < fileVec.size(); i++) {
-        //        countStr = to_string(i);
-        //        currFile = fileVec.at(i);
-        //        currFile = "<h4> File Name : " + currFile255 + "</h4>";
-        //        html = html + currFile;
-        //    }
-
-        //    for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
-        //        Comment *currComm = *commIter;
-        //            comm = currComm->get_Comment();
-        //            comm = "<h3>" + comm + "</h3>";
-
-        //            commLine = currComm->get_line();
-        //            commLineString = to_string(commLine);
-        //            commLineString = "<h3> Line Number: " + commLineString + "</h3>";
-
-        //            commFile = currComm->get_fileName();
-        //            commFile = "<h3> File: " + commFile + "</h3>";
-
-        //            commTotal = commTotal + empty + commFile + commLineString + comm;
-        //    }
+    {
         tmpPtr = rubricItemsDisplayed.at(i);
         selected = selectedBoxes.at(i);
         pointPTR = pointBoxes.at(i);
         mpointPTR = maxPoints.at(i);
-        //comments.push_back(com);
         if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
         {
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
-            //cout << "applied set : " << GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied() << endl;
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_maxP(mpointPTR->value());
             pointsOff = pointsOff + pointPTR->value();

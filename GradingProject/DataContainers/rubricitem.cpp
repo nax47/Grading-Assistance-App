@@ -6,6 +6,7 @@ RubricItem::RubricItem()
 {
     ID = idCount;
     idCount += 1;
+    applied = false;
 }
 
 RubricItem::RubricItem(string sub, int pnts)
@@ -14,6 +15,7 @@ RubricItem::RubricItem(string sub, int pnts)
     points = pnts;
     ID = idCount;
     idCount += 1;
+    applied = false;
 }
 
 RubricItem::~RubricItem()
