@@ -205,8 +205,6 @@ void Widget::on_okButton_clicked()
             scrollLayout->addWidget(rubricItemsDisplayed.at(i));
         }
         delete scrollWidget->layout();
-//        delete scrollWidget;
-//        scrollWidget = new QWidget();
         scrollWidget->setLayout(scrollLayout);
         ui->rubricScroll->setWidget(scrollWidget);
         ui->stackedWidget->setCurrentIndex(0);
@@ -248,6 +246,69 @@ void Widget::on_StartGrading_clicked()
     } else if(GUIEngine->get_currSec() == nullptr) {
         QMessageBox::information(this, "Warning", "Please Select Section.");
     } else {
+        if(ui->loadRub->isChecked())
+        {
+            vector <RubricItem *> prevTemplate = GUIEngine->get_currL()->get_Template()->getItems();
+            for(int i = 0; i < prevTemplate.size(); i++)
+            {
+                RubricItem * tmpPtr = prevTemplate.at(i);
+                QGroupBox * rubricItemBox = new QGroupBox (QString::fromStdString(tmpPtr->get_Subject()));
+                rubricItemBox->setFixedWidth(220);
+                rubricItemBox->setMinimumHeight(150);
+                rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
+
+                QVBoxLayout * boxLayout = new QVBoxLayout;
+
+                QLabel * pointsLabel = new QLabel(tr("Points"));
+                QHBoxLayout * pointsBoxLayout = new QHBoxLayout();
+                pointsLabel->setStyleSheet("QLabel { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
+                pointsLabel->setFixedSize(50,20);
+                pointsBoxLayout->addWidget(pointsLabel);
+
+
+                QSpinBox * pointsVal = new QSpinBox();
+                pointsVal->setValue(tmpPtr->get_Points());
+                pointsVal->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
+                pointsVal->setMaximum(tmpPtr->get_maxP());
+                pointsBoxLayout->addWidget(pointsVal);
+                pointBoxes.push_back(pointsVal);
+
+                QLabel * div = new QLabel(tr("Out of"));
+                div->setStyleSheet("QLabel { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
+                pointsBoxLayout->addWidget(div);
+
+                QSpinBox * outof = new QSpinBox();
+                outof->setValue(tmpPtr->get_maxP());
+                outof->setStyleSheet("QSpinBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; }");
+                pointsBoxLayout->addWidget(outof);
+                boxLayout->addLayout(pointsBoxLayout);
+                maxPoints.push_back(outof);
+
+                QCheckBox * applyBox = new QCheckBox();
+
+                applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+                applyBox->setText("Select");
+                boxLayout->addWidget(applyBox);
+                selectedBoxes.push_back(applyBox);
+
+
+                rubricItemBox->setLayout(boxLayout);
+                rubricItemsDisplayed.push_back(rubricItemBox);
+
+
+
+
+                QVBoxLayout * scrollLayout = new QVBoxLayout;
+                for(int i=0; i<rubricItemsDisplayed.size(); i++){
+                    scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+                }
+                delete scrollWidget->layout();
+                scrollWidget->setLayout(scrollLayout);
+                ui->rubricScroll->setWidget(scrollWidget);
+
+            }
+
+        }
         GUIEngine->start_Grading();
         string studentName = GUIEngine->get_currStu()->get_Name();
         QString name = QString::fromStdString(studentName);
@@ -263,6 +324,7 @@ void Widget::on_StartGrading_clicked()
         QString final = name.append(grade);
         ui->studentgrade->setText(final);
         ui->stackedWidget->setCurrentIndex(0);
+
 
     }
 }
