@@ -92,6 +92,9 @@
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="placeholderText">
+             <string>Subject</string>
+            </property>
            </widget>
           </item>
           <item row="0" column="2" colspan="2">
@@ -197,7 +200,7 @@
       <widget class="QLabel" name="pointsLabel_2">
        <property name="geometry">
         <rect>
-         <x>410</x>
+         <x>400</x>
          <y>300</y>
          <width>40</width>
          <height>16</height>
@@ -222,6 +225,9 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
+       <property name="placeholderText">
+        <string>#</string>
+       </property>
       </widget>
       <widget class="QLabel" name="newRubricItemLabel">
        <property name="geometry">
@@ -245,7 +251,7 @@
       <widget class="QPushButton" name="cancelButton">
        <property name="geometry">
         <rect>
-         <x>420</x>
+         <x>430</x>
          <y>370</y>
          <width>121</width>
          <height>21</height>
@@ -261,7 +267,7 @@
       <widget class="QPushButton" name="okButton">
        <property name="geometry">
         <rect>
-         <x>250</x>
+         <x>290</x>
          <y>370</y>
          <width>131</width>
          <height>21</height>
@@ -277,8 +283,8 @@
       <widget class="QLabel" name="pointsLabel">
        <property name="geometry">
         <rect>
-         <x>241</x>
-         <y>297</y>
+         <x>240</x>
+         <y>300</y>
          <width>40</width>
          <height>16</height>
         </rect>
@@ -302,12 +308,15 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
+       <property name="placeholderText">
+        <string>#</string>
+       </property>
       </widget>
       <widget class="QLabel" name="subjectLabel">
        <property name="geometry">
         <rect>
-         <x>241</x>
-         <y>216</y>
+         <x>240</x>
+         <y>220</y>
          <width>49</width>
          <height>16</height>
         </rect>
@@ -322,14 +331,17 @@
       <widget class="QLineEdit" name="subjectLine">
        <property name="geometry">
         <rect>
-         <x>296</x>
-         <y>216</y>
+         <x>300</x>
+         <y>220</y>
          <width>251</width>
          <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="placeholderText">
+        <string>Subject</string>
        </property>
       </widget>
      </widget>
@@ -560,6 +572,9 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
+       <property name="placeholderText">
+        <string>Section Number</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="newLabNum">
        <property name="geometry">
@@ -573,6 +588,9 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
+       <property name="placeholderText">
+        <string>Lab Number</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="newStudentName">
        <property name="geometry">
@@ -585,6 +603,9 @@
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="placeholderText">
+        <string>Student Name</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="loadRub">
@@ -627,7 +648,7 @@
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>80</y>
+         <y>90</y>
          <width>411</width>
          <height>51</height>
         </rect>
@@ -692,6 +713,12 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+       <property name="placeholderText">
+        <string>Enter Comment Here</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="lNumNewCom">
        <property name="geometry">
@@ -704,6 +731,9 @@
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="placeholderText">
+        <string>######</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_10">
