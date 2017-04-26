@@ -44,7 +44,10 @@ void Widget::on_itemButton_clicked()
 
 void Widget::on_commentButton_clicked()
 {
-
+    if(currFileName.empty()) {
+        QMessageBox::information(this, "Warning", "Please Select Code File Before Adding Comment.");
+        ui->stackedWidget->setCurrentIndex(0);
+    } else {
     ui->newComText->clear();
     ui->lNumNewCom->clear();
     ui->RIScombo->clear();
@@ -54,7 +57,7 @@ void Widget::on_commentButton_clicked()
         ui->RIScombo->addItem(temp->title());
     }
     ui->stackedWidget->setCurrentIndex(3);
-
+    }
 }
 
 void Widget::on_searchButton_clicked()
@@ -202,6 +205,8 @@ void Widget::on_okButton_clicked()
             scrollLayout->addWidget(rubricItemsDisplayed.at(i));
         }
         delete scrollWidget->layout();
+//        delete scrollWidget;
+//        scrollWidget = new QWidget();
         scrollWidget->setLayout(scrollLayout);
         ui->rubricScroll->setWidget(scrollWidget);
         ui->stackedWidget->setCurrentIndex(0);
@@ -298,6 +303,8 @@ void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
 
 void Widget::on_doneButton_clicked()
 {
+    vector <RubricItem *> rubricItems;
+    //rubricItems.clear();
     rubricItems = GUIEngine->get_currLA()->get_rubricItems();
     cout << comments.size() << endl;
     cout << rubricItems.size() << endl;
@@ -305,7 +312,8 @@ void Widget::on_doneButton_clicked()
     Section *currSection = GUIEngine->get_currSec();
     Lab *currLab = GUIEngine->get_currL();
 
-    studentName = currStudent->get_Name();
+    //studentName = currStudent->get_Name();
+    studentName = GUIEngine->get_currLA()->get_Student()->get_Name();
     fileName = currPathName + studentName +".pdf";
     qFileName = QString::fromStdString(fileName);
 
@@ -325,31 +333,8 @@ void Widget::on_doneButton_clicked()
 
     html = studentName + sectionString + labString + scoreString;
 
-//    for(int i = 0; i < fileVec.size(); i++) {
-//        countStr = to_string(i);
-//        currFile = fileVec.at(i);
-//        currFile = "<h4> File Name : " + currFile255 + "</h4>";
-//        html = html + currFile;
-//    }
-
-//    for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
-//        Comment *currComm = *commIter;
-//            comm = currComm->get_Comment();
-//            comm = "<h3>" + comm + "</h3>";
-
-//            commLine = currComm->get_line();
-//            commLineString = to_string(commLine);
-//            commLineString = "<h3> Line Number: " + commLineString + "</h3>";
-
-//            commFile = currComm->get_fileName();
-//            commFile = "<h3> File: " + commFile + "</h3>";
-
-//            commTotal = commTotal + empty + commFile + commLineString + comm;
-//    }
-
     for(rubricIter = rubricItems.begin(); rubricIter != rubricItems.end(); rubricIter++) {
         RubricItem *currItem = *rubricIter;
-        cout << currItem->get_Applied() << " rubric iter" << endl;
         if(currItem->get_Applied()) {
             subj = currItem->get_Subject();
             subj = "<h2>" + subj + "</h2>";
@@ -391,6 +376,34 @@ void Widget::on_doneButton_clicked()
     doc.print(&printer);
     printer.newPage();
 
+    ui->codeDisp->clear();
+    ui->linNumBox->clear();
+//    delete scrollWidget->layout();
+//    delete scrollWidget;
+//    QWidget * scrollWidget = new QWidget();
+//    QVBoxLayout * emp = new QVBoxLayout;
+//    scrollWidget->setLayout(emp);
+//    ui->rubricScroll->setWidget(scrollWidget);
+    for(rubrDispIter = rubricItemsDisplayed.begin(); rubrDispIter != rubricItemsDisplayed.end(); rubrDispIter++) {
+        QGroupBox *currQBox = *rubrDispIter;
+        delete currQBox;
+    }
+
+    for(rubricIter = rubricItems.begin(); rubricIter != rubricItems.end(); rubricIter++) {
+        RubricItem *currItem = *rubricIter;
+        delete currItem;
+    }
+
+    rubricItemsDisplayed.clear();
+    selectedBoxes.clear();
+    pointBoxes.clear();
+    maxPoints.clear();
+    rubricItems.clear();
+    comments.clear();
+    currFileName.clear();
+    html.clear();
+    qhtml.clear();
+    rubric.clear();
     ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -401,15 +414,10 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
-    if(currFileName.empty()) {
-        QMessageBox::information(this, "Warning", "Please Select Code File Before Adding Comment.");
-        ui->stackedWidget->setCurrentIndex(0);
-    } else {
     string in = ui->newComText->text().toStdString();
     int in2 = ui->lNumNewCom->text().toInt();
     Comment * com = GUIEngine->add_Comment(in, in2, currFileName);
     GUIEngine->get_currLA()->get_RI(ui->RIScombo->currentText().toStdString())->add_Comment(com);
-    //comments.push_back(com);
     QString sub = ui->RIScombo->currentText();
     int gbNum = -1;
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
@@ -442,7 +450,7 @@ void Widget::on_commentOK_clicked()
         ui->rubricScroll->setWidget(scrollWidget);
     }
     ui->stackedWidget->setCurrentIndex(0);
-    }
+
 }
 
 void Widget::on_applyButton_clicked()
@@ -453,11 +461,32 @@ void Widget::on_applyButton_clicked()
     QSpinBox * mpointPTR;
     int pointsOff = 0;
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
-    {
+    {//    for(int i = 0; i < fileVec.size(); i++) {
+        //        countStr = to_string(i);
+        //        currFile = fileVec.at(i);
+        //        currFile = "<h4> File Name : " + currFile255 + "</h4>";
+        //        html = html + currFile;
+        //    }
+
+        //    for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
+        //        Comment *currComm = *commIter;
+        //            comm = currComm->get_Comment();
+        //            comm = "<h3>" + comm + "</h3>";
+
+        //            commLine = currComm->get_line();
+        //            commLineString = to_string(commLine);
+        //            commLineString = "<h3> Line Number: " + commLineString + "</h3>";
+
+        //            commFile = currComm->get_fileName();
+        //            commFile = "<h3> File: " + commFile + "</h3>";
+
+        //            commTotal = commTotal + empty + commFile + commLineString + comm;
+        //    }
         tmpPtr = rubricItemsDisplayed.at(i);
         selected = selectedBoxes.at(i);
         pointPTR = pointBoxes.at(i);
         mpointPTR = maxPoints.at(i);
+        //comments.push_back(com);
         if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
         {
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);

@@ -130,11 +130,12 @@ private:
     vector <QCheckBox *> selectedBoxes;
     vector <QSpinBox *> pointBoxes;
     vector <QSpinBox *> maxPoints;
-    vector <RubricItem *> rubricItems;
+    //vector <RubricItem *> rubricItems;
     vector <RubricItem*>::iterator rubricIter;
     vector <Comment *> comments;
     vector <Comment*>::iterator commIter;
     vector <QGroupBox *> rubricItemsDisplayed;
+    vector <QGroupBox *>::iterator rubrDispIter;
 };
 
 #endif // WIDGET_H
