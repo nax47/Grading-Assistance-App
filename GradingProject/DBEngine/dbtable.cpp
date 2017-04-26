@@ -21,8 +21,8 @@ Modified by Nakul Talwar in April 2017
 
 #include "dbtable.h"
 
- // Default constructor that is only called when the software
- // developer uses the package incorrectly.
+// Default constructor that is only called when the software
+// developer uses the package incorrectly.
 DBTable::DBTable() {
     std::cerr << "Table name must be provided "
               << "for DBTable Class during "
@@ -31,8 +31,8 @@ DBTable::DBTable() {
     exit(-1);
 }
 
- // Constructor taking a pointer to the DB tool and name
- // of the table that will be represented by this class.
+// Constructor taking a pointer to the DB tool and name
+// of the table that will be represented by this class.
 DBTable::DBTable(DBTool      *db,
                  DBEngine *engine,
                  std::string  name,
@@ -53,14 +53,24 @@ DBTable::DBTable(DBTool      *db,
     sql_add_row = "";
     sql_select_all = "";
 
-    // must build table sepparately so new
-    // sql can be properly registered
+    // determine if table exists
+    exist();
+
+    if (table_exists) {
+        //call select_all to restore any data
+        select_all();
+
+        // call drop to delete table if it exists
+        drop();
+    }
+
+    // rebuild new table
     build_table();
 }
 
- // This should be called by the child constructor but
- // is used to build a table in the database if the table
- // does not exist.
+// This should be called by the child constructor but
+// is used to build a table in the database if the table
+// does not exist.
 void DBTable::build_table() {
 
     // determine if table exists
@@ -73,14 +83,14 @@ void DBTable::build_table() {
     }
 }
 
- // Deconstructor
+// Deconstructor
 DBTable::~DBTable() {
     // std::cerr << "Deconstructing table object "
     // 	    << table_name
     // 	    << std::endl;
 }
 
- // SQL used to get a list of all tables in the DB tool.
+// SQL used to get a list of all tables in the DB tool.
 void DBTable::store_template_sql() {
 
     sql_template =  "SELECT name ";
@@ -91,8 +101,8 @@ void DBTable::store_template_sql() {
 
 }
 
- // SQL used to determine if a specific table exists
- // in the database.
+// SQL used to determine if a specific table exists
+// in the database.
 void DBTable::store_exist_sql() {
 
     sql_exist  = "SELECT count(*) ";
@@ -104,7 +114,7 @@ void DBTable::store_exist_sql() {
 
 }
 
- // SQL for removing the table from the database.
+// SQL for removing the table from the database.
 void DBTable::store_drop_sql() {
 
     sql_drop =  "DROP TABLE ";
@@ -113,7 +123,7 @@ void DBTable::store_drop_sql() {
 
 }
 
- // SQL to determine number of records in the database.
+// SQL to determine number of records in the database.
 void DBTable::store_size_sql() {
 
     sql_size =  "SELECT count(*) ";
@@ -123,7 +133,7 @@ void DBTable::store_size_sql() {
 
 }
 
- // Method for calling the template DB SQL above.
+// Method for calling the template DB SQL above.
 int DBTable::dbtemplate() {
 
     // Initialize local variables.
@@ -167,7 +177,7 @@ int cb_template(void  *data,
     return 0;
 }
 
- // Determine if table exists.
+// Determine if table exists.
 bool DBTable::exist() {
 
     // Initialize local variables.
@@ -204,9 +214,9 @@ bool DBTable::exist() {
     return retCode;
 }
 
- // callback to determine if table exists.  SQLite
- // will pass the results of the call and this function
- // will manipulate and make changes to the DBTable object.
+// callback to determine if table exists.  SQLite
+// will pass the results of the call and this function
+// will manipulate and make changes to the DBTable object.
 int cb_exist(void  *data,        // pointer to the DBTable object.
              int    argc,        // number of data columns
              char **argv,        // the actual data columns
@@ -236,7 +246,7 @@ int cb_exist(void  *data,        // pointer to the DBTable object.
     return 0;
 }
 
- // Create the db table.
+// Create the db table.
 bool DBTable::create() {
 
     // Initialize local variables.
@@ -268,9 +278,9 @@ bool DBTable::create() {
     return retCode;
 }
 
- // The callback after the table is created.   SQLite
- // will pass the results of the call and this function
- // will manipulate and make changes to the DBTable object.
+// The callback after the table is created.   SQLite
+// will pass the results of the call and this function
+// will manipulate and make changes to the DBTable object.
 int cb_create(void  *data,
               int    argc,
               char **argv,
@@ -302,7 +312,7 @@ int cb_create(void  *data,
     return 0;
 }
 
- // Removes the db table from the database.
+// Removes the db table from the database.
 bool DBTable::drop() {
 
     // Initialize local variables.
@@ -334,9 +344,9 @@ bool DBTable::drop() {
     return retCode;
 }
 
- // The callback after the table is droped.   SQLite
- // will pass the results of the call and this function
- // will manipulate and make changes to the DBTable object.
+// The callback after the table is droped.   SQLite
+// will pass the results of the call and this function
+// will manipulate and make changes to the DBTable object.
 int cb_drop(void  *data,
             int    argc,
             char **argv,
@@ -365,7 +375,7 @@ int cb_drop(void  *data,
     return 0;
 }
 
- // Determines the number of rows in the table.
+// Determines the number of rows in the table.
 int DBTable::size() {
 
     // Initialize local variables.
@@ -397,9 +407,9 @@ int DBTable::size() {
     return row_cnt;
 }
 
- // The callback after the size is computed.   SQLite
- // will pass the results of the call and this function
- // will manipulate and make changes to the DBTable object.
+// The callback after the size is computed.   SQLite
+// will pass the results of the call and this function
+// will manipulate and make changes to the DBTable object.
 int cb_size(void  *data,
             int    argc,
             char **argv,
@@ -448,7 +458,7 @@ bool DBTable::add_row(std::string add_row){
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg <<std::endl;
 
         sqlite3_free(zErrMsg);
     }
@@ -460,12 +470,14 @@ bool DBTable::add_row(std::string add_row){
 // will pass the results of the call and this function
 // will manipulate and make changes to the DBTable object.
 int cb_add_row(void  *data,
-                int    argc,
-                char **argv,
-                char **azColName)
+               int    argc,
+               char **argv,
+               char **azColName)
 {
 
     std::cerr << "cb_add_row being called\n";
+
+    std::cout << "in select_all callback" << std::endl;
 
     if(argc < 1) {
         std::cerr << "No data presented to callback "
@@ -515,7 +527,7 @@ bool DBTable::select_all() {
                   << " template ::"
                   << std::endl
                   << "SQL error: "
-                  << zErrMsg;
+                  << zErrMsg <<endl;
 
         sqlite3_free(zErrMsg);
     }
@@ -527,12 +539,14 @@ bool DBTable::select_all() {
 // SQLite will pass the results of the call and this function
 // will manipulate and make changes to the DBTable object.
 int cb_select_all(void  *data,
-                   int    argc,
-                   char **argv,
-                   char **azColName)
+                  int    argc,
+                  char **argv,
+                  char **azColName)
 {
 
     std::cerr << "cb_select_all being called\n";
+
+    std::cout << "in select_all callback" << std::endl;
 
     if(argc < 1) {
         std::cerr << "No data presented to callback "

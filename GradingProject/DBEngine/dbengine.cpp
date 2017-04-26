@@ -5,6 +5,9 @@ DBEngine::DBEngine(){
 }
 
 DBEngine::DBEngine(DBTool * dbtool){
+
+    std::cout << "starting DBENGINE constructor" << std::endl;
+
     this->dbtool = dbtool;
     maxSectionId = 0;
     maxStudentId = 0;
@@ -13,21 +16,9 @@ DBEngine::DBEngine(DBTool * dbtool){
     maxLabAssignmentId = 0;
     maxRubricItemId = 0;
     maxCommentId = 0;
-    initialize_main_tables();
-    restore_data();
-    sectionTable->drop();
-    studentTable->drop();
-    labTable->drop();
-    templateTable->drop();
-    labAssignmentTable->drop();
-    rubricItemTable->drop();
-    commentTable->drop();
-    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
-    while (it!=additionalTables.end()){
-        it->second->drop();
-        delete it->second;
-        it++;
-    }
+    initialize_tables();
+
+    std::cout << "reached end of DBENGINE constructor" << std::endl;
 }
 
 DBEngine::~DBEngine(){
@@ -46,7 +37,8 @@ DBEngine::~DBEngine(){
     }
 }
 
-void DBEngine::initialize_main_tables(){
+void DBEngine::initialize_tables(){
+
     std::string sql_create;
 
     sql_create =  "CREATE TABLE ";
@@ -123,6 +115,20 @@ void DBEngine::initialize_main_tables(){
     sql_create += " );";
 
     commentTable = new DBTable(dbtool, this, "commentTable", sql_create);
+
+    std::string tableName;
+
+    for(int i=0; i<additionalTableNames.size(); i++){
+        tableName = additionalTableNames.at(i);
+
+        sql_create =  "CREATE TABLE ";
+        sql_create += tableName;
+        sql_create += " ( ";
+        sql_create += "  id INT PRIMARY KEY NOT NULL ";
+        sql_create += " );";
+
+        additionalTables[tableName] = new DBTable(dbtool, this, tableName, sql_create);
+    }
 }
 
 void DBEngine::store_section(int id, std::vector<int> studentIds, std::vector<int> labIds){
@@ -632,37 +638,57 @@ void DBEngine::restore_additional_table_data(string tableName, char **data){
 
 }
 
-void DBEngine::restore_data(){
+//void DBEngine::restore_data(){
 
-    sectionTable->select_all();
-    studentTable->select_all();
-    labTable->select_all();
-    templateTable->select_all();
-    labAssignmentTable->select_all();
-    rubricItemTable->select_all();
-    commentTable->select_all();
+//    sectionTable->select_all();
+//    studentTable->select_all();
+//    labTable->select_all();
+//    templateTable->select_all();
+//    labAssignmentTable->select_all();
+//    rubricItemTable->select_all();
+//    commentTable->select_all();
 
-    std::string sql_create;
-    std::string tableName;
+//    std::cout << "done calling select_all() for main tables" << std::endl;
 
-    for(int i=0; i<additionalTableNames.size(); i++){
-        tableName = additionalTableNames.at(i);
+//    std::string sql_create;
+//    std::string tableName;
 
-        sql_create =  "CREATE TABLE ";
-        sql_create += tableName;
-        sql_create += " ( ";
-        sql_create += "  id INT PRIMARY KEY NOT NULL ";
-        sql_create += " );";
+//    for(int i=0; i<additionalTableNames.size(); i++){
+//        tableName = additionalTableNames.at(i);
 
-        additionalTables[tableName] = new DBTable(dbtool, this, tableName, sql_create);
-    }
+//        sql_create =  "CREATE TABLE ";
+//        sql_create += tableName;
+//        sql_create += " ( ";
+//        sql_create += "  id INT PRIMARY KEY NOT NULL ";
+//        sql_create += " );";
 
-    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
-    while (it!=additionalTables.end()){
-        it->second->select_all();
-        it++;
-    }
-}
+//        additionalTables[tableName] = new DBTable(dbtool, this, tableName, sql_create);
+//    }
+
+//    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
+//    while (it!=additionalTables.end()){
+//        it->second->select_all();
+//        it++;
+//    }
+//}
+
+//void DBEngine::drop_tables(){
+
+//    sectionTable->drop();
+//    studentTable->drop();
+//    labTable->drop();
+//    templateTable->drop();
+//    labAssignmentTable->drop();
+//    rubricItemTable->drop();
+//    commentTable->drop();
+
+//    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
+//    while (it!=additionalTables.end()){
+//        it->second->drop();
+//        delete it->second;
+//        it++;
+//    }
+//}
 
 int DBEngine::get_max_section_id(){
     return maxSectionId;

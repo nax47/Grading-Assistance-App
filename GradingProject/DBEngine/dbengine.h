@@ -200,10 +200,13 @@ private:
     void create_additional_table(std::vector<int> ids, std::string tableName);
 
     // Creates main DBTable objects
-    void initialize_main_tables();
+    void initialize_tables();
 
     // Internal method restore data from tables into objects
     void restore_data();
+
+    // Delete all tables
+    void drop_tables();
 };
 
 #endif // DBENGINE_H

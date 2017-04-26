@@ -34,6 +34,7 @@ Engine::Engine(){
 
 Engine::~Engine(){
     write_to_database();
+    delete dbControl;
 }
 
 void Engine::add_Section(int id)
