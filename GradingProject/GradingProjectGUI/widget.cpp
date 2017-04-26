@@ -78,13 +78,16 @@ void Widget::on_searchButton_clicked()
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
     {
         QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
+        //if the search text matches the subject update gbnum to the index
         if(search == tmpPtr->title())
         {
             gbNum = i;
         }
     }
+    //if gbnum is still -1 no rubric item was found so nothing should be updated
     if(gbNum != -1)
     {
+        //if it was found place the found item at the top of the scroll area then re write the rest
         QVBoxLayout * scrollLayout = new QVBoxLayout;
         scrollLayout->addWidget(rubricItemsDisplayed.at(gbNum));
         for(int i=0; i<rubricItemsDisplayed.size(); i++)
@@ -173,6 +176,7 @@ void Widget::on_cancelButton_clicked()
 
 void Widget::on_okButton_clicked()
 {
+    //gets data for subject points and max points
     subjectQ = ui->subjectLine->text();
     subject = subjectQ.toStdString();
 
@@ -182,21 +186,22 @@ void Widget::on_okButton_clicked()
     int max = ui->outofText->text().toInt();
     QString out;
     out = ui->outofText->text();
-
+    //assures nothing is empty
     if(points == NULL) {
         QMessageBox::information(this, "Warning", "Points value must be a number.");
     } else if(subject.empty() || points == NULL) {
         QMessageBox::information(this, "Warning", "Please populate all fields.");
     } else {
-
+        //has the gui engine create and properly store the rubric item in the data containers
         GUIEngine->add_Rubric_Item(subject, points, max);
-
+        //creates the holder for one rubric item
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedWidth(220);
         rubricItemBox->setMinimumHeight(150);
         rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
-
+        //creates a layout to add all the parts of the rubric item to
         QVBoxLayout * boxLayout = new QVBoxLayout;
+
 
         QLabel * pointsLabel = new QLabel(tr("Points"));
         QHBoxLayout * pointsBoxLayout = new QHBoxLayout();
@@ -224,25 +229,29 @@ void Widget::on_okButton_clicked()
         maxPoints.push_back(outof);
 
         QCheckBox * applyBox = new QCheckBox();
-
         applyBox->setStyleSheet("QCheckBox { color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
         applyBox->setText("Select");
         boxLayout->addWidget(applyBox);
         selectedBoxes.push_back(applyBox);
 
-
+        //all rubric item peices have been creates set and placed in a layout
+        //add the layout to the group box
         rubricItemBox->setLayout(boxLayout);
         rubricItemsDisplayed.push_back(rubricItemBox);
 
 
 
-
+        // make the layout to hold all rubric items
         QVBoxLayout * scrollLayout = new QVBoxLayout;
+        //add each item to the new layout
         for(int i=0; i<rubricItemsDisplayed.size(); i++){
             scrollLayout->addWidget(rubricItemsDisplayed.at(i));
         }
+        //delete the old layout from the widget
         delete scrollWidget->layout();
+        //place the new layout in the widget
         scrollWidget->setLayout(scrollLayout);
+        //make the widget scrollable
         ui->rubricScroll->setWidget(scrollWidget);
         ui->stackedWidget->setCurrentIndex(0);
     }
@@ -297,7 +306,9 @@ void Widget::on_StartGrading_clicked()
         //Checks if rubric item is checked.
         if(ui->loadRub->isChecked())
         {
+            // gets the rubric items from the previous lab
             vector <RubricItem *> prevTemplate = GUIEngine->get_currL()->get_Template()->getItems();
+            //creates the rubric items and adds them tp the gui like in on_okButton_clicked()
             for(int i = 0; i < prevTemplate.size(); i++)
             {
                 RubricItem * tmpPtr = prevTemplate.at(i);
@@ -358,7 +369,9 @@ void Widget::on_StartGrading_clicked()
             }
 
         }
+        //updates data containers if load last rubric is checked
         GUIEngine->start_Grading(ui->loadRub->isChecked());
+        //displays student name lab number and grade in the top right label
         string studentName = GUIEngine->get_currStu()->get_Name();
         QString name = QString::fromStdString(studentName);
         int t = GUIEngine->get_currL()->get_labNum();
@@ -380,24 +393,29 @@ void Widget::on_StartGrading_clicked()
 
 void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
 {
+    //updates current section to the new selection
     GUIEngine->set_currSection(arg1.toInt());
 
     ui->labDrop->clear();
     ui->studentDrop->clear();
+    //gets all labnumbrs for the new section
     vector <int> temp = GUIEngine->labNum_Drop_SetUp();
+    //places each lab number into the cleared lab number combo box
     for(int i = 0; i < temp.size(); i++)
     {
         QString t = QString::number(temp.at(i));
         ui->labDrop->addItem(t);
     }
+    //gets all student names for the new section
     vector <string> t2 = GUIEngine->student_Drop_SetUp();
+    //displays all students in the combo box
     for(int i = 0; i < t2.size(); i++)
     {
         QString t = QString::fromStdString(t2.at(i));
         ui->studentDrop->addItem(t);
     }
 }
-
+//updates currLab when the gui combo box is changed
 void Widget::on_labDrop_currentIndexChanged(const QString &arg1)
 {
     if(!arg1.isEmpty() && !arg1.isNull())
@@ -405,7 +423,7 @@ void Widget::on_labDrop_currentIndexChanged(const QString &arg1)
         GUIEngine->set_currLab(arg1.toInt());
     }
 }
-
+//updates curr student when gui combo box is changed
 void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
 {
     GUIEngine->set_currStudent(arg1.toStdString());
@@ -564,12 +582,16 @@ void Widget::on_commentCancel_clicked()
 
 void Widget::on_commentOK_clicked()
 {
+    //gets all text box inputs
     string in = ui->newComText->text().toStdString();
     int in2 = ui->lNumNewCom->text().toInt();
+    //creates a new comment
     Comment * com = GUIEngine->add_Comment(in, in2, currFileName);
+    //adds it to the correct rubric item in the curr lab assignment
     GUIEngine->get_currLA()->get_RI(ui->RIScombo->currentText().toStdString())->add_Comment(com);
     QString sub = ui->RIScombo->currentText();
     int gbNum = -1;
+    //finds the proper rubric item Group box and adds the new label with comment to it
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
     {
         QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
@@ -611,20 +633,28 @@ void Widget::on_applyButton_clicked()
     QSpinBox * pointPTR;
     QSpinBox * mpointPTR;
     int pointsOff = 0;
+    //loops through all rubric item group boxes
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
     {
+        // gets temp pointes for the groupBox spin wheels and check box
         tmpPtr = rubricItemsDisplayed.at(i);
         selected = selectedBoxes.at(i);
         pointPTR = pointBoxes.at(i);
         mpointPTR = maxPoints.at(i);
+        //if the selected box is checked and it has not been applied already
         if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
         {
+            //sets the rubric item to applied
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
+            //updates points in the lab assignment to what is in the spin boxes
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
             GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_maxP(mpointPTR->value());
+            // tallys the proper amout of points to be deducted
             pointsOff = pointsOff + pointPTR->value();
+            // sets the lab assignment grade to the new grade
             GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
 
+            //updates the main window with the new grade
             string studentName = GUIEngine->get_currStu()->get_Name();
             QString name = QString::fromStdString(studentName);
             int t = GUIEngine->get_currL()->get_labNum();
