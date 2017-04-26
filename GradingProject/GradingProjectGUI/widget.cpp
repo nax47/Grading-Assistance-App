@@ -183,12 +183,11 @@ void Widget::on_okButton_clicked()
     QString out;
     out = ui->outofText->text();
 
-    if(points == NULL) {
-        QMessageBox::information(this, "Warning", "Points value must be a number.");
-    } else if(subject.empty() || points == NULL) {
-        QMessageBox::information(this, "Warning", "Please populate all fields.");
+    if(subject.empty() || points == NULL || max == NULL) {
+        QMessageBox::information(this, "Warning", "Please populate all fields. Points must be a number.");
+    }else if(points > max) {
+        QMessageBox::information(this, "Warning", "Max points must not be smaller than points.");
     } else {
-
         GUIEngine->add_Rubric_Item(subject, points, max);
 
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
@@ -251,35 +250,47 @@ void Widget::on_okButton_clicked()
 //Adds new student to be graded.
 void Widget::on_studentAdd_clicked()
 {
-    //Grabs student name from gui, converts to string,
-    //and adds student to engine, and displays on gui.
-    QString tmp = ui->newStudentName->text();
-    GUIEngine->add_Student(tmp.toStdString());
-    ui->studentDrop->addItem(tmp);
-    ui->newStudentName->clear();
+    if(GUIEngine->get_sections().size() == 0) {
+        QMessageBox::information(this, "Warning", "Please Select Section.");
+    } else {
+        //Grabs student name from gui, converts to string,
+        //and adds student to engine, and displays on gui.
+        QString tmp = ui->newStudentName->text();
+        GUIEngine->add_Student(tmp.toStdString());
+        ui->studentDrop->addItem(tmp);
+        ui->newStudentName->clear();
+    }
 }
 
 //Adds new lab number.
 void Widget::on_labAdd_clicked()
 {
-    //Grabs lab number from gui, converts to int,
-    //and adds to engine, and displays on gui.
-    QString tmp = ui->newLabNum->text();
-    int temp = tmp.toInt();
-    GUIEngine->add_Lab(temp);
-    ui->labDrop->addItem(tmp);
-    ui->newLabNum->clear();
+    if(GUIEngine->get_sections().size() == 0) {
+        QMessageBox::information(this, "Warning", "Please Select Section.");
+    } else {
+        //Grabs lab number from gui, converts to int,
+        //and adds to engine, and displays on gui.
+        QString tmp = ui->newLabNum->text();
+        int temp = tmp.toInt();
+        GUIEngine->add_Lab(temp);
+        ui->labDrop->addItem(tmp);
+        ui->newLabNum->clear();
+    }
 }
 
 //Adds new section.
 void Widget::on_sectionAdd_clicked()
 {
+    if(ui->newIDVal->text() == "") {
+        QMessageBox::information(this, "Warning", "Please Input Section.");
+    } else {
     //Grabs section number from gui, converts to int,
     //adds to engine, and displays on gui.
     QString tmp = ui->newIDVal->text();
     GUIEngine->add_Section(tmp.toInt());
     ui->sectionDrop->addItem(tmp);
     ui->newIDVal->clear();
+    }
 }
 
 //Begins grading current student.

@@ -57,6 +57,10 @@ Section * Engine::get_Section(int id)
     return nullptr;
 }
 
+vector<Section*> Engine::get_sections() {
+    return sectionList;
+}
+
 Lab * Engine::get_Lab(int num)
 {
     Lab * tmpPtr;

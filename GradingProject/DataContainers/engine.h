@@ -48,6 +48,7 @@ public:
     Lab * get_currL();
     Section * get_currSec();
     LabAssignment * get_currLA();
+    vector<Section*> get_sections();
 
     // basic adds
     void add_Student(string name);
