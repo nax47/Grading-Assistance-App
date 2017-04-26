@@ -30,11 +30,14 @@ Widget::Widget(QWidget *parent) :
     });
 }
 
+//default destuctor
 Widget::~Widget()
 {
     delete ui;
 }
 
+//Clears line for subject and points and
+//sets ui to page for adding new rubric item.
 void Widget::on_itemButton_clicked()
 {
     ui->subjectLine->clear();
@@ -42,12 +45,17 @@ void Widget::on_itemButton_clicked()
     ui->stackedWidget->setCurrentIndex(1);
 }
 
+//Adds new comment.
 void Widget::on_commentButton_clicked()
 {
+    //Checks that code file is open. Code file must be open
+    //for comment to be added as the open file is associated
+    //with the comment and used later.
     if(currFileName.empty()) {
         QMessageBox::information(this, "Warning", "Please Select Code File Before Adding Comment.");
         ui->stackedWidget->setCurrentIndex(0);
     } else {
+    //If code file is open, goes to page for creating new comment.
     ui->newComText->clear();
     ui->lNumNewCom->clear();
     ui->RIScombo->clear();
@@ -60,10 +68,13 @@ void Widget::on_commentButton_clicked()
     }
 }
 
+//Searches through rubric items. Moves it
+//to the top if it present.
 void Widget::on_searchButton_clicked()
 {
     QString search = ui->searchBar->text();
     int gbNum = -1;
+    //Iterates through list of displayed rubric items.
     for(int i=0; i<rubricItemsDisplayed.size(); i++)
     {
         QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
@@ -90,33 +101,55 @@ void Widget::on_searchButton_clicked()
 
 }
 
+
+//Opens code file.
 void Widget::on_openCodeButton_clicked()
 {
+    //Total lines of code
     totalLines = 0;
+
+    //Opens file explorer.
     QFileDialog dialog;
+
+    //QList of string of files that are selected.
     QStringList fileNames;
 
+    //Allows any type of file to be chosen.
     dialog.setFileMode(QFileDialog::AnyFile);
     if(dialog.exec())
     {
         fileNames = dialog.selectedFiles();
     }
-    QString FName = fileNames.at(0);
-    string FNamestr = FName.toStdString();
-    int pos = FNamestr.find_last_of('/');
-    currFileName = FNamestr.substr(pos + 1, FNamestr.length() - 1);
-    currPathName = FNamestr.substr(0,pos + 1);
-    fileVec.push_back(currFileName);
 
+    //Sets file as the first file in list
+    QString FName = fileNames.at(0);
+
+    //Converts file name to string
+    string FNamestr = FName.toStdString();
+
+    //Finds last instance of '/' character.
+    int pos = FNamestr.find_last_of('/');
+
+    //Sets name of code file
+    currFileName = FNamestr.substr(pos + 1, FNamestr.length() - 1);
+
+    //Sets file path of code file
+    currPathName = FNamestr.substr(0,pos + 1);
+
+    //Opens file and checks that it is open.
+    //Error message appears if it is not open.
     QFile file(fileNames.at(0));
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(0,"info",file.errorString());
     }
 
+    //Converts file data to QTextStream and displays in code display on ui.
     QTextStream in(&file);
     QString fileData = in.readAll();
     ui->codeDisp->setText(fileData);
 
+    //Calculates total number of lines in code file
+    //and shows line numbers on side of code.
     totalLines = fileData.count('\n');
     file.close();
     QString ln = "\n";
@@ -130,10 +163,13 @@ void Widget::on_openCodeButton_clicked()
     ui->linNumBox->setText(nums);
 }
 
+//Cancels adding new comment and goes back
+//to main scren of gui.
 void Widget::on_cancelButton_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
 }
+
 
 void Widget::on_okButton_clicked()
 {
@@ -212,17 +248,22 @@ void Widget::on_okButton_clicked()
     }
 }
 
-
+//Adds new student to be graded.
 void Widget::on_studentAdd_clicked()
 {
+    //Grabs student name from gui, converts to string,
+    //and adds student to engine, and displays on gui.
     QString tmp = ui->newStudentName->text();
     GUIEngine->add_Student(tmp.toStdString());
     ui->studentDrop->addItem(tmp);
     ui->newStudentName->clear();
 }
 
+//Adds new lab number.
 void Widget::on_labAdd_clicked()
 {
+    //Grabs lab number from gui, converts to int,
+    //and adds to engine, and displays on gui.
     QString tmp = ui->newLabNum->text();
     int temp = tmp.toInt();
     GUIEngine->add_Lab(temp);
@@ -230,16 +271,22 @@ void Widget::on_labAdd_clicked()
     ui->newLabNum->clear();
 }
 
+//Adds new section.
 void Widget::on_sectionAdd_clicked()
 {
+    //Grabs section number from gui, converts to int,
+    //adds to engine, and displays on gui.
     QString tmp = ui->newIDVal->text();
     GUIEngine->add_Section(tmp.toInt());
     ui->sectionDrop->addItem(tmp);
     ui->newIDVal->clear();
 }
 
+//Begins grading current student.
 void Widget::on_StartGrading_clicked()
 {
+    //Checks that a student, section, and lab have been chosen.
+    //If one or more have been let blank, error message is displayed.
     if(GUIEngine->get_currStu() == nullptr) {
         QMessageBox::information(this, "Warning", "Please Select Student.");
     } else if(GUIEngine->get_currL() == nullptr) {
@@ -247,6 +294,7 @@ void Widget::on_StartGrading_clicked()
     } else if(GUIEngine->get_currSec() == nullptr) {
         QMessageBox::information(this, "Warning", "Please Select Section.");
     } else {
+        //Checks if rubric item is checked.
         if(ui->loadRub->isChecked())
         {
             vector <RubricItem *> prevTemplate = GUIEngine->get_currL()->get_Template()->getItems();
@@ -342,7 +390,6 @@ void Widget::on_sectionDrop_currentIndexChanged(const QString &arg1)
         QString t = QString::number(temp.at(i));
         ui->labDrop->addItem(t);
     }
-    string five = "5";
     vector <string> t2 = GUIEngine->student_Drop_SetUp();
     for(int i = 0; i < t2.size(); i++)
     {
@@ -364,18 +411,19 @@ void Widget::on_studentDrop_currentIndexChanged(const QString &arg1)
     GUIEngine->set_currStudent(arg1.toStdString());
 }
 
+//Chosen when grader is done grading all of current student's code.
 void Widget::on_doneButton_clicked()
 {
+    //Initializes vector for holding rubric items.
+    //Gets current student, current section, and current lab.
     vector <RubricItem *> rubricItems;
-    //rubricItems.clear();
     rubricItems = GUIEngine->get_currLA()->get_rubricItems();
-    cout << comments.size() << endl;
-    cout << rubricItems.size() << endl;
     Student *currStudent = GUIEngine->get_currStu();
     Section *currSection = GUIEngine->get_currSec();
     Lab *currLab = GUIEngine->get_currL();
 
-    //studentName = currStudent->get_Name();
+    //Sets studentName, file name as current student by going through engine.
+    //Converts file name to QString to output to pdf.
     studentName = GUIEngine->get_currLA()->get_Student()->get_Name();
     fileName = currPathName + studentName +".pdf";
     qFileName = QString::fromStdString(fileName);
