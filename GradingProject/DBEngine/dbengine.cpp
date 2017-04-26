@@ -6,6 +6,13 @@ DBEngine::DBEngine(){
 
 DBEngine::DBEngine(DBTool * dbtool){
     this->dbtool = dbtool;
+    maxSectionId = 0;
+    maxStudentId = 0;
+    maxLabId = 0;
+    maxTemplateId = 0;
+    maxLabAssignmentId = 0;
+    maxRubricItemId = 0;
+    maxCommentId = 0;
     initialize_main_tables();
     restore_data();
     sectionTable->drop();
@@ -389,6 +396,9 @@ void DBEngine::restore_section_data(char **data){
 
     Section * section;
 
+    if(id>maxSectionId)
+        maxSectionId = id;
+
     if(sections.find(id) == sections.end())
         section = new Section();
     else
@@ -406,6 +416,9 @@ void DBEngine::restore_student_data(char **data){
     additionalTableNames.push_back(std::string(data[2]));
 
     Student * student;
+
+    if(id>maxStudentId)
+        maxStudentId = id;
 
     if(students.find(id) == students.end())
         student = new Student();
@@ -427,6 +440,9 @@ void DBEngine::restore_lab_data(char **data){
     Lab * lab;
     Section * section;
     Template * templ;
+
+    if(id>maxLabId)
+        maxLabId = id;
 
     if(labs.find(id) == labs.end())
         lab = new Lab();
@@ -462,6 +478,9 @@ void DBEngine::restore_template_data(char **data){
 
     Template * templ;
 
+    if(id>maxTemplateId)
+        maxTemplateId = id;
+
     if(templates.find(id) == templates.end())
         templ = new Template();
     else
@@ -483,6 +502,9 @@ void DBEngine::restore_labAssignment_data(char **data){
     LabAssignment * labAssignment;
     Student * student;
     Lab * lab;
+
+    if(id>maxLabAssignmentId)
+        maxLabAssignmentId = id;
 
     if(labAssignments.find(id) == labAssignments.end())
         labAssignment = new LabAssignment();
@@ -520,6 +542,9 @@ void DBEngine::restore_rubricItem_data(char **data){
 
     RubricItem * rubricItem;
 
+    if(id>maxRubricItemId)
+        maxRubricItemId = id;
+
     if(rubricItems.find(id) == rubricItems.end())
         rubricItem = new RubricItem();
     else
@@ -541,6 +566,9 @@ void DBEngine::restore_comment_data(char **data){
     int rubricItemId = std::stoi(std::string(data[4]));
     Comment * comment;
     RubricItem * rubricItem;
+
+    if(id>maxCommentId)
+        maxCommentId = id;
 
     if(comments.find(id) == comments.end())
         comment = new Comment();
@@ -617,12 +645,6 @@ void DBEngine::restore_data(){
     std::string sql_create;
     std::string tableName;
 
-    sql_create =  "CREATE TABLE ";
-    sql_create += tableName;
-    sql_create += " ( ";
-    sql_create += "  id INT PRIMARY KEY NOT NULL ";
-    sql_create += " );";
-
     for(int i=0; i<additionalTableNames.size(); i++){
         tableName = additionalTableNames.at(i);
 
@@ -642,7 +664,35 @@ void DBEngine::restore_data(){
     }
 }
 
-std::vector<Section *> DBEngine::get_stored_data(){
+int DBEngine::get_max_section_id(){
+    return maxSectionId;
+}
+
+int DBEngine::get_max_student_id(){
+    return maxStudentId;
+}
+
+int DBEngine::get_max_lab_id(){
+    return maxLabId;
+}
+
+int DBEngine::get_max_template_id(){
+    return maxTemplateId;
+}
+
+int DBEngine::get_max_labAssignment_id(){
+    return maxLabAssignmentId;
+}
+
+int DBEngine::get_max_rubricItem_id(){
+    return maxRubricItemId;
+}
+
+int DBEngine::get_max_comment_id(){
+    return maxCommentId;
+}
+
+std::vector<Section *> DBEngine::get_sections(){
 
     std::vector<Section *> restoredSections;
 
@@ -653,4 +703,82 @@ std::vector<Section *> DBEngine::get_stored_data(){
     }
 
     return restoredSections;
+}
+
+std::vector<Student *> DBEngine::get_students(){
+
+    std::vector<Student *> restoredStudents;
+
+    std::map<int, Student *>::iterator it = students.begin();
+    while (it!=students.end()){
+        restoredStudents.push_back(it->second);
+        it++;
+    }
+
+    return restoredStudents;
+}
+
+std::vector<Lab *> DBEngine::get_labs(){
+
+    std::vector<Lab *> restoredLabs;
+
+    std::map<int, Lab *>::iterator it = labs.begin();
+    while (it!=labs.end()){
+        restoredLabs.push_back(it->second);
+        it++;
+    }
+
+    return restoredLabs;
+}
+
+std::vector<Template *> DBEngine::get_templates(){
+
+    std::vector<Template *> restoredTemplates;
+
+    std::map<int, Template *>::iterator it = templates.begin();
+    while (it!=templates.end()){
+        restoredTemplates.push_back(it->second);
+        it++;
+    }
+
+    return restoredTemplates;
+}
+
+std::vector<LabAssignment *> DBEngine::get_labAssignments(){
+
+    std::vector<LabAssignment *> restoredLabAssignments;
+
+    std::map<int, LabAssignment *>::iterator it = labAssignments.begin();
+    while (it!=labAssignments.end()){
+        restoredLabAssignments.push_back(it->second);
+        it++;
+    }
+
+    return restoredLabAssignments;
+}
+
+std::vector<RubricItem *> DBEngine::get_rubricItems(){
+
+    std::vector<RubricItem *> restoredRubricItems;
+
+    std::map<int, RubricItem *>::iterator it = rubricItems.begin();
+    while (it!=rubricItems.end()){
+        restoredRubricItems.push_back(it->second);
+        it++;
+    }
+
+    return restoredRubricItems;
+}
+
+std::vector<Comment *> DBEngine::get_comments(){
+
+    std::vector<Comment *> restoredComments;
+
+    std::map<int, Comment *>::iterator it = comments.begin();
+    while (it!=comments.end()){
+        restoredComments.push_back(it->second);
+        it++;
+    }
+
+    return restoredComments;
 }

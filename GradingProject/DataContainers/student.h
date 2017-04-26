@@ -32,14 +32,15 @@ public:
 
     vector <LabAssignment *> get_labAssignments();
 
+    static int idCount;
+
 private:
 
     string studentName;
     vector <LabAssignment *> gradedLabs;
     int ID;
-    //static int idCountStudent;
 };
 
-//int Student::idCount = 0;
+
 
 #endif // STUDENT_H

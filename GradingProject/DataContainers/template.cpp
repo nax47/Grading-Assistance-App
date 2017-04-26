@@ -1,8 +1,11 @@
 #include "template.h"
 
+int Template::idCount = 0;
+
 Template::Template()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 Template::~Template()

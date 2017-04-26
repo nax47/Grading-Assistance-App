@@ -41,15 +41,14 @@ public:
 
     vector <Lab *> get_labs();
 
+    static int idCount;
 
 private:
 
     vector <Student *> studentList;
     vector <Lab *> labList;
     int ID;
-    //static int idCount;
 };
 
-//int Section::idCount = 0;
 
 #endif // SECTION_H

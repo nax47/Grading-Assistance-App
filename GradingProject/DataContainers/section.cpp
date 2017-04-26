@@ -1,8 +1,11 @@
 #include "section.h"
 
+int Section::idCount = 0;
+
 Section::Section()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 Section::~Section()
@@ -94,3 +97,4 @@ vector <Student *> Section::get_students(){
 vector <Lab *> Section::get_labs(){
     return labList;
 }
+

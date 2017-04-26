@@ -1,8 +1,11 @@
 #include "labassignment.h"
 
+int LabAssignment::idCount = 0;
+
 LabAssignment::LabAssignment()
 {
-
+    ID = idCount;
+    idCount += 1;
 }
 
 LabAssignment::~LabAssignment()
