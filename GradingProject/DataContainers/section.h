@@ -21,6 +21,7 @@ public:
     Section();
     ~Section();
 
+    //Getters, setters, and add labs.
     void add_Student(Student * stu);
     int get_Student_Size();
     string get_Student_Name(int num);
