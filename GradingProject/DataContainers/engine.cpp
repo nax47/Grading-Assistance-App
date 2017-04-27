@@ -5,8 +5,8 @@ Engine::Engine(){
     dbControl = new DBEngine(new DBTool("GradingToolDB"));
 
     //Initialize the sectionList with data stored in the database
-    sectionList = dbControl->get_sections();
 
+    sectionList = dbControl->get_sections();
     //Initialize the other object vectors with data from the database
     students = dbControl->get_students();
     labs = dbControl->get_labs();
@@ -18,6 +18,7 @@ Engine::Engine(){
     std::cout << "restored items" << std::endl;
 
     //debugging
+    cout << sectionList.size() << endl;
     for(int i=0; i<sectionList.size(); i++){
         std::cout << "Section: " << std::to_string(sectionList.at(i)->get_Id()) << std::endl;
     }

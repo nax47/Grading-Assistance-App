@@ -204,6 +204,7 @@ void Widget::on_okButton_clicked()
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedWidth(220);
         rubricItemBox->setMinimumHeight(150);
+        rubricItemBox->setMaximumHeight(300);
         rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
         //creates a layout to add all the parts of the rubric item to
         QVBoxLayout * boxLayout = new QVBoxLayout;
@@ -334,6 +335,7 @@ void Widget::on_StartGrading_clicked()
                 QGroupBox * rubricItemBox = new QGroupBox (QString::fromStdString(tmpPtr->get_Subject()));
                 rubricItemBox->setFixedWidth(220);
                 rubricItemBox->setMinimumHeight(150);
+                rubricItemBox->setMaximumHeight(300);
                 rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
 
                 QVBoxLayout * boxLayout = new QVBoxLayout;
@@ -468,7 +470,8 @@ void Widget::on_doneButton_clicked()
     //Sets studentName, file name as current student by going through engine.
     //Converts file name to QString to output to pdf.
     studentName = GUIEngine->get_currLA()->get_Student()->get_Name();
-    fileName = currPathName + studentName +".pdf";
+    string fileLab = "_L" + to_string(GUIEngine->get_currL()->get_labNum());
+    fileName = currPathName + studentName + fileLab +".pdf";
     qFileName = QString::fromStdString(fileName);
 
     //Sets student name.
