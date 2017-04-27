@@ -608,43 +608,46 @@ void Widget::on_commentOK_clicked()
     string in = ui->newComText->text().toStdString();
     int in2 = ui->lNumNewCom->text().toInt();
     //creates a new comment
-    Comment * com = GUIEngine->add_Comment(in, in2, currFileName);
-    //adds it to the correct rubric item in the curr lab assignment
-    GUIEngine->get_currLA()->get_RI(ui->RIScombo->currentText().toStdString())->add_Comment(com);
-    QString sub = ui->RIScombo->currentText();
-    int gbNum = -1;
-    //finds the proper rubric item Group box and adds the new label with comment to it
-    for(int i=0; i<rubricItemsDisplayed.size(); i++)
-    {
-        QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
-        if(sub == tmpPtr->title())
+    if(in == "" || in2 == NULL) {
+        QMessageBox::information(this, "Warning", "Please populate all fields.");
+    } else {
+        Comment * com = GUIEngine->add_Comment(in, in2, currFileName);
+        //adds it to the correct rubric item in the curr lab assignment
+        GUIEngine->get_currLA()->get_RI(ui->RIScombo->currentText().toStdString())->add_Comment(com);
+        QString sub = ui->RIScombo->currentText();
+        int gbNum = -1;
+        //finds the proper rubric item Group box and adds the new label with comment to it
+        for(int i=0; i<rubricItemsDisplayed.size(); i++)
         {
-            gbNum = i;
+            QGroupBox * tmpPtr = rubricItemsDisplayed.at(i);
+            if(sub == tmpPtr->title())
+            {
+                gbNum = i;
+            }
         }
-    }
-    if(gbNum == -1)
-    {
-        QMessageBox::information(this, "Warning", "Please enter a valid rubric item subject");
-    }
-    else
-    {
-        QLabel * newComment = new QLabel(ui->newComText->text());
-        newComment->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
-        newComment->setMinimumHeight(20);
-        QGroupBox * tmpPtr = rubricItemsDisplayed.at(gbNum);
-        tmpPtr->layout()->addWidget(newComment);
-        tmpPtr->resize(220, tmpPtr->height() + 20);
-
-        QVBoxLayout * scrollLayout = new QVBoxLayout;
-        for(int i=0; i<rubricItemsDisplayed.size(); i++){
-            scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+        if(gbNum == -1)
+        {
+            QMessageBox::information(this, "Warning", "Please enter a valid rubric item subject");
         }
-        delete scrollWidget->layout();
-        scrollWidget->setLayout(scrollLayout);
-        ui->rubricScroll->setWidget(scrollWidget);
-    }
-    ui->stackedWidget->setCurrentIndex(0);
+        else
+        {
+            QLabel * newComment = new QLabel(ui->newComText->text());
+            newComment->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); font: 8pt\"DejaVu Sans\"; } ");
+            newComment->setMinimumHeight(20);
+            QGroupBox * tmpPtr = rubricItemsDisplayed.at(gbNum);
+            tmpPtr->layout()->addWidget(newComment);
+            tmpPtr->resize(220, tmpPtr->height() + 20);
 
+            QVBoxLayout * scrollLayout = new QVBoxLayout;
+            for(int i=0; i<rubricItemsDisplayed.size(); i++){
+                scrollLayout->addWidget(rubricItemsDisplayed.at(i));
+            }
+            delete scrollWidget->layout();
+            scrollWidget->setLayout(scrollLayout);
+            ui->rubricScroll->setWidget(scrollWidget);
+        }
+        ui->stackedWidget->setCurrentIndex(0);
+    }
 }
 
 
@@ -655,41 +658,46 @@ void Widget::on_applyButton_clicked()
     QSpinBox * pointPTR;
     QSpinBox * mpointPTR;
     int pointsOff = 0;
-    //loops through all rubric item group boxes
-    for(int i=0; i<rubricItemsDisplayed.size(); i++)
-    {
-        // gets temp pointes for the groupBox spin wheels and check box
-        tmpPtr = rubricItemsDisplayed.at(i);
-        selected = selectedBoxes.at(i);
-        pointPTR = pointBoxes.at(i);
-        mpointPTR = maxPoints.at(i);
-        //if the selected box is checked and it has not been applied already
-        if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
-        {
-            //sets the rubric item to applied
-            GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
-            //updates points in the lab assignment to what is in the spin boxes
-            GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
-            GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_maxP(mpointPTR->value());
-            // tallys the proper amout of points to be deducted
-            pointsOff = pointsOff + pointPTR->value();
-            // sets the lab assignment grade to the new grade
-            GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
 
-            //updates the main window with the new grade
-            string studentName = GUIEngine->get_currStu()->get_Name();
-            QString name = QString::fromStdString(studentName);
-            int t = GUIEngine->get_currL()->get_labNum();
-            QString lab = " Lab #: ";
-            QString labnum = QString::number(t);
-            lab = lab.append(labnum);
-            name = name.append(lab);
-            int g = GUIEngine->get_currLA()->get_Grade();
-            QString grade = " Grade: ";
-            QString tem = QString::number(g);
-            grade = grade.append(tem);
-            QString final = name.append(grade);
-            ui->studentgrade->setText(final);
+    if(currFileName.empty()) {
+        QMessageBox::information(this, "Warning", "Please Select Code File Before Adding Comment.");
+    } else {
+        //loops through all rubric item group boxes
+        for(int i=0; i<rubricItemsDisplayed.size(); i++)
+        {
+            // gets temp pointes for the groupBox spin wheels and check box
+            tmpPtr = rubricItemsDisplayed.at(i);
+            selected = selectedBoxes.at(i);
+            pointPTR = pointBoxes.at(i);
+            mpointPTR = maxPoints.at(i);
+            //if the selected box is checked and it has not been applied already
+            if(selected->isChecked() && !(GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->get_Applied()))
+            {
+                //sets the rubric item to applied
+                GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Applied(true);
+                //updates points in the lab assignment to what is in the spin boxes
+                GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
+                GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_maxP(mpointPTR->value());
+                // tallys the proper amout of points to be deducted
+                pointsOff = pointsOff + pointPTR->value();
+                // sets the lab assignment grade to the new grade
+                GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
+
+                //updates the main window with the new grade
+                string studentName = GUIEngine->get_currStu()->get_Name();
+                QString name = QString::fromStdString(studentName);
+                int t = GUIEngine->get_currL()->get_labNum();
+                QString lab = " Lab #: ";
+                QString labnum = QString::number(t);
+                lab = lab.append(labnum);
+                name = name.append(lab);
+                int g = GUIEngine->get_currLA()->get_Grade();
+                QString grade = " Grade: ";
+                QString tem = QString::number(g);
+                grade = grade.append(tem);
+                QString final = name.append(grade);
+                ui->studentgrade->setText(final);
+            }
         }
     }
 
