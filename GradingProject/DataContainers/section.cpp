@@ -4,13 +4,10 @@
 //Each section has a list of students, a list of labs,
 //and an id associated with it.
 
-int Section::idCount = 0;
 
 //Constructor that sets id and id count.
 Section::Section()
 {
-    ID = idCount;
-    idCount += 1;
 }
 
 //Destructor

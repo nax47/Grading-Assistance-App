@@ -33,6 +33,11 @@ Widget::Widget(QWidget *parent) :
 //default destuctor
 Widget::~Widget()
 {
+    delete GUIEngine;
+    delete codeBar;
+    delete numBar;
+    delete RIBar;
+    delete scrollWidget;
     delete ui;
 }
 

@@ -444,7 +444,7 @@ bool DBTable::add_row(std::string add_row){
 
     sql_add_row = add_row;
 
-    //std::cout << sql_add_row << std::endl;
+    std::cout << "sql_add_row" << std::endl;
 
     retCode = sqlite3_exec(curr_db->db_ref(),
                            sql_add_row.c_str(),
@@ -546,8 +546,6 @@ int cb_select_all(void  *data,
 
     std::cerr << "cb_select_all being called\n";
 
-    std::cout << "in select_all callback" << std::endl;
-
     if(argc < 1) {
         std::cerr << "No data presented to callback "
                   << "argc = " << argc
@@ -563,10 +561,13 @@ int cb_select_all(void  *data,
     std::cout << tableName
               << std::endl;
 
+
     if(tableName == "sectionTable"){
+        std::cout << "first case in cb_select_all" << std::endl;
         obj->get_engine()->restore_section_data(argv);
     }
     else if(tableName == "studentTable"){
+        std::cout << "second case in cb_select_all" << std::endl;
         obj->get_engine()->restore_student_data(argv);
     }
     else if(tableName == "labTable"){
@@ -585,6 +586,7 @@ int cb_select_all(void  *data,
         obj->get_engine()->restore_comment_data(argv);
     }
     else{
+        std::cout << "else case in cb_select_all" << std::endl;
         obj->get_engine()->restore_additional_table_data(tableName, argv);
     }
 

@@ -8,6 +8,18 @@ Engine::Engine(){
 
     sectionList = dbControl->get_sections();
     //Initialize the other object vectors with data from the database
+    for (int i=0; i<sectionList.size(); i++){
+        std::cout << "Section: " << sectionList.at(i)->get_Id() << " has->" << std::endl;
+        vector<Lab *> sectionlabs= sectionList.at(i)->get_labs();
+        vector<Student *> studentlabs = sectionList.at(i)->get_students();
+
+        for(int j=0; j<sectionlabs.size(); j++)
+            std::cout << "Lab: " << sectionlabs.at(j)->get_Id() << std::endl;
+
+        for(int j=0; j<studentlabs.size(); j++)
+            std::cout << "Student: " << studentlabs.at(j)->get_Name() << std::endl;
+        }
+
     students = dbControl->get_students();
     labs = dbControl->get_labs();
     templates = dbControl->get_templates();
@@ -15,16 +27,12 @@ Engine::Engine(){
     rubricItems = dbControl->get_rubricItems();
     comments = dbControl->get_comments();
 
-    std::cout << "restored items" << std::endl;
-
     //debugging
     cout << sectionList.size() << endl;
     for(int i=0; i<sectionList.size(); i++){
         std::cout << "Section: " << std::to_string(sectionList.at(i)->get_Id()) << std::endl;
     }
 
-    //Update ID count for each class so subsequent objects are created with correct IDs
-    Section::idCount = dbControl->get_max_section_id()+1;
     Student::idCount = dbControl->get_max_student_id()+1;
     Lab::idCount = dbControl->get_max_lab_id()+1;
     Template::idCount = dbControl->get_max_template_id()+1;
@@ -35,7 +43,34 @@ Engine::Engine(){
 
 Engine::~Engine(){
     write_to_database();
+    std::cout << "done writing" << std::endl;
+
+    for(int i=0; i<sectionList.size(); i++)
+        delete sectionList.at(i);
+
+    for(int i=0; i<students.size(); i++)
+        delete students.at(i);
+
+    for(int i=0; i<labs.size(); i++)
+        delete labs.at(i);
+
+    for(int i=0; i<templates.size(); i++)
+        delete templates.at(i);
+
+    for(int i=0; i<labAssignments.size(); i++)
+        delete labAssignments.at(i);
+
+    for(int i=0; i<rubricItems.size(); i++)
+        delete rubricItems.at(i);
+
+    for(int i=0; i<comments.size(); i++)
+        delete comments.at(i);
+
+    std::cout << "done deleting tables" << std::endl;
+
     delete dbControl;
+
+    std::cout << "done deleting dbcontrol" << std::endl;
 }
 
 /**
@@ -252,6 +287,7 @@ void Engine::start_Grading(bool loadLast)
             temp->set_maxP(tp->get_maxP());
 
             lab->new_RI(temp);
+            rubricItems.push_back(temp);
         }
     }
     currStudent->add_Lab(lab);
@@ -312,6 +348,9 @@ vector <string> Engine::student_Drop_SetUp()
  * @brief Engine::write_to_database
  */
 void Engine::write_to_database(){
+
+    //writing to database
+    std::cout << "writing to database" << std::endl;
 
     for(int i=0; i<sectionList.size(); i++){
         Section * section = sectionList.at(i);

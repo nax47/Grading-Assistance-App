@@ -11,6 +11,7 @@ int RubricItem::idCount = 0;
 RubricItem::RubricItem()
 {
     ID = idCount;
+    std::cout << "RubricItem: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
     applied = false;
 }
@@ -22,6 +23,7 @@ RubricItem::RubricItem(string sub, int pnts)
     subject = sub;
     points = pnts;
     ID = idCount;
+    std::cout << "RubricItem: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
     applied = false;
 }

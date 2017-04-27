@@ -8,6 +8,7 @@ int Lab::idCount = 0;
 Lab::Lab()
 {
     ID = idCount;
+    std::cout << "Lab: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 
@@ -22,6 +23,7 @@ Lab::Lab(int num)
 {
     labNum = num;
     ID = idCount;
+    std::cout << "Lab: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 

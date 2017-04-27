@@ -10,6 +10,7 @@ int Template::idCount = 0;
 Template::Template()
 {
     ID = idCount;
+    std::cout << "Template: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 

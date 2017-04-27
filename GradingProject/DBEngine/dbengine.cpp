@@ -35,6 +35,8 @@ DBEngine::~DBEngine(){
         delete it->second;
         it++;
     }
+
+    delete dbtool;
 }
 
 void DBEngine::initialize_tables(){
@@ -128,6 +130,16 @@ void DBEngine::initialize_tables(){
         sql_create += " );";
 
         additionalTables[tableName] = new DBTable(dbtool, this, tableName, sql_create);
+    }
+
+    std::map<std::string, DBTable *>::iterator it = additionalTables.begin();
+    while (it!=additionalTables.end()){
+
+        it->second->drop();
+        std::cout << "dropped additional table" << std::endl;
+        delete it->second;
+        std::cout << "deleted additional table" << std::endl;
+        it++;
     }
 }
 
@@ -599,39 +611,40 @@ void DBEngine::restore_comment_data(char **data){
 
 void DBEngine::restore_additional_table_data(string tableName, char **data){
 
-    if(tableName.substr(0,6) == "section"){
-        int id = stoi(tableName.substr(7,7));
+    if(tableName.substr(0,7) == "section"){
+        int id = stoi(tableName.substr(7,1));
 
-        if(tableName.substr(8,14) == "student"){
+        if(tableName.substr(8,7) == "student"){
             int studentId = std::stoi(std::string(data[0]));
             sections[id]->add_Student(students[studentId]);
         }
-        else if(tableName.substr(8,10) == "lab"){
+
+        else if(tableName.substr(8,3) == "lab"){
             int labId = std::stoi(std::string(data[0]));
             sections[id]->add_Lab(labs[labId]);
         }
     }
 
-    else if(tableName.substr(0,6) == "student"){
-        int id = stoi(tableName.substr(7,7));
+    else if(tableName.substr(0,7) == "student"){
+        int id = stoi(tableName.substr(7,1));
         int labAssignmentId = std::stoi(std::string(data[0]));
         students[id]->add_Lab(labAssignments[labAssignmentId]);
     }
 
-    else if(tableName.substr(0,7) == "template"){
-        int id = stoi(tableName.substr(8,8));
+    else if(tableName.substr(0,8) == "template"){
+        int id = stoi(tableName.substr(8,1));
         int rubricItemId = std::stoi(std::string(data[0]));
         templates[id]->add_RI(rubricItems[rubricItemId]);
     }
 
-    else if(tableName.substr(0,12) == "labAssignment"){
-        int id = stoi(tableName.substr(13,13));
+    else if(tableName.substr(0,13) == "labAssignment"){
+        int id = stoi(tableName.substr(13,1));
         int rubricItemId = std::stoi(std::string(data[0]));
         labAssignments[id]->new_RI(rubricItems[rubricItemId]);
     }
 
-    else if(tableName.substr(0,9) == "rubricItem"){
-        int id = stoi(tableName.substr(13,13));
+    else if(tableName.substr(0,10) == "rubricItem"){
+        int id = stoi(tableName.substr(10,1));
         int commentId = std::stoi(std::string(data[0]));
         rubricItems[id]->add_Comment(comments[commentId]);
     }

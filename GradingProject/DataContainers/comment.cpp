@@ -9,6 +9,7 @@ int Comment::idCount = 0;
 Comment::Comment()
 {
     ID = idCount;
+    std::cout << "Comment: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 
@@ -17,6 +18,7 @@ Comment::Comment(string in)
 {
     comment = in;
     ID = idCount;
+    std::cout << "Comment: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 
@@ -27,6 +29,7 @@ Comment::Comment(string in, int line, string file)
     lineNum = line;
     fileName = file;
     ID = idCount;
+    std::cout << "Comment: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 

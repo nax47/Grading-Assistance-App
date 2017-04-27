@@ -42,8 +42,6 @@ public:
 
     vector <Lab *> get_labs();
 
-    static int idCount;
-
 private:
 
     vector <Student *> studentList;

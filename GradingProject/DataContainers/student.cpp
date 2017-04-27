@@ -10,6 +10,7 @@ int Student::idCount = 0;
 Student::Student()
 {
     ID = idCount;
+    std::cout << "Student: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 
@@ -18,6 +19,7 @@ Student::Student(string name)
 {
     studentName = name;
     ID = idCount;
+     std::cout << "Student: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 

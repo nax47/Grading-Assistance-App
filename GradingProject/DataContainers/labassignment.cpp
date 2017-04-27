@@ -8,6 +8,7 @@ int LabAssignment::idCount = 0;
 LabAssignment::LabAssignment()
 {
     ID = idCount;
+    std::cout << "LabAssignment: " << std::to_string(ID) << " being created" << std::endl;
     idCount += 1;
 }
 
