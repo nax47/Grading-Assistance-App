@@ -275,7 +275,7 @@ void Engine::start_Grading(bool loadLast)
     //currLab->set_Template(currLab->get_Template());
     lab->set_Lab(currLab);
     lab->set_Student(currStudent);
-    lab->set_Grade(100);
+    lab->set_Grade(0);
     if(loadLast)
     {
         vector <RubricItem *> last = currLab->get_Template()->getItems();

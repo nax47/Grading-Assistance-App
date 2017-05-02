@@ -209,7 +209,7 @@ void Widget::on_okButton_clicked()
         QGroupBox * rubricItemBox = new QGroupBox (subjectQ);
         rubricItemBox->setFixedWidth(220);
         rubricItemBox->setMinimumHeight(150);
-        rubricItemBox->setMaximumHeight(300);
+        rubricItemBox->setMaximumHeight(200);
         rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
         //creates a layout to add all the parts of the rubric item to
         QVBoxLayout * boxLayout = new QVBoxLayout;
@@ -319,6 +319,7 @@ void Widget::on_sectionAdd_clicked()
 //Begins grading current student.
 void Widget::on_StartGrading_clicked()
 {
+    pointsTot = 0;
     //Checks that a student, section, and lab have been chosen.
     //If one or more have been let blank, error message is displayed.
     if(GUIEngine->get_currStu() == nullptr) {
@@ -340,7 +341,7 @@ void Widget::on_StartGrading_clicked()
                 QGroupBox * rubricItemBox = new QGroupBox (QString::fromStdString(tmpPtr->get_Subject()));
                 rubricItemBox->setFixedWidth(220);
                 rubricItemBox->setMinimumHeight(150);
-                rubricItemBox->setMaximumHeight(300);
+                rubricItemBox->setMaximumHeight(200);
                 rubricItemBox->setStyleSheet("QGroupBox { color: rgb(255, 255, 255); font: 10pt\"DejaVu Sans\"; } ");
 
                 QVBoxLayout * boxLayout = new QVBoxLayout;
@@ -406,9 +407,11 @@ void Widget::on_StartGrading_clicked()
         lab = lab.append(labnum);
         name = name.append(lab);
         int g = GUIEngine->get_currLA()->get_Grade();
+        QString outOf = " / ";
         QString grade = " Grade: ";
         QString tem = QString::number(g);
         grade = grade.append(tem);
+        grade = grade.append(outOf);
         QString final = name.append(grade);
         ui->studentgrade->setText(final);
         ui->stackedWidget->setCurrentIndex(0);
@@ -496,7 +499,7 @@ void Widget::on_doneButton_clicked()
     LabAssignment *currLabAssignment = currStudent->get_Lab(lab - 1);
     score = currLabAssignment->get_Grade();
     scoreString = to_string(score);
-    scoreString = "<h3> Final Grade: " + scoreString + "</h3>";
+    scoreString = "<h3> Final Grade: " + scoreString + " / " + to_string(pointsTot) + "</h3>";
 
     //Combines student name, section, lab, and grade to one string.
     html = studentName + sectionString + labString + scoreString;
@@ -522,9 +525,9 @@ void Widget::on_doneButton_clicked()
 
             //Gets comments associated with current rubric item.
             comments = currItem->get_comments();
-
+            string commentStart = "<h3> Comments:  </h3>";
             //Combines rubric item with subject and points.
-            rubric = rubric + empty + subj + rubricPoints;
+            rubric = rubric + empty + subj + rubricPoints + commentStart;
 
             //Iterates through vector of comments.
             for(commIter = comments.begin(); commIter != comments.end(); commIter++) {
@@ -662,7 +665,8 @@ void Widget::on_applyButton_clicked()
     QCheckBox * selected;
     QSpinBox * pointPTR;
     QSpinBox * mpointPTR;
-    int pointsOff = 0;
+
+    int pointsGot = 0;
 
     if(currFileName.empty()) {
         QMessageBox::information(this, "Warning", "Please Select Code File Before Adding Comment.");
@@ -684,9 +688,10 @@ void Widget::on_applyButton_clicked()
                 GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_Points(pointPTR->value());
                 GUIEngine->get_currLA()->get_RI(tmpPtr->title().toStdString())->set_maxP(mpointPTR->value());
                 // tallys the proper amout of points to be deducted
-                pointsOff = pointsOff + pointPTR->value();
+                pointsTot = pointsTot +  mpointPTR->value();
+
                 // sets the lab assignment grade to the new grade
-                GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() - pointPTR->value());
+                GUIEngine->get_currLA()->set_Grade(GUIEngine->get_currLA()->get_Grade() + pointPTR->value());
 
                 //updates the main window with the new grade
                 string studentName = GUIEngine->get_currStu()->get_Name();
@@ -699,7 +704,11 @@ void Widget::on_applyButton_clicked()
                 int g = GUIEngine->get_currLA()->get_Grade();
                 QString grade = " Grade: ";
                 QString tem = QString::number(g);
+                QString outof = " / ";
                 grade = grade.append(tem);
+                grade = grade.append(outof);
+                QString m = QString::number(pointsTot);
+                grade = grade.append(m);
                 QString final = name.append(grade);
                 ui->studentgrade->setText(final);
             }

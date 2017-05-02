@@ -139,6 +139,7 @@ private:
     string rubric; //string for total rubric data
     int maxPnt; //int for max points for rubric item
     string maxPntStr; //string for max points for rubric item
+    int pointsTot = 0;
 
     string comm; //string for comment
     int commLine; //int for line comment appears on
