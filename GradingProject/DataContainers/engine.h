@@ -70,27 +70,21 @@ private:
 
     void write_to_database();
 
+    //Variables to store current state
     Section * currSection = nullptr;
     Lab * currLab = nullptr;
     Student * currStudent = nullptr;
     LabAssignment * currLabAssignment = nullptr;
     Template * currTemplate = nullptr;
 
-
+    //Vectors to store each type of item to enable easy writeback to database
     vector <Section *> sectionList;
-
     vector <Student *> students;
-
     vector <Lab *> labs;
-
     vector <Template *> templates;
-
     vector <LabAssignment *> labAssignments;
-
     vector <RubricItem *> rubricItems;
-
     vector <Comment *> comments;
-
     DBEngine * dbControl;
 };
 

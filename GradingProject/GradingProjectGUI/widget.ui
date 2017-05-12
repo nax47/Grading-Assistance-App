@@ -28,6 +28,12 @@
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="1">
           <widget class="QPushButton" name="openCodeButton">
+           <property name="font">
+            <font>
+             <family>DejaVu Sans</family>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
@@ -38,6 +44,12 @@
          </item>
          <item row="0" column="2">
           <widget class="QLabel" name="studentgrade">
+           <property name="font">
+            <font>
+             <family>DejaVu Sans</family>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
@@ -82,6 +94,12 @@
           <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0" colspan="2">
             <widget class="QLineEdit" name="searchBar">
+             <property name="font">
+              <font>
+               <family>DejaVu Sans</family>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(255, 255, 255);</string>
              </property>
@@ -92,6 +110,12 @@
            </item>
            <item row="0" column="2" colspan="2">
             <widget class="QPushButton" name="searchButton">
+             <property name="font">
+              <font>
+               <family>DejaVu Sans</family>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
@@ -108,21 +132,33 @@
                <height>16777215</height>
               </size>
              </property>
+             <property name="font">
+              <font>
+               <family>DejaVu Sans</family>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>+ Item</string>
+              <string>+Item</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
             <widget class="QPushButton" name="commentButton">
+             <property name="font">
+              <font>
+               <family>DejaVu Sans</family>
+               <pointsize>13</pointsize>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>+ Comment</string>
+              <string>+Comment</string>
              </property>
             </widget>
            </item>
@@ -133,6 +169,12 @@
                <width>51</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>DejaVu Sans</family>
+               <pointsize>13</pointsize>
+              </font>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);</string>
@@ -149,6 +191,12 @@
                <width>51</width>
                <height>16777215</height>
               </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>DejaVu Sans</family>
+               <pointsize>13</pointsize>
+              </font>
              </property>
              <property name="styleSheet">
               <string notr="true">color: rgb(255, 255, 255);</string>
@@ -177,8 +225,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>242</width>
-                <height>586</height>
+                <width>274</width>
+                <height>571</height>
                </rect>
               </property>
              </widget>
@@ -194,11 +242,17 @@
       <widget class="QLabel" name="pointsLabel_2">
        <property name="geometry">
         <rect>
-         <x>400</x>
-         <y>300</y>
-         <width>40</width>
-         <height>16</height>
+         <x>410</x>
+         <y>350</y>
+         <width>91</width>
+         <height>21</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -210,11 +264,17 @@
       <widget class="QLineEdit" name="outofText">
        <property name="geometry">
         <rect>
-         <x>460</x>
-         <y>300</y>
+         <x>510</x>
+         <y>350</y>
          <width>91</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -226,11 +286,17 @@
       <widget class="QLabel" name="newRubricItemLabel">
        <property name="geometry">
         <rect>
-         <x>340</x>
-         <y>160</y>
-         <width>138</width>
-         <height>16</height>
+         <x>50</x>
+         <y>130</y>
+         <width>751</width>
+         <height>101</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>50</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -245,11 +311,17 @@
       <widget class="QPushButton" name="cancelButton">
        <property name="geometry">
         <rect>
-         <x>430</x>
-         <y>370</y>
-         <width>121</width>
-         <height>21</height>
+         <x>420</x>
+         <y>410</y>
+         <width>131</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -261,11 +333,17 @@
       <widget class="QPushButton" name="okButton">
        <property name="geometry">
         <rect>
-         <x>290</x>
-         <y>370</y>
+         <x>240</x>
+         <y>410</y>
          <width>131</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -277,11 +355,17 @@
       <widget class="QLabel" name="pointsLabel">
        <property name="geometry">
         <rect>
-         <x>240</x>
-         <y>300</y>
-         <width>40</width>
-         <height>16</height>
+         <x>180</x>
+         <y>350</y>
+         <width>91</width>
+         <height>21</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -293,11 +377,17 @@
       <widget class="QLineEdit" name="pointsLine">
        <property name="geometry">
         <rect>
-         <x>300</x>
-         <y>300</y>
+         <x>280</x>
+         <y>350</y>
          <width>91</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -309,11 +399,17 @@
       <widget class="QLabel" name="subjectLabel">
        <property name="geometry">
         <rect>
-         <x>240</x>
-         <y>220</y>
-         <width>49</width>
-         <height>16</height>
+         <x>190</x>
+         <y>280</y>
+         <width>111</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -325,11 +421,17 @@
       <widget class="QLineEdit" name="subjectLine">
        <property name="geometry">
         <rect>
-         <x>300</x>
-         <y>220</y>
-         <width>251</width>
-         <height>21</height>
+         <x>310</x>
+         <y>280</y>
+         <width>261</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -345,13 +447,14 @@
         <rect>
          <x>40</x>
          <y>170</y>
-         <width>71</width>
-         <height>21</height>
+         <width>81</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>12</pointsize>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -367,8 +470,14 @@
          <x>140</x>
          <y>170</y>
          <width>291</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -379,13 +488,14 @@
         <rect>
          <x>40</x>
          <y>270</y>
-         <width>59</width>
+         <width>71</width>
          <height>20</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -401,8 +511,14 @@
          <x>140</x>
          <y>270</y>
          <width>291</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -413,13 +529,14 @@
         <rect>
          <x>40</x>
          <y>380</y>
-         <width>59</width>
-         <height>20</height>
+         <width>91</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="font">
         <font>
-         <pointsize>11</pointsize>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -435,8 +552,14 @@
          <x>140</x>
          <y>380</y>
          <width>291</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -445,11 +568,17 @@
       <widget class="QPushButton" name="sectionAdd">
        <property name="geometry">
         <rect>
-         <x>590</x>
+         <x>510</x>
          <y>170</y>
-         <width>21</width>
-         <height>21</height>
+         <width>31</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -461,11 +590,17 @@
       <widget class="QPushButton" name="labAdd">
        <property name="geometry">
         <rect>
-         <x>590</x>
+         <x>510</x>
          <y>270</y>
-         <width>21</width>
-         <height>21</height>
+         <width>31</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -477,11 +612,17 @@
       <widget class="QPushButton" name="studentAdd">
        <property name="geometry">
         <rect>
-         <x>590</x>
+         <x>510</x>
          <y>380</y>
-         <width>21</width>
-         <height>21</height>
+         <width>31</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -493,11 +634,17 @@
       <widget class="QPushButton" name="StartGrading">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>530</y>
-         <width>181</width>
-         <height>21</height>
+         <x>280</x>
+         <y>520</y>
+         <width>211</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -509,11 +656,17 @@
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
-         <x>630</x>
+         <x>550</x>
          <y>170</y>
          <width>21</width>
-         <height>21</height>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -525,11 +678,17 @@
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
-         <x>620</x>
+         <x>550</x>
          <y>270</y>
-         <width>51</width>
+         <width>91</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -541,11 +700,17 @@
       <widget class="QLabel" name="label_6">
        <property name="geometry">
         <rect>
-         <x>620</x>
+         <x>550</x>
          <y>380</y>
-         <width>51</width>
+         <width>61</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -557,11 +722,17 @@
       <widget class="QLineEdit" name="newIDVal">
        <property name="geometry">
         <rect>
-         <x>682</x>
+         <x>590</x>
          <y>170</y>
-         <width>141</width>
-         <height>21</height>
+         <width>221</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -573,11 +744,17 @@
       <widget class="QLineEdit" name="newLabNum">
        <property name="geometry">
         <rect>
-         <x>682</x>
+         <x>640</x>
          <y>270</y>
-         <width>141</width>
-         <height>21</height>
+         <width>181</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -589,11 +766,17 @@
       <widget class="QLineEdit" name="newStudentName">
        <property name="geometry">
         <rect>
-         <x>682</x>
+         <x>620</x>
          <y>380</y>
-         <width>141</width>
-         <height>21</height>
+         <width>191</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -605,11 +788,17 @@
       <widget class="QRadioButton" name="loadRub">
        <property name="geometry">
         <rect>
-         <x>150</x>
+         <x>240</x>
          <y>460</y>
-         <width>201</width>
-         <height>21</height>
+         <width>331</width>
+         <height>41</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>15</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -624,11 +813,17 @@
       <widget class="QLabel" name="label_8">
        <property name="geometry">
         <rect>
-         <x>610</x>
-         <y>90</y>
-         <width>221</width>
+         <x>490</x>
+         <y>80</y>
+         <width>341</width>
          <height>61</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>18</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -641,17 +836,24 @@
       <widget class="QLabel" name="label_9">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>411</width>
-         <height>51</height>
+         <x>10</x>
+         <y>80</y>
+         <width>461</width>
+         <height>61</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>18</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
-        <string>Choose what section, lab and student you would like to grade.</string>
+        <string>Choose what section, lab and student
+ you would like to grade.</string>
        </property>
       </widget>
      </widget>
@@ -659,11 +861,17 @@
       <widget class="QLabel" name="label_7">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>140</y>
-         <width>111</width>
-         <height>16</height>
+         <x>160</x>
+         <y>120</y>
+         <width>501</width>
+         <height>71</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>50</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -678,12 +886,18 @@
          <x>240</x>
          <y>510</y>
          <width>311</width>
-         <height>31</height>
+         <height>41</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QPushButton" name="commentOK">
+          <property name="font">
+           <font>
+            <family>DejaVu Sans</family>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
           <property name="styleSheet">
            <string notr="true">color: rgb(255, 255, 255);</string>
           </property>
@@ -694,6 +908,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="commentCancel">
+          <property name="font">
+           <font>
+            <family>DejaVu Sans</family>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
           <property name="styleSheet">
            <string notr="true">color: rgb(255, 255, 255);</string>
           </property>
@@ -707,11 +927,17 @@
       <widget class="QLineEdit" name="newComText">
        <property name="geometry">
         <rect>
-         <x>130</x>
-         <y>190</y>
+         <x>120</x>
+         <y>220</y>
          <width>571</width>
          <height>141</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -726,11 +952,17 @@
       <widget class="QLineEdit" name="lNumNewCom">
        <property name="geometry">
         <rect>
-         <x>380</x>
-         <y>380</y>
-         <width>81</width>
-         <height>31</height>
+         <x>440</x>
+         <y>390</y>
+         <width>151</width>
+         <height>41</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -742,11 +974,17 @@
       <widget class="QLabel" name="label_10">
        <property name="geometry">
         <rect>
-         <x>241</x>
-         <y>391</y>
-         <width>85</width>
-         <height>16</height>
+         <x>230</x>
+         <y>390</y>
+         <width>181</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -758,11 +996,17 @@
       <widget class="QLabel" name="label_11">
        <property name="geometry">
         <rect>
-         <x>241</x>
-         <y>451</y>
-         <width>128</width>
-         <height>16</height>
+         <x>150</x>
+         <y>440</y>
+         <width>271</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">color: rgb(255, 255, 255);</string>
@@ -774,11 +1018,17 @@
       <widget class="QComboBox" name="RIScombo">
        <property name="geometry">
         <rect>
-         <x>390</x>
-         <y>450</y>
-         <width>211</width>
-         <height>21</height>
+         <x>440</x>
+         <y>440</y>
+         <width>221</width>
+         <height>31</height>
         </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>DejaVu Sans</family>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -819,7 +1069,6 @@
   <tabstop>newComText</tabstop>
   <tabstop>lNumNewCom</tabstop>
   <tabstop>RIScombo</tabstop>
-  <tabstop>commentOK</tabstop>
   <tabstop>commentCancel</tabstop>
   <tabstop>linNumBox</tabstop>
  </tabstops>
